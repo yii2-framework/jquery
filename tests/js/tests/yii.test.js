@@ -31,8 +31,8 @@ describe('yii', function () {
     function registerPjax() {
         var code = fs.readFileSync(pjaxPath);
         var script = new vm.Script(code);
-        var sandbox = {jQuery: $, window: window, navigator: window.navigator};
-        var context = new vm.createContext(sandbox);
+        var pjaxSandbox = {jQuery: $, window: window, navigator: window.navigator};
+        var context = new vm.createContext(pjaxSandbox);
         script.runInContext(context);
     }
 
@@ -81,7 +81,7 @@ describe('yii', function () {
     before(function () {
         $ = window.$;
         registerTestableCode();
-        // eslint-disable-next-line global-require
+         
         sinon = require('sinon');
         addPjaxAttributes();
         yiiGetBaseCurrentUrlStub = sinon.stub(yii, 'getBaseCurrentUrl', function () {
@@ -939,7 +939,7 @@ describe('yii', function () {
                 'init',
                 ['isActiveUndefined', 'isActiveTrue', 'subModule', 'subModule2']
             ]
-        }, function (rootModuleIsActive, rootModuleInit, expectedCalledInitMethods) {
+        }, function (rootModuleIsActive, rootModuleInitParam, expectedCalledInitMethods) {
             var message = 'should call init method in the root module and all submodules depending depending on ' +
                 'activity and if init is a valid method';
             it(message, function () {
@@ -947,7 +947,7 @@ describe('yii', function () {
 
                 var module = {
                     isActive: rootModuleIsActive,
-                    init: rootModuleInit
+                    init: rootModuleInitParam
                 };
 
                 // Submodules

@@ -71,7 +71,7 @@ class IpValidatorJqueryClientScript extends BaseObject implements ClientValidato
             'ipv4' => $validator->ipv4,
             'ipv6' => $validator->ipv6,
             'ipParsePattern' => new JsExpression(
-                Html::escapeJsRegularExpression($this->getIpParsePattern($validator)),
+                Html::escapeJsRegularExpression($this->getIpParsePattern()),
             ),
             'negation' => $validator->negation,
             'subnet' => $validator->subnet,
@@ -96,7 +96,7 @@ class IpValidatorJqueryClientScript extends BaseObject implements ClientValidato
     /**
      * Returns the Regexp pattern for initial IP address parsing.
      */
-    private function getIpParsePattern(IpValidator $validator): string
+    private function getIpParsePattern(): string
     {
         return '/^(' . preg_quote(IpValidator::NEGATION_CHAR, '/') . '?)(.+?)(\/(\d+))?$/';
     }

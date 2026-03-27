@@ -50,28 +50,23 @@ Register the bootstrap class in your application configuration:
 // config/web.php
 return [
     'bootstrap' => [\yii\jquery\Bootstrap::class],
-    'useJquery' => true,
     // ...
 ];
 ```
 
-`Bootstrap` overrides `\yii\web\YiiAsset` via `AssetManager::$bundles` to add `JqueryAsset` as a dependency
-and load `yii.js` from `@yii/assets`.
+`Bootstrap` configures the DI container with jQuery-based `$clientScript` defaults for all validators and widgets
+that support the strategy pattern. No other configuration is required.
 
-### Opting out selectively
+### Overriding a single validator
 
 ```php
-// Disable jQuery globally — no jQuery assets are loaded
-'useJquery' => false,
-
-// Override a single validator's client script
 public function rules(): array
 {
     return [
         [
             'email',
             'required',
-            'clientScript' => ['class' => \yii\jquery\validators\RequiredValidatorJqueryClientScript::class],
+            'clientScript' => ['class' => MyCustomRequiredClientScript::class],
         ],
     ];
 }

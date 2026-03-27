@@ -1,5 +1,19 @@
 module.exports = [
     {
+        languageOptions: {
+            ecmaVersion: 2020,
+            sourceType: "script",
+            globals: {
+                window: "readonly",
+                document: "readonly",
+                jQuery: "readonly",
+                $: "readonly",
+                Inputmask: "readonly",
+                console: "readonly",
+                setTimeout: "readonly",
+                XMLHttpRequest: "readonly"
+            }
+        },
         rules: {
             "comma-dangle": ["error", "never"],
             "no-cond-assign": "error",
@@ -18,7 +32,7 @@ module.exports = [
             "no-inner-declarations": ["error", "functions"],
             "no-invalid-regexp": "error",
             "no-irregular-whitespace": "error",
-            "no-negated-in-lhs": "error",
+            "no-unsafe-negation": "error",
             "no-obj-calls": "error",
             "no-regex-spaces": "error",
             "no-sparse-arrays": "error",
@@ -46,7 +60,7 @@ module.exports = [
             "no-lone-blocks": "error",
             "no-loop-func": "warn",
             "no-multi-str": "error",
-            "no-native-reassign": "error",
+            "no-global-assign": "error",
             "no-new-func": "error",
             "no-new-wrappers": "warn",
             "no-new": "error",
@@ -64,17 +78,12 @@ module.exports = [
             "no-with": "error",
             radix: "error",
             "wrap-iife": "warn",
-            "no-catch-shadow": "error",
+            "no-shadow": "error",
             "no-delete-var": "error",
             "no-label-var": "error",
             "no-shadow-restricted-names": "error",
             "no-undef-init": "warn",
-            "callback-return": "error",
-            "global-require": "warn",
-            "handle-callback-err": "error",
-            "no-path-concat": "error",
-            "no-process-exit": "error",
-            "max-statements": ["warn", 30],
-        },
-    },
+            "max-statements": ["warn", 30]
+        }
+    }
 ];

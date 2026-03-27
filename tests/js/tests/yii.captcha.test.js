@@ -37,7 +37,7 @@ describe('yii.captcha', function () {
     before(function () {
         $ = window.$;
         registerTestableCode();
-        // eslint-disable-next-line global-require
+         
         sinon = require('sinon');
     });
 

@@ -45,7 +45,9 @@ class GridViewJqueryClientScript extends BaseObject implements ClientScriptInter
                 $additionalFilterSelector = ($widget->filterSelector)($widget->getId(), $id);
             }
 
-            $filterSelector .= ", {$additionalFilterSelector}";
+            $filterSelector = $filterSelector !== ''
+                ? "$filterSelector, $additionalFilterSelector"
+                : $additionalFilterSelector;
 
             if ($widget->overrideFilterSelector) {
                 $filterSelector = $additionalFilterSelector;
