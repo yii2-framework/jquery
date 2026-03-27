@@ -16,22 +16,21 @@ use yii\validators\FilterValidator;
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
+#[Group('jquery')]
 #[Group('validators')]
 final class FilterValidatorJqueryTest extends TestCase
 {
     public function testClientValidateAttributeWithTrimFilter(): void
     {
-        $val = Yii::createObject(['class' => FilterValidator::class, 'filter' => 'trim']);
+        $validator = Yii::createObject(['class' => FilterValidator::class, 'filter' => 'trim']);
 
-        $m = FakedValidationModel::createWithAttributes(['attr_one' => 'test']);
-
-        $js = $val->clientValidateAttribute($m, 'attr_one', Yii::$app->view);
+        $model = FakedValidationModel::createWithAttributes(['attr_one' => 'test']);
 
         self::assertSame(
             <<<'JS'
             value = yii.validation.trim($form, attribute, [], value);
             JS,
-            $js,
+            $validator->clientValidateAttribute($model, 'attr_one', Yii::$app->view),
             "Should return correct 'trim' validation script.",
         );
     }
