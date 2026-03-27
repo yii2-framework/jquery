@@ -137,7 +137,6 @@ class ActiveFormJqueryClientScript extends BaseObject implements ClientScriptInt
 
         $options = Json::htmlEncode($this->getClientOptions($widget));
         $attributes = Json::htmlEncode($widget->attributes);
-        $view = $widget->getView();
 
         ActiveFormAsset::register($view);
 
