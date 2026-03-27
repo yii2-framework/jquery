@@ -61,7 +61,6 @@ final class FileValidatorJqueryClientScriptTest extends \yii\jquery\tests\TestCa
                 'tooBig' => 'The file "{file}" is too big. Its size cannot exceed 1 MiB.',
                 'maxFiles' => 1,
                 'tooMany' => 'You can upload at most 1 file.',
-
             ],
             $validator->getClientOptions($modelValidator, 'attrA'),
             "Should return correct options 'array'.",

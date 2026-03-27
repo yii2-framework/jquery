@@ -86,11 +86,11 @@ final class MaskedInputJqueryClientScriptTest extends \yii\jquery\tests\TestCase
             'Should contain jQuery selector and inputmask initialization.',
         );
     }
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->mockWebApplication();
     }
-
 }

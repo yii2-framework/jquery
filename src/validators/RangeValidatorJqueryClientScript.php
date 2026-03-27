@@ -12,8 +12,6 @@ use yii\validators\client\ClientValidatorScriptInterface;
 use yii\validators\Validator;
 use yii\web\View;
 
-use function call_user_func;
-
 /**
  * jQuery client-side script for [[RangeValidator]].
  *
@@ -58,7 +56,7 @@ class RangeValidatorJqueryClientScript extends BaseObject implements ClientValid
     public function register(Validator $validator, Model $model, string $attribute, View $view): string
     {
         if ($validator->range instanceof Closure) {
-            $validator->range = call_user_func($validator->range, $model, $attribute);
+            $validator->range = ($validator->range)($model, $attribute);
         }
 
         ValidationAsset::register($view);
