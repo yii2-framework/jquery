@@ -19,18 +19,6 @@ final class ApplicationFactory
     private const COOKIE_VALIDATION_KEY = 'wefJDF8sfdsfSDefwqdxj9oq';
 
     /**
-     * Creates a web application with jQuery Bootstrap configured.
-     *
-     * @phpstan-param array<string, mixed> $override
-     */
-    public static function web(array $override = []): void
-    {
-        new \yii\web\Application(
-            ArrayHelper::merge(self::commonBase(), $override),
-        );
-    }
-
-    /**
      * Creates a console application with jQuery Bootstrap configured.
      *
      * @phpstan-param array<string, mixed> $override
@@ -60,6 +48,18 @@ final class ApplicationFactory
         }
 
         Yii::$app = null; // @phpstan-ignore assign.propertyType (Yii2 test teardown pattern)
+    }
+
+    /**
+     * Creates a web application with jQuery Bootstrap configured.
+     *
+     * @phpstan-param array<string, mixed> $override
+     */
+    public static function web(array $override = []): void
+    {
+        new \yii\web\Application(
+            ArrayHelper::merge(self::commonBase(), $override),
+        );
     }
 
     /**

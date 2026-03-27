@@ -8,7 +8,7 @@
     if (methods[method]) {
       return methods[method].apply(
         this,
-        Array.prototype.slice.call(arguments, 1),
+        Array.prototype.slice.call(arguments, 1)
       );
     } else if (typeof method === "object" || !method) {
       return methods.init.apply(this, arguments);
@@ -20,7 +20,7 @@
 
   var defaults = {
     refreshUrl: undefined,
-    hashKey: undefined,
+    hashKey: undefined
   };
 
   var methods = {
@@ -29,7 +29,7 @@
         var $e = $(this);
         var settings = $.extend({}, defaults, options || {});
         $e.data("yiiCaptcha", {
-          settings: settings,
+          settings: settings
         });
 
         $e.on("click.yiiCaptcha", function () {
@@ -49,7 +49,7 @@
         success: function (data) {
           $e.attr("src", data.url);
           $("body").data(settings.hashKey, [data.hash1, data.hash2]);
-        },
+        }
       });
     },
 
@@ -61,6 +61,6 @@
 
     data: function () {
       return this.data("yiiCaptcha");
-    },
+    }
   };
-})(window.jQuery);
+}(window.jQuery));

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace yii\jquery\tests\validators;
 
+use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\jquery\tests\data\validators\FakedValidationModel;
 use yii\validators\RequiredValidator;
-use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for {@see RequiredValidatorJqueryClientScript} jQuery client-side validation script.

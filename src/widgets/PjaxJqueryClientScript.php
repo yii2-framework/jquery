@@ -37,7 +37,7 @@ class PjaxJqueryClientScript extends BaseObject implements ClientScriptInterface
         $options = Json::htmlEncode($widget->clientOptions);
 
         if ($widget->linkSelector !== false) {
-            $id = is_string($id) && $id !== '' ? $id :'';
+            $id = is_string($id) && $id !== '' ? $id : '';
 
             $linkSelector = Json::htmlEncode(
                 $widget->linkSelector !== null ? $widget->linkSelector : "#{$id} a",
@@ -47,7 +47,7 @@ class PjaxJqueryClientScript extends BaseObject implements ClientScriptInterface
         }
 
         if ($widget->formSelector !== false) {
-            $id = is_string($id) && $id !== '' ? $id :'';
+            $id = is_string($id) && $id !== '' ? $id : '';
 
             $formSelector = Json::htmlEncode(
                 $widget->formSelector !== null ? $widget->formSelector : "#{$id} form[data-pjax]",

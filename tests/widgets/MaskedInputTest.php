@@ -95,7 +95,7 @@ final class MaskedInputTest extends TestCase
     {
         $output = MaskedInput::widget(
             [
-                'id'=> 'w0',
+                'id' => 'w0',
                 'name' => 'phone',
                 'mask' => '999-9999',
                 'clientOptions' => ['oncomplete' => new JsExpression('function() { alert("complete"); }')],

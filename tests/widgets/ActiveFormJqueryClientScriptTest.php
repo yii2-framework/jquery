@@ -403,7 +403,8 @@ final class ActiveFormJqueryClientScriptTest extends \yii\jquery\tests\TestCase
 
         self::assertArrayHasKey(
             'validate',
-            $options, 'Should contain validate key.',
+            $options,
+            'Should contain validate key.',
         );
 
         $expression = $options['validate'] instanceof JsExpression

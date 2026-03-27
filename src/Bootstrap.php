@@ -26,7 +26,6 @@ use yii\validators\RequiredValidator;
 use yii\validators\StringValidator;
 use yii\validators\TrimValidator;
 use yii\validators\UrlValidator;
-use yii\web\Application;
 use yii\widgets\ActiveForm;
 
 /**
@@ -85,9 +84,6 @@ final class Bootstrap implements BootstrapInterface
         Pjax::class => widgets\PjaxJqueryClientScript::class,
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function bootstrap($app): void
     {
         foreach (self::CLIENT_SCRIPT_MAP as $component => $clientScript) {

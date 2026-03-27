@@ -8,7 +8,7 @@
     if (methods[method]) {
       return methods[method].apply(
         this,
-        Array.prototype.slice.call(arguments, 1),
+        Array.prototype.slice.call(arguments, 1)
       );
     } else if (typeof method === "object" || !method) {
       return methods.init.apply(this, arguments);
@@ -21,7 +21,7 @@
   var defaults = {
     filterUrl: undefined,
     filterSelector: undefined,
-    filterOnFocusOut: true,
+    filterOnFocusOut: true
   };
 
   var gridData = {};
@@ -45,7 +45,7 @@
      * where
      *  - event: an Event object.
      */
-    afterFilter: "afterFilter",
+    afterFilter: "afterFilter"
   };
 
   /**
@@ -114,7 +114,7 @@
             methods.applyFilter.apply($e);
 
             return false;
-          },
+          }
         );
       });
     },
@@ -166,12 +166,12 @@
         method: "get",
         class: "gridview-filter-form",
         style: "display:none",
-        "data-pjax": "",
+        "data-pjax": ""
       }).appendTo($grid);
       $.each(data, function (name, values) {
         $.each(values, function (index, value) {
           $form.append(
-            $("<input/>").attr({ type: "hidden", name: name, value: value }),
+            $("<input/>").attr({ type: "hidden", name: name, value: value })
           );
         });
       });
@@ -212,7 +212,7 @@
             .find(inputs + (this.checked ? ":not(:checked)" : ":checked"))
             .prop("checked", this.checked)
             .change();
-        },
+        }
       );
       var handler = function () {
         var all =
@@ -227,7 +227,7 @@
         "checkRow",
         "click.yiiGridView",
         "#" + id + " " + inputs,
-        handler,
+        handler
       );
       if ($grid.find(inputs).length) {
         handler(); // Ensure "check all" checkbox is checked on page load if all data row checkboxes are initially checked.
@@ -253,7 +253,7 @@
       var events = [
         ".yiiGridView",
         gridEvents.beforeFilter,
-        gridEvents.afterFilter,
+        gridEvents.afterFilter
       ].join(" ");
       this.off(events);
 
@@ -270,7 +270,7 @@
     data: function () {
       var id = $(this).attr("id");
       return gridData[id];
-    },
+    }
   };
 
   /**
@@ -295,4 +295,4 @@
     $(document).on(event, selector, callback);
     gridEventHandlers[id][type] = { event: event, selector: selector };
   }
-})(window.jQuery);
+}(window.jQuery));
