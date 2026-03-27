@@ -37,15 +37,15 @@ return [
 All classes in this package use the `yii\jquery\*` namespace hierarchy. The corresponding classes that previously
 shipped with core used framework namespaces (`yii\web\`, `yii\widgets\`, etc.). Update any direct class references:
 
-| Before (core) | After (this package) |
-| --- | --- |
-| `yii\web\JqueryAsset` | `yii\jquery\web\JqueryAsset` |
+| Before (core)                    | After (this package)                    |
+| -------------------------------- | --------------------------------------- |
+| `yii\web\JqueryAsset`            | `yii\jquery\web\JqueryAsset`            |
 | `yii\validators\ValidationAsset` | `yii\jquery\validators\ValidationAsset` |
-| `yii\widgets\ActiveFormAsset` | `yii\jquery\widgets\ActiveFormAsset` |
-| `yii\widgets\PjaxAsset` | `yii\jquery\widgets\PjaxAsset` |
-| `yii\widgets\MaskedInputAsset` | `yii\jquery\widgets\MaskedInputAsset` |
-| `yii\captcha\CaptchaAsset` | `yii\jquery\captcha\CaptchaAsset` |
-| `yii\grid\GridViewAsset` | `yii\jquery\grid\GridViewAsset` |
+| `yii\widgets\ActiveFormAsset`    | `yii\jquery\widgets\ActiveFormAsset`    |
+| `yii\widgets\PjaxAsset`          | `yii\jquery\widgets\PjaxAsset`          |
+| `yii\widgets\MaskedInputAsset`   | `yii\jquery\widgets\MaskedInputAsset`   |
+| `yii\captcha\CaptchaAsset`       | `yii\jquery\captcha\CaptchaAsset`       |
+| `yii\grid\GridViewAsset`         | `yii\jquery\grid\GridViewAsset`         |
 
 Direct references to these classes in application code are uncommon — they are registered automatically when jQuery
 support is active. **No action required** for standard Yii2 applications.

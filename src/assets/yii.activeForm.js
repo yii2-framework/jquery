@@ -9,7 +9,7 @@
     if (methods[method]) {
       return methods[method].apply(
         this,
-        Array.prototype.slice.call(arguments, 1)
+        Array.prototype.slice.call(arguments, 1),
       );
     } else {
       if (typeof method === "object" || !method) {
@@ -107,7 +107,7 @@
      * where
      *  - event: an Event object.
      */
-    afterInit: "afterInit"
+    afterInit: "afterInit",
   };
 
   // NOTE: If you change any of these defaults, make sure you update yii\widgets\ActiveForm::getClientOptions() as well
@@ -135,7 +135,7 @@
     // offset in pixels that should be added when scrolling to the first error.
     scrollToErrorOffset: 0,
     // where to add validation class: container or input
-    validationStateOn: "container"
+    validationStateOn: "container",
   };
 
   // NOTE: If you change any of these defaults, make sure you update yii\widgets\ActiveField::getClientOptions() as well
@@ -173,7 +173,7 @@
     // the value of the input
     value: undefined,
     // whether to update aria-invalid attribute after validation
-    updateAriaInvalid: true
+    updateAriaInvalid: true,
   };
 
   var submitDefer;
@@ -197,7 +197,7 @@
     data,
     attribute,
     messages,
-    deferreds
+    deferreds,
   ) {
     attribute.$form = $form;
     attribute.cancelled = false;
@@ -278,7 +278,7 @@
         getValue($form, attribute),
         msg,
         deferreds,
-        $form
+        $form,
       );
     }
 
@@ -291,7 +291,7 @@
     messages,
     deferreds,
     needAjaxValidation,
-    submitting
+    submitting,
   ) {
     removeEmptyMessages(messages);
     if (shouldRunAjaxValidation(data, messages, needAjaxValidation)) {
@@ -323,7 +323,7 @@
         buildAjaxValidationData(
           $form,
           data.submitObject,
-          data.settings.ajaxParam
+          data.settings.ajaxParam,
         ),
       dataType: data.settings.ajaxDataType,
       complete: function (jqXHR, textStatus) {
@@ -338,14 +338,14 @@
         var validationMessages = filterAjaxValidationMessages(
           data.attributes,
           msgs,
-          messages
+          messages,
         );
         updateInputs($form, validationMessages, submitting);
       },
       error: function () {
         data.submitting = false;
         submitFinalize($form);
-      }
+      },
     });
   };
 
@@ -361,7 +361,7 @@
   var filterAjaxValidationMessages = function (
     attributes,
     ajaxMessages,
-    messages
+    messages,
   ) {
     if (ajaxMessages === null || typeof ajaxMessages !== "object") {
       return messages;
@@ -380,7 +380,7 @@
     $form,
     data,
     messages,
-    submitting
+    submitting,
   ) {
     if (data.submitting) {
       // delay callback so that the form can be submitted without problem
@@ -410,7 +410,7 @@
           attributes[i] = $.extend(
             { value: getValue($form, this) },
             attributeDefaults,
-            this
+            this,
           );
           watchAttribute($form, attributes[i]);
         });
@@ -421,7 +421,7 @@
           submitting: false,
           validated: false,
           validate_only: false, // validate without auto submitting
-          options: getFormOptions($form)
+          options: getFormOptions($form),
         });
 
         /**
@@ -436,7 +436,7 @@
             ":submit",
             function () {
               $form.data("yiiActiveForm").submitObject = $(this);
-            }
+            },
           );
           $form.on("submit.yiiActiveForm", methods.submitForm);
         }
@@ -452,7 +452,7 @@
       attribute = $.extend(
         { value: getValue($form, attribute) },
         attributeDefaults,
-        attribute
+        attribute,
       );
       $form.data("yiiActiveForm").attributes.push(attribute);
       watchAttribute($form, attribute);
@@ -550,7 +550,7 @@
           messages,
           deferreds,
           needAjaxValidation,
-          submitting
+          submitting,
         );
       });
     },
@@ -604,7 +604,7 @@
               " " +
               data.settings.errorCssClass +
               " " +
-              data.settings.successCssClass
+              data.settings.successCssClass,
           );
           $container.find(this.error).html("");
         });
@@ -642,7 +642,7 @@
         msg[id] = messages;
         updateInput($(this), attribute, msg);
       }
-    }
+    },
   };
 
   var watchAttribute = function ($form, attribute) {
@@ -697,7 +697,7 @@
     $form,
     attribute,
     forceValidate,
-    validationDelay
+    validationDelay,
   ) {
     var data = $form.data("yiiActiveForm");
     var hasValueChanges = false;
@@ -752,7 +752,7 @@
         });
         methods.validate.call($form);
       },
-      validationDelay ? validationDelay : 200
+      validationDelay ? validationDelay : 200,
     );
   };
 
@@ -894,7 +894,7 @@
       data,
       data.attributes,
       messages,
-      submitting
+      submitting,
     );
 
     $form.trigger(events.afterValidate, [messages, errorAttributes]);
@@ -912,7 +912,7 @@
     data,
     attributes,
     messages,
-    submitting
+    submitting,
   ) {
     var errorAttributes = [];
     $.each(attributes, function () {
@@ -922,7 +922,7 @@
         this,
         messages,
         submitting,
-        errorAttributes
+        errorAttributes,
       );
     });
 
@@ -935,7 +935,7 @@
     attribute,
     messages,
     submitting,
-    errorAttributes
+    errorAttributes,
   ) {
     var $input = findInput($form, attribute);
     if ($input.is(":disabled") || attribute.cancelled) {
@@ -952,7 +952,7 @@
     data,
     attribute,
     messages,
-    submitting
+    submitting,
   ) {
     if (submitting) {
       return updateInput($form, attribute, messages);
@@ -973,7 +973,7 @@
     $form,
     data,
     messages,
-    errorAttributes
+    errorAttributes,
   ) {
     updateSummary($form, messages);
     if (errorAttributes.length) {
@@ -981,7 +981,7 @@
         $form,
         errorAttributes,
         data.settings.scrollToError,
-        data.settings.scrollToErrorOffset
+        data.settings.scrollToErrorOffset,
       );
       data.submitting = false;
       return;
@@ -1005,7 +1005,7 @@
     $form,
     errorAttributes,
     shouldScroll,
-    scrollOffset
+    scrollOffset,
   ) {
     if (!shouldScroll) {
       return;
@@ -1059,14 +1059,14 @@
       // simulate button input value
       var $hiddenButton = $(
         'input[type="hidden"][name="' + $button.attr("name") + '"]',
-        $form
+        $form,
       );
       if (!$hiddenButton.length) {
         $("<input>")
           .attr({
             type: "hidden",
             name: $button.attr("name"),
-            value: $button.attr("value")
+            value: $button.attr("value"),
           })
           .appendTo($form);
       } else {
@@ -1110,7 +1110,7 @@
           .removeClass(
             data.settings.validatingCssClass +
               " " +
-              data.settings.successCssClass
+              data.settings.successCssClass,
           )
           .addClass(data.settings.errorCssClass);
       } else {
@@ -1120,7 +1120,7 @@
             data.settings.validatingCssClass +
               " " +
               data.settings.errorCssClass +
-              " "
+              " ",
           )
           .addClass(data.settings.successCssClass);
       }
@@ -1129,7 +1129,7 @@
 
     $form.trigger(events.afterValidateAttribute, [
       attribute,
-      messages[attribute.id]
+      messages[attribute.id],
     ]);
 
     return hasError;
@@ -1198,7 +1198,7 @@
 
       if (!$realInput.length) {
         $realInput = $form.find(
-          'input[type=hidden][name="' + $input.attr("name") + '"]'
+          'input[type=hidden][name="' + $input.attr("name") + '"]',
         );
       }
 
@@ -1227,4 +1227,4 @@
   };
 
   var currentAjaxRequest = null;
-}(window.jQuery));
+})(window.jQuery);

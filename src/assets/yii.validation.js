@@ -69,7 +69,7 @@ yii.validation = (function ($) {
           options,
           deferred,
           new FileReader(),
-          new Image()
+          new Image(),
         );
         deferredList.push(deferred);
       });
@@ -81,7 +81,7 @@ yii.validation = (function ($) {
       options,
       deferred,
       fileReader,
-      image
+      image,
     ) {
       image.onload = function () {
         validateImageSize(file, image, messages, options);
@@ -201,7 +201,7 @@ yii.validation = (function ($) {
       }
 
       validateIpValue(value, messages, options);
-    }
+    },
   };
 
   function isRequiredValid(value, options) {
@@ -354,7 +354,7 @@ yii.validation = (function ($) {
     if (!options.enableIDN) {
       return {
         valid: options.pattern.test(normalizedValue),
-        value: normalizedValue
+        value: normalizedValue,
       };
     }
 
@@ -368,7 +368,7 @@ yii.validation = (function ($) {
 
     return {
       valid: options.pattern.test(normalizedValue),
-      value: normalizedValue
+      value: normalizedValue,
     };
   }
 
@@ -423,7 +423,7 @@ yii.validation = (function ($) {
     return evaluateCompareResult(
       compareData.value,
       compareData.compareValue,
-      options.operator
+      options.operator,
     );
   }
 
@@ -447,7 +447,7 @@ yii.validation = (function ($) {
 
     return {
       value: value ? parseFloat(value) : 0,
-      compareValue: compareValue ? parseFloat(compareValue) : 0
+      compareValue: compareValue ? parseFloat(compareValue) : 0,
     };
   }
 
@@ -485,7 +485,7 @@ yii.validation = (function ($) {
       },
       "<=": function (left, right) {
         return left <= right;
-      }
+      },
     };
 
     return operators[operator];
@@ -512,7 +512,7 @@ yii.validation = (function ($) {
     return {
       value: matches[2],
       negation: matches[1] || null,
-      cidr: matches[4] || null
+      cidr: matches[4] || null,
     };
   }
 
@@ -638,7 +638,7 @@ yii.validation = (function ($) {
       }
       if (
         normalizedFilename.substr(
-          normalizedFilename.length - extensionLength - 1
+          normalizedFilename.length - extensionLength - 1,
         ) ===
         "." + extension
       ) {
@@ -687,7 +687,7 @@ yii.validation = (function ($) {
       messages,
       function (actual, expected) {
         return actual < expected;
-      }
+      },
     );
     addImageSizeMessageIfNeeded(
       options.maxWidth,
@@ -697,7 +697,7 @@ yii.validation = (function ($) {
       messages,
       function (actual, expected) {
         return actual > expected;
-      }
+      },
     );
     addImageSizeMessageIfNeeded(
       options.minHeight,
@@ -707,7 +707,7 @@ yii.validation = (function ($) {
       messages,
       function (actual, expected) {
         return actual < expected;
-      }
+      },
     );
     addImageSizeMessageIfNeeded(
       options.maxHeight,
@@ -717,7 +717,7 @@ yii.validation = (function ($) {
       messages,
       function (actual, expected) {
         return actual > expected;
-      }
+      },
     );
   }
 
@@ -727,7 +727,7 @@ yii.validation = (function ($) {
     messageTemplate,
     file,
     messages,
-    isViolation
+    isViolation,
   ) {
     if (limit && isViolation(actualSize, limit)) {
       messages.push(messageTemplate.replace(/\{file\}/g, file.name));
@@ -757,7 +757,7 @@ yii.validation = (function ($) {
 
     return value.replace(
       new RegExp("^[" + trimChars + "]+|[" + trimChars + "]+$", "g"),
-      ""
+      "",
     );
   }
 
@@ -776,4 +776,4 @@ yii.validation = (function ($) {
   }
 
   return pub;
-}(jQuery));
+})(jQuery);

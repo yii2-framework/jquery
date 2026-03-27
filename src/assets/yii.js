@@ -215,7 +215,7 @@ window.yii = (function ($) {
      */
     getCurrentUrl: function () {
       return window.location.href;
-    }
+    },
   };
 
   var conflictActionParams = [
@@ -228,7 +228,7 @@ window.yii = (function ($) {
     "action",
     "enctype",
     "method",
-    "target"
+    "target",
   ];
   var actionHelperAttribute = "data-yii-action-helper";
 
@@ -248,7 +248,7 @@ window.yii = (function ($) {
       params: params,
       areValidParams: params && $.isPlainObject(params),
       usePjax: isPjaxEnabled($e),
-      pjaxOptions: {}
+      pjaxOptions: {},
     };
   }
 
@@ -269,7 +269,7 @@ window.yii = (function ($) {
           "Parameter name '" +
             param +
             "' conflicts with a same named form property. " +
-            "Please use another name."
+            "Please use another name.",
         );
       }
     });
@@ -286,7 +286,7 @@ window.yii = (function ($) {
       skipOuterContainers: $e.data("pjax-skip-outer-containers"),
       timeout: $e.data("pjax-timeout"),
       originalEvent: event,
-      originalTarget: $e
+      originalTarget: $e,
     };
   }
 
@@ -334,7 +334,7 @@ window.yii = (function ($) {
       oldMethod: undefined,
       oldAction: undefined,
       oldActionExists: false,
-      actionModified: false
+      actionModified: false,
     };
 
     if (state.newForm) {
@@ -348,7 +348,7 @@ window.yii = (function ($) {
     var normalizedMethod = normalizeSubmitMethod(
       context.$form,
       context.method,
-      true
+      true,
     );
     appendCsrfField(context.$form, normalizedMethod, true);
     if (context.isValidAction) {
@@ -399,7 +399,7 @@ window.yii = (function ($) {
         $form,
         csrfParam,
         pub.getCsrfToken(),
-        markAsActionHelper
+        markAsActionHelper,
       );
     }
   }
@@ -458,7 +458,7 @@ window.yii = (function ($) {
   function removeActionParams($form) {
     $(
       'input[type="hidden"][' + actionHelperAttribute + '="true"]',
-      $form
+      $form,
     ).remove();
   }
 
@@ -483,7 +483,7 @@ window.yii = (function ($) {
   function appendQueryParam(params, pair) {
     var pairSeparatorPosition = pair.indexOf("=");
     var name = decodeURIComponent(
-      getQueryParamName(pair, pairSeparatorPosition).replace(/\+/g, "%20")
+      getQueryParamName(pair, pairSeparatorPosition).replace(/\+/g, "%20"),
     );
     if (!name.length) {
       return;
@@ -503,7 +503,7 @@ window.yii = (function ($) {
     return pairSeparatorPosition < 0
       ? ""
       : decodeURIComponent(
-          pair.substring(pairSeparatorPosition + 1).replace(/\+/g, "%20")
+          pair.substring(pairSeparatorPosition + 1).replace(/\+/g, "%20"),
         );
   }
 
@@ -640,7 +640,7 @@ window.yii = (function ($) {
     if (loadedScripts[url] === undefined || loadedScripts[url] === true) {
       loadedScripts[url] = {
         xhrList: [],
-        xhrDone: false
+        xhrDone: false,
       };
     }
   }
@@ -720,7 +720,7 @@ window.yii = (function ($) {
       $element: $element,
       method: $element.data("method"),
       message: $element.data("confirm"),
-      form: $element.data("form")
+      form: $element.data("form"),
     };
   }
 
@@ -752,7 +752,7 @@ window.yii = (function ($) {
     for (var i = 0; i < pub.reloadableScripts.length; i++) {
       var rule = getAbsoluteUrl(pub.reloadableScripts[i]);
       var match = new RegExp(
-        "^" + escapeRegExp(rule).split("\\*").join(".+") + "$"
+        "^" + escapeRegExp(rule).split("\\*").join(".+") + "$",
       ).test(url);
       if (match === true) {
         return true;
@@ -777,7 +777,7 @@ window.yii = (function ($) {
   }
 
   return pub;
-}(window.jQuery));
+})(window.jQuery);
 
 window.jQuery(function () {
   window.yii.initModule(window.yii);
