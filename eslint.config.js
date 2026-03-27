@@ -77,7 +77,7 @@ module.exports = [
       "no-void": "error",
       "no-with": "error",
       radix: "error",
-      "wrap-iife": "warn",
+      "wrap-iife": "off",
       "no-shadow": "error",
       "no-delete-var": "error",
       "no-label-var": "error",
