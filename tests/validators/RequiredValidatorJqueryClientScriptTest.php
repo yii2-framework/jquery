@@ -17,7 +17,7 @@ use yii\validators\RequiredValidator;
  */
 #[Group('jquery')]
 #[Group('validators')]
-final class RequireValidatorJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class RequiredValidatorJqueryClientScriptTest extends \yii\jquery\tests\TestCase
 {
     public function testClientValidateAttribute(): void
     {
