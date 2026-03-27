@@ -16,7 +16,7 @@ use yii\jquery\Bootstrap;
  */
 final class ApplicationFactory
 {
-    private const COOKIE_VALIDATION_KEY = 'wefJDF8sfdsfSDefwqdxj9oq';
+    private const COOKIE_VALIDATION_KEY = 'test-cookie-validation-key';
 
     /**
      * Creates a console application with jQuery Bootstrap configured.

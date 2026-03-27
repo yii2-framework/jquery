@@ -83,7 +83,6 @@ describe('yii.validation', function () {
     before(function () {
         $ = window.$;
         registerTestableCode();
-         
         sinon = require('sinon');
     });
 

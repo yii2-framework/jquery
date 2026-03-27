@@ -81,7 +81,6 @@ describe('yii', function () {
     before(function () {
         $ = window.$;
         registerTestableCode();
-         
         sinon = require('sinon');
         addPjaxAttributes();
         yiiGetBaseCurrentUrlStub = sinon.stub(yii, 'getBaseCurrentUrl', function () {

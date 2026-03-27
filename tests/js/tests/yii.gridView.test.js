@@ -58,7 +58,6 @@ describe('yii.gridView', function () {
     before(function () {
         $ = window.$;
         registerTestableCode();
-         
         sinon = require('sinon');
     });
 

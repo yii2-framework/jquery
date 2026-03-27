@@ -1,0 +1,11 @@
+title = "Gitleaks config for Super-Linter"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Ignore test fixtures and support files"
+paths = [
+    '''(^|/)tests/''',
+    '''(^|/)runtime/'''
+]
