@@ -13,8 +13,6 @@ use yii\validators\client\ClientValidatorScriptInterface;
 use yii\validators\Validator;
 use yii\web\View;
 
-use function call_user_func;
-
 /**
  * jQuery client-side script for [[CompareValidator]].
  *
@@ -41,7 +39,7 @@ class CompareValidatorJqueryClientScript extends BaseObject implements ClientVal
         $resolvedCompareValue = $validator->compareValue;
 
         if ($resolvedCompareValue instanceof Closure) {
-            $resolvedCompareValue = call_user_func($resolvedCompareValue, $model, $attribute);
+            $resolvedCompareValue = $resolvedCompareValue($model, $attribute);
         }
 
         $options = [

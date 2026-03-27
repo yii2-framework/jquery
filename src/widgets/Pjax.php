@@ -51,7 +51,7 @@ class Pjax extends Widget
      */
     public array $clientOptions = [];
     /**
-     * @var array|string|ClientScriptInterface|null The client-side script implementation.
+     * @var array|ClientScriptInterface|string|null The client-side script implementation.
      *
      * When `null` (default), no client script is registered unless configured via the DI container
      * by [[Bootstrap]].
@@ -70,7 +70,7 @@ class Pjax extends Widget
      */
     public bool $enableReplaceState = false;
     /**
-     * @var string|false|null The jQuery selector of the forms whose submissions should trigger pjax requests.
+     * @var false|string|null The jQuery selector of the forms whose submissions should trigger pjax requests.
      *
      * If not set, all forms with `data-pjax` attribute within the enclosed content of Pjax will trigger pjax requests.
      * If set to false, no code will be registered to handle forms.
@@ -78,7 +78,7 @@ class Pjax extends Widget
      */
     public string|false|null $formSelector = null;
     /**
-     * @var string|false|null The jQuery selector of the links that should trigger pjax requests.
+     * @var false|string|null The jQuery selector of the links that should trigger pjax requests.
      *
      * If not set, all links within the enclosed content of Pjax will trigger pjax requests.
      * If set to false, no code will be registered to handle links.
@@ -114,7 +114,6 @@ class Pjax extends Widget
      * will be triggered.
      */
     public int $timeout = 1000;
-
 
     public function init()
     {
