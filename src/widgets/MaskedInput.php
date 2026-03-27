@@ -68,7 +68,7 @@ class MaskedInput extends InputWidget
     public array $clientOptions = [];
 
     /**
-     * @var array|string|ClientScriptInterface|null The client-side script implementation.
+     * @var array|ClientScriptInterface|string|null The client-side script implementation.
      *
      * When `null` (default), no client script is registered unless configured via the DI container
      * by [[Bootstrap]].
@@ -86,7 +86,7 @@ class MaskedInput extends InputWidget
      */
     public array|null $definitions = null;
     /**
-     * @var string|array|JsExpression the input mask (e.g. '99/99/9999' for date input). The following characters
+     * @var array|JsExpression|string the input mask (e.g. '99/99/9999' for date input). The following characters
      * can be used in the mask and are predefined:
      *
      * - `a`: represents an alpha character (A-Z, a-z)
@@ -124,7 +124,6 @@ class MaskedInput extends InputWidget
         'onKeyValidation',
         'isComplete',
     ];
-
 
     /**
      * Initializes the widget.
