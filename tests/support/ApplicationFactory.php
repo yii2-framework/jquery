@@ -1,0 +1,96 @@
+<?php
+
+declare(strict_types=1);
+
+namespace yii\jquery\tests\support;
+
+use Yii;
+use yii\helpers\ArrayHelper;
+use yii\jquery\Bootstrap;
+
+/**
+ * Creates Yii application instances for tests.
+ *
+ * @author Wilmer Arambula <terabytesoftw@gmail.com>
+ * @since 0.1
+ */
+final class ApplicationFactory
+{
+    private const COOKIE_VALIDATION_KEY = 'wefJDF8sfdsfSDefwqdxj9oq';
+
+    /**
+     * Creates a web application with jQuery Bootstrap configured.
+     *
+     * @phpstan-param array<string, mixed> $override
+     */
+    public static function web(array $override = []): void
+    {
+        new \yii\web\Application(
+            ArrayHelper::merge(self::commonBase(), $override),
+        );
+    }
+
+    /**
+     * Creates a console application with jQuery Bootstrap configured.
+     *
+     * @phpstan-param array<string, mixed> $override
+     */
+    public static function console(array $override = []): void
+    {
+        new \yii\console\Application(
+            ArrayHelper::merge(
+                [
+                    'id' => 'testapp',
+                    'basePath' => dirname(__DIR__),
+                    'vendorPath' => dirname(__DIR__, 2) . '/vendor',
+                    'bootstrap' => [Bootstrap::class],
+                ],
+                $override,
+            ),
+        );
+    }
+
+    /**
+     * Destroys the current application.
+     */
+    public static function destroy(): void
+    {
+        if (Yii::$app !== null && Yii::$app->has('session', true)) {
+            Yii::$app->session->close();
+        }
+
+        Yii::$app = null; // @phpstan-ignore assign.propertyType (Yii2 test teardown pattern)
+    }
+
+    /**
+     * @phpstan-return array<string, mixed>
+     */
+    private static function commonBase(): array
+    {
+        return [
+            'id' => 'testapp',
+            'basePath' => dirname(__DIR__),
+            'vendorPath' => dirname(__DIR__, 2) . '/vendor',
+            'controllerNamespace' => 'yii\jquery\tests\data\controllers',
+            'bootstrap' => [Bootstrap::class],
+            'aliases' => [
+                '@root' => dirname(__DIR__, 2),
+                '@npm' => '@root/node_modules',
+                '@tests' => dirname(__DIR__),
+            ],
+            'components' => [
+                'assetManager' => [
+                    'basePath' => '@root/runtime/assets',
+                    'baseUrl' => '/assets',
+                    'hashCallback' => static fn(string $path): string => '5a1b552',
+                ],
+                'request' => [
+                    'cookieValidationKey' => self::COOKIE_VALIDATION_KEY,
+                    'scriptFile' => dirname(__DIR__) . '/index.php',
+                    'scriptUrl' => '/index.php',
+                    'isConsoleRequest' => false,
+                ],
+            ],
+        ];
+    }
+}

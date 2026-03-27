@@ -1,0 +1,42 @@
+---
+name: build-node
+
+on:
+  pull_request: &ignore-paths
+    paths-ignore:
+      - ".gitattributes"
+      - ".gitignore"
+      - "CHANGELOG.md"
+      - "docs/**"
+      - "README.md"
+
+  push: *ignore-paths
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Node 20 on ubuntu-22.04
+
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Monitor action permissions.
+        if: runner.os != 'Windows'
+        uses: GitHubSecurityLab/actions-permissions/monitor@v1
+
+      - name: Checkout.
+        uses: actions/checkout@v6
+
+      - name: Install node.js.
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Tests.
+        run: |
+          npm install
+          npm run lint
+          npm test

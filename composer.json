@@ -1,16 +1,20 @@
 {
-    "name": "yii2-extensions/template",
+    "name": "yii2-framework/jquery",
     "type": "library",
-    "description": "_____",
+    "description": "jQuery integration layer for yii2-framework/core asset bundles, client validation scripts, and widget client scripts.",
     "keywords": [
-        "_____"
+        "yii2",
+        "jquery",
+        "assets",
+        "validation",
+        "widgets"
     ],
     "license": "BSD-3-Clause",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
-        "yiisoft/yii2": "^2.0.54|^22"
+        "php": ">=8.2",
+        "yii2-framework/core": "^1.0"
     },
     "require-dev": {
         "infection/infection": "^0.27|^0.32",
@@ -23,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "yii\\template\\": "src"
+            "yii\\jquery\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "yii\\template\\tests\\": "tests"
+            "yii\\jquery\\tests\\": "tests/"
         }
     },
     "extra": {
@@ -40,6 +44,7 @@
         "sort-packages": true,
         "allow-plugins": {
             "infection/extension-installer": true,
+            "php-forge/foxy": true,
             "phpstan/extension-installer": true,
             "yiisoft/yii2-composer": true
         }

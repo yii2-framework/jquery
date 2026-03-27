@@ -46,28 +46,28 @@
             </style>
             <div class="container">
                 <div class="alert-box">
-                    <p class="alert-title"><strong>Best Practices</strong></p>
-                    <p class="alert-content">PSR standards • Clean code • Documentation ready</p>
+                    <p class="alert-title"><strong>Asset Bundles</strong></p>
+                    <p class="alert-content">JqueryAsset • ValidationAsset • ActiveFormAsset • PjaxAsset • MaskedInputAsset • GridViewAsset</p>
                 </div>
                 <div class="alert-box">
-                    <p class="alert-title"><strong>Easy Setup</strong></p>
-                    <p class="alert-content">Quick start template • Configuration examples • Clear structure</p>
+                    <p class="alert-title"><strong>Client Validation</strong></p>
+                    <p class="alert-content">jQuery-backed scripts for all 13 built-in validators • BooleanValidator, CompareValidator, EmailValidator, and more</p>
                 </div>
                 <div class="alert-box">
-                    <p class="alert-title"><strong>GitHub Actions</strong></p>
-                    <p class="alert-content">CI/CD workflows • Automated testing • Quality checks</p>
+                    <p class="alert-title"><strong>Fully Optional</strong></p>
+                    <p class="alert-content">Clean opt-out via useJquery: false • No jQuery assets loaded when disabled • Core remains framework-agnostic</p>
                 </div>
                 <div class="alert-box">
-                    <p class="alert-title"><strong>Quality Tools</strong></p>
-                    <p class="alert-content">PHPStan Level Max • StyleCI • Super-Linter integration</p>
+                    <p class="alert-title"><strong>Strategy Pattern</strong></p>
+                    <p class="alert-content">Pluggable via $clientScript on every validator and widget • Drop-in replacement or fully custom implementation</p>
                 </div>
                 <div class="alert-box">
-                    <p class="alert-title"><strong>PHP 8.1+</strong></p>
-                    <p class="alert-content">Modern PHP features • Type safety • Performance optimizations</p>
+                    <p class="alert-title"><strong>Widget Integration</strong></p>
+                    <p class="alert-content">ActiveForm • GridView • CheckboxColumn • Pjax • MaskedInput • Captcha</p>
                 </div>
                 <div class="alert-box">
-                    <p class="alert-title"><strong>Testing Ready</strong></p>
-                    <p class="alert-content">PHPUnit setup • Mutation testing • Codecov integration</p>
+                    <p class="alert-title"><strong>Zero Config</strong></p>
+                    <p class="alert-content">Register Bootstrap and set useJquery: true • Works out of the box with existing Yii2 applications</p>
                 </div>
             </div>
         </div>
