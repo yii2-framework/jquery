@@ -16,6 +16,9 @@ indent_size = 2
 [*.mjs]
 indent_size = 2
 
+[*.cjs]
+indent_size = 2
+
 [*.md]
 trim_trailing_whitespace = false
 
