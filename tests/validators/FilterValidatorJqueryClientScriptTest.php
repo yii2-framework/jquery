@@ -7,6 +7,7 @@ namespace yii\jquery\tests\validators;
 use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\jquery\tests\data\validators\FakedValidationModel;
+use yii\jquery\tests\TestCase;
 use yii\validators\FilterValidator;
 
 /**
@@ -17,7 +18,7 @@ use yii\validators\FilterValidator;
  */
 #[Group('jquery')]
 #[Group('validators')]
-final class FilterValidatorJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class FilterValidatorJqueryClientScriptTest extends TestCase
 {
     public function testGetClientOptionsWithoutSkipOnEmpty(): void
     {

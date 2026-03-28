@@ -8,6 +8,7 @@ use yii\base\BaseObject;
 use yii\base\Model;
 use yii\helpers\Json;
 use yii\validators\client\ClientValidatorScriptInterface;
+use yii\validators\UrlValidator;
 use yii\validators\Validator;
 use yii\web\JsExpression;
 use yii\web\View;
@@ -15,7 +16,7 @@ use yii\web\View;
 /**
  * jQuery client-side script for [[UrlValidator]].
  *
- * @implements ClientValidatorScriptInterface<\yii\validators\UrlValidator>
+ * @implements ClientValidatorScriptInterface<UrlValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
@@ -35,12 +36,12 @@ class UrlValidatorJqueryClientScript extends BaseObject implements ClientValidat
     {
         $pattern = $validator->pattern;
 
-        if (strpos($validator->pattern, '{schemes}') !== false) {
+        if (str_contains($validator->pattern, '{schemes}')) {
             $pattern = str_replace(
                 '{schemes}',
                 '(' . implode(
                     '|',
-                    array_map('strval', $validator->validSchemes),
+                    array_map(strval(...), $validator->validSchemes),
                 ) . ')',
                 $validator->pattern,
             );

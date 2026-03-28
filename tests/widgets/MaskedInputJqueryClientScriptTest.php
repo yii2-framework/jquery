@@ -7,6 +7,7 @@ namespace yii\jquery\tests\widgets;
 
 use PHPUnit\Framework\Attributes\Group;
 use Yii;
+use yii\jquery\tests\TestCase;
 use yii\jquery\widgets\MaskedInput;
 use yii\jquery\widgets\MaskedInputJqueryClientScript;
 
@@ -18,7 +19,7 @@ use yii\jquery\widgets\MaskedInputJqueryClientScript;
  */
 #[Group('jquery')]
 #[Group('widgets')]
-final class MaskedInputJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class MaskedInputJqueryClientScriptTest extends TestCase
 {
     public function testGetClientOptions(): void
     {

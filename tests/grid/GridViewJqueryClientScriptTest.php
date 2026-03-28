@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\grid\GridView;
+use yii\jquery\tests\TestCase;
 
 /**
  * Unit tests for {@see GridViewJqueryClientScript} jQuery client-side script.
@@ -16,7 +17,7 @@ use yii\grid\GridView;
  * @since 0.1
  */
 #[Group('jquery')]
-final class GridViewJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class GridViewJqueryClientScriptTest extends TestCase
 {
     public function testRegister(): void
     {
@@ -85,7 +86,7 @@ final class GridViewJqueryClientScriptTest extends \yii\jquery\tests\TestCase
             'id' => 'test-grid',
             'dataProvider' => new ArrayDataProvider(['allModels' => []]),
             'filterUrl' => '/test/filter',
-            'filterSelector' => static fn(string $id, string $filterId): string => '#extra-filter input',
+            'filterSelector' => static fn(string $_id, string $_filterId): string => '#extra-filter input',
             'options' => ['id' => 'test-grid'],
             'filterRowOptions' => ['id' => 'test-grid-filters'],
         ];

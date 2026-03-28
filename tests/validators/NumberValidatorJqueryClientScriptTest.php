@@ -7,6 +7,7 @@ namespace yii\jquery\tests\validators;
 use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\jquery\tests\data\validators\FakedValidationModel;
+use yii\jquery\tests\TestCase;
 use yii\jquery\validators\ValidationAsset;
 use yii\validators\NumberValidator;
 use yii\web\JsExpression;
@@ -20,7 +21,7 @@ use yii\web\View;
  */
 #[Group('jquery')]
 #[Group('validators')]
-final class NumberValidatorJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class NumberValidatorJqueryClientScriptTest extends TestCase
 {
     public function testClientValidateAttribute(): void
     {

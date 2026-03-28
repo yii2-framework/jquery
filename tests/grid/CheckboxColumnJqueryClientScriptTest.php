@@ -10,6 +10,7 @@ use yii\data\ArrayDataProvider;
 use yii\grid\CheckboxColumn;
 use yii\grid\GridView;
 use yii\jquery\grid\CheckboxColumnJqueryClientScript;
+use yii\jquery\tests\TestCase;
 
 /**
  * Unit tests for {@see CheckboxColumnJqueryClientScript} jQuery client-side script.
@@ -19,7 +20,7 @@ use yii\jquery\grid\CheckboxColumnJqueryClientScript;
  */
 #[Group('jquery')]
 #[Group('grid')]
-final class CheckboxColumnJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class CheckboxColumnJqueryClientScriptTest extends TestCase
 {
     public function testCheckAllWithCustomName(): void
     {

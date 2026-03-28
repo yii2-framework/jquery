@@ -10,13 +10,14 @@ use yii\base\Model;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\validators\client\ClientValidatorScriptInterface;
+use yii\validators\CompareValidator;
 use yii\validators\Validator;
 use yii\web\View;
 
 /**
  * jQuery client-side script for [[CompareValidator]].
  *
- * @implements ClientValidatorScriptInterface<\yii\validators\CompareValidator>
+ * @implements ClientValidatorScriptInterface<CompareValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
@@ -52,7 +53,8 @@ class CompareValidatorJqueryClientScript extends BaseObject implements ClientVal
             $compareLabel = $compareValue = $compareValueOrAttribute = $resolvedCompareValue;
         } else {
             $compareAttribute = $validator->compareAttribute === null
-                ? "{$attribute}_repeat" : $validator->compareAttribute;
+                ? "{$attribute}_repeat"
+                : $validator->compareAttribute;
 
             $compareValue = $model->getAttributeLabel($compareAttribute);
             $options['compareAttribute'] = Html::getInputId($model, $compareAttribute);

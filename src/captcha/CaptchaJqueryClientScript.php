@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace yii\jquery\captcha;
 
 use yii\base\BaseObject;
+use yii\captcha\Captcha;
 use yii\helpers\Json;
 use yii\web\client\ClientScriptInterface;
 use yii\web\View;
@@ -17,7 +18,7 @@ use function is_string;
  * Registers the CAPTCHA asset bundle and emits the `yiiCaptcha` jQuery plugin
  * initialization JavaScript.
  *
- * @implements ClientScriptInterface<\yii\captcha\Captcha>
+ * @implements ClientScriptInterface<Captcha>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
@@ -30,7 +31,7 @@ class CaptchaJqueryClientScript extends BaseObject implements ClientScriptInterf
     }
 
     /**
-     * @param \yii\captcha\Captcha $widget
+     * @param Captcha $widget
      */
     public function register(BaseObject $widget, View $view, array $params = []): void
     {

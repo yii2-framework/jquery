@@ -19,7 +19,7 @@ describe("yii.captcha", function () {
   function registerTestableCode() {
     var code = fs.readFileSync(yiiCaptchaPath);
     var script = new vm.Script(code);
-    var context = new vm.createContext({ window: window });
+    var context = vm.createContext({ window: window });
 
     script.runInContext(context);
   }

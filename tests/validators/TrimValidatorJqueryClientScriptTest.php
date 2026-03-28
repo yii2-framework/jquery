@@ -8,6 +8,7 @@ namespace yii\jquery\tests\validators;
 use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\jquery\tests\data\validators\FakedValidationModel;
+use yii\jquery\tests\TestCase;
 use yii\validators\TrimValidator;
 
 /**
@@ -18,7 +19,7 @@ use yii\validators\TrimValidator;
  */
 #[Group('jquery')]
 #[Group('validators')]
-final class TrimValidatorJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class TrimValidatorJqueryClientScriptTest extends TestCase
 {
     public function testClientValidateAttribute(): void
     {

@@ -7,6 +7,7 @@ namespace yii\jquery\validators;
 use yii\base\BaseObject;
 use yii\base\Model;
 use yii\helpers\Json;
+use yii\validators\BooleanValidator;
 use yii\validators\client\ClientValidatorScriptInterface;
 use yii\validators\Validator;
 use yii\web\View;
@@ -14,7 +15,7 @@ use yii\web\View;
 /**
  * jQuery client-side script for [[BooleanValidator]].
  *
- * @implements ClientValidatorScriptInterface<\yii\validators\BooleanValidator>
+ * @implements ClientValidatorScriptInterface<BooleanValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace yii\jquery\widgets;
 
+use yii\jquery\web\YiiAsset;
 use yii\web\AssetBundle;
 
 /**
@@ -14,11 +15,7 @@ use yii\web\AssetBundle;
  */
 class PjaxAsset extends AssetBundle
 {
-    public $depends = [
-        \yii\jquery\web\YiiAsset::class,
-    ];
-    public $js = [
-        'jquery.pjax.js',
-    ];
+    public $depends = [YiiAsset::class];
+    public $js = ['jquery.pjax.js'];
     public $sourcePath = '@npm/yii2-pjax';
 }

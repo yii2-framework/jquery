@@ -6,6 +6,7 @@ namespace yii\jquery\validators;
 
 use yii\base\Model;
 use yii\helpers\Json;
+use yii\validators\ImageValidator;
 use yii\validators\Validator;
 use yii\web\JsExpression;
 use yii\web\View;
@@ -15,7 +16,7 @@ use yii\web\View;
  *
  * Extends [[FileValidatorJqueryClientScript]] to add image-specific dimension validation options.
  *
- * @extends FileValidatorJqueryClientScript<\yii\validators\ImageValidator>
+ * @extends FileValidatorJqueryClientScript<ImageValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1

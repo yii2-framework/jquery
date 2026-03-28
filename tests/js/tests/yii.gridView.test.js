@@ -38,7 +38,7 @@ describe("yii.gridView", function () {
       navigator: window.navigator,
       jQuery: $,
     };
-    var context = new vm.createContext(sandbox);
+    var context = vm.createContext(sandbox);
     script.runInContext(context);
     return sandbox.window.yii;
   }
@@ -47,7 +47,7 @@ describe("yii.gridView", function () {
     var yii = registerYii();
     var code = fs.readFileSync(yiiGridViewPath);
     var script = new vm.Script(code);
-    var context = new vm.createContext({
+    var context = vm.createContext({
       window: window,
       document: window.document,
       yii: yii,
@@ -86,7 +86,7 @@ describe("yii.gridView", function () {
   });
 
   afterEach(function () {
-    if ($gridView.length) {
+    if ($gridView && $gridView.length) {
       $gridView.yiiGridView("destroy");
     }
     $textInput.val("");
@@ -518,7 +518,7 @@ describe("yii.gridView", function () {
           $listBox.find('option[value="3"]').prop("selected", true);
 
           var filterUrl =
-            "/posts/index?PostSearch[tags]=-1PostSearch[tags][0]=2&PostSearch[tags][1]=3" +
+            "/posts/index?PostSearch[tags]=-1&PostSearch[tags][0]=2&PostSearch[tags][1]=3" +
             "&page=2&per-page=2";
           $gridView = $("#w2").yiiGridView({
             filterUrl: filterUrl,

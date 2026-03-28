@@ -8,6 +8,8 @@ use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\captcha\Captcha;
 use yii\jquery\captcha\CaptchaJqueryClientScript;
+use yii\jquery\tests\data\controllers\SiteController;
+use yii\jquery\tests\TestCase;
 
 /**
  * Unit tests for {@see CaptchaJqueryClientScript} jQuery client-side script.
@@ -17,7 +19,7 @@ use yii\jquery\captcha\CaptchaJqueryClientScript;
  */
 #[Group('jquery')]
 #[Group('captcha')]
-final class CaptchaJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class CaptchaJqueryClientScriptTest extends TestCase
 {
     public function testGetClientOptions(): void
     {
@@ -82,6 +84,6 @@ final class CaptchaJqueryClientScriptTest extends \yii\jquery\tests\TestCase
     {
         parent::setUp();
 
-        Yii::$app->controller = new \yii\jquery\tests\data\controllers\SiteController('site', Yii::$app);
+        Yii::$app->controller = new SiteController('site', Yii::$app);
     }
 }

@@ -115,7 +115,7 @@ class Pjax extends Widget
      */
     public int $timeout = 1000;
 
-    public function init()
+    public function init(): void
     {
         parent::init();
 
@@ -163,7 +163,7 @@ class Pjax extends Widget
      * Delegates to [[clientScript]] when set. Prepares [[clientOptions]] from widget properties before delegating so
      * the client script receives a complete options array.
      */
-    public function registerClientScript()
+    public function registerClientScript(): void
     {
         $id = $this->options['id'];
         $this->clientOptions['push'] = $this->enablePushState;
@@ -212,7 +212,7 @@ class Pjax extends Widget
     /**
      * @return bool whether the current request requires pjax response from this widget
      */
-    protected function requiresPjax()
+    protected function requiresPjax(): bool
     {
         $headers = Yii::$app->getRequest()->getHeaders();
 

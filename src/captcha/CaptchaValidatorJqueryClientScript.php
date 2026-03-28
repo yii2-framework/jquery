@@ -6,6 +6,7 @@ namespace yii\jquery\captcha;
 
 use yii\base\BaseObject;
 use yii\base\Model;
+use yii\captcha\CaptchaValidator;
 use yii\helpers\Json;
 use yii\jquery\validators\ValidationAsset;
 use yii\validators\client\ClientValidatorScriptInterface;
@@ -15,7 +16,7 @@ use yii\web\View;
 /**
  * jQuery client-side script for [[CaptchaValidator]].
  *
- * @implements ClientValidatorScriptInterface<\yii\captcha\CaptchaValidator>
+ * @implements ClientValidatorScriptInterface<CaptchaValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1

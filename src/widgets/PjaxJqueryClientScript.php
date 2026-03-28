@@ -17,7 +17,7 @@ use function is_string;
  * Registers the [jquery-pjax](https://github.com/yiisoft/jquery-pjax) plugin asset and
  * emits the initialization JavaScript using the jQuery API.
  *
- * @implements ClientScriptInterface<\yii\jquery\widgets\Pjax>
+ * @implements ClientScriptInterface<Pjax>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
@@ -40,7 +40,7 @@ class PjaxJqueryClientScript extends BaseObject implements ClientScriptInterface
             $id = is_string($id) && $id !== '' ? $id : '';
 
             $linkSelector = Json::htmlEncode(
-                $widget->linkSelector !== null ? $widget->linkSelector : "#{$id} a",
+                $widget->linkSelector ?? "#{$id} a",
             );
 
             $js .= "jQuery(document).pjax($linkSelector, $options);";
@@ -50,7 +50,7 @@ class PjaxJqueryClientScript extends BaseObject implements ClientScriptInterface
             $id = is_string($id) && $id !== '' ? $id : '';
 
             $formSelector = Json::htmlEncode(
-                $widget->formSelector !== null ? $widget->formSelector : "#{$id} form[data-pjax]",
+                $widget->formSelector ?? "#{$id} form[data-pjax]",
             );
             $submitEvent = Json::htmlEncode($widget->submitEvent);
 

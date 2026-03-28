@@ -8,13 +8,14 @@ use yii\base\BaseObject;
 use yii\base\Model;
 use yii\helpers\Json;
 use yii\validators\client\ClientValidatorScriptInterface;
+use yii\validators\FilterValidator;
 use yii\validators\Validator;
 use yii\web\View;
 
 /**
  * jQuery client-side script for [[FilterValidator]] when the filter is `'trim'`.
  *
- * @implements ClientValidatorScriptInterface<\yii\validators\FilterValidator>
+ * @implements ClientValidatorScriptInterface<FilterValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1

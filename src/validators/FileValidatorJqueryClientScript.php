@@ -14,6 +14,8 @@ use yii\validators\Validator;
 use yii\web\JsExpression;
 use yii\web\View;
 
+use function strval;
+
 /**
  * jQuery client-side script for [[FileValidator]].
  *
@@ -79,7 +81,7 @@ class FileValidatorJqueryClientScript extends BaseObject implements ClientValida
                 $validator->wrongMimeType,
                 [
                     'attribute' => $label,
-                    'mimeTypes' => implode(', ', array_map('strval', $validator->mimeTypes)),
+                    'mimeTypes' => implode(', ', array_map(strval(...), $validator->mimeTypes)),
                 ],
             );
         }
@@ -90,7 +92,7 @@ class FileValidatorJqueryClientScript extends BaseObject implements ClientValida
                 $validator->wrongExtension,
                 [
                     'attribute' => $label,
-                    'extensions' => implode(', ', array_map('strval', $validator->extensions)),
+                    'extensions' => implode(', ', array_map(strval(...), $validator->extensions)),
                 ],
             );
         }

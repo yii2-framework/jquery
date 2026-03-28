@@ -71,7 +71,7 @@ describe("yii.validation", function () {
 
     var defaultSandbox = { yii: {}, jQuery: $ };
     var sandbox = $.extend({}, defaultSandbox, customSandbox);
-    var context = new vm.createContext(sandbox);
+    var context = vm.createContext(sandbox);
 
     script.runInContext(context);
     yii = sandbox.yii;

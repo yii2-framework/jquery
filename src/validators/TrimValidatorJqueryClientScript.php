@@ -8,6 +8,7 @@ use yii\base\BaseObject;
 use yii\base\Model;
 use yii\helpers\Json;
 use yii\validators\client\ClientValidatorScriptInterface;
+use yii\validators\TrimValidator;
 use yii\validators\Validator;
 use yii\web\View;
 
@@ -18,7 +19,7 @@ use function is_array;
  *
  * Preserves the `skipOnArray` check from the original validator.
  *
- * @implements ClientValidatorScriptInterface<\yii\validators\TrimValidator>
+ * @implements ClientValidatorScriptInterface<TrimValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1

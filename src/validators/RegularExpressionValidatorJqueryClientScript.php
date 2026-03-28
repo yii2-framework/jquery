@@ -9,6 +9,7 @@ use yii\base\Model;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\validators\client\ClientValidatorScriptInterface;
+use yii\validators\RegularExpressionValidator;
 use yii\validators\Validator;
 use yii\web\JsExpression;
 use yii\web\View;
@@ -16,7 +17,7 @@ use yii\web\View;
 /**
  * jQuery client-side script for [[RegularExpressionValidator]].
  *
- * @implements ClientValidatorScriptInterface<\yii\validators\RegularExpressionValidator>
+ * @implements ClientValidatorScriptInterface<RegularExpressionValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
@@ -24,7 +25,7 @@ use yii\web\View;
 class RegularExpressionValidatorJqueryClientScript extends BaseObject implements ClientValidatorScriptInterface
 {
     /**
-     * @phpstan-return array{pattern: \yii\web\JsExpression, not: bool, message: string, skipOnEmpty?: int}
+     * @phpstan-return array{pattern: JsExpression, not: bool, message: string, skipOnEmpty?: int}
      */
     public function getClientOptions(Validator $validator, Model $model, string $attribute): array
     {

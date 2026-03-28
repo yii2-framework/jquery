@@ -8,6 +8,7 @@ use yii\base\BaseObject;
 use yii\base\Model;
 use yii\helpers\Json;
 use yii\validators\client\ClientValidatorScriptInterface;
+use yii\validators\NumberValidator;
 use yii\validators\Validator;
 use yii\web\JsExpression;
 use yii\web\View;
@@ -15,7 +16,7 @@ use yii\web\View;
 /**
  * jQuery client-side script for [[NumberValidator]].
  *
- * @implements ClientValidatorScriptInterface<\yii\validators\NumberValidator>
+ * @implements ClientValidatorScriptInterface<NumberValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1

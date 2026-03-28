@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace yii\jquery\tests\support;
 
 use Yii;
+use yii\console\Application;
 use yii\helpers\ArrayHelper;
 use yii\jquery\Bootstrap;
 
@@ -25,7 +26,7 @@ final class ApplicationFactory
      */
     public static function console(array $override = []): void
     {
-        new \yii\console\Application(
+        new Application(
             ArrayHelper::merge(
                 [
                     'id' => 'testapp',

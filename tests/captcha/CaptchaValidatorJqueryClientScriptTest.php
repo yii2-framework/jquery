@@ -10,6 +10,7 @@ use yii\base\DynamicModel;
 use yii\captcha\CaptchaValidator;
 use yii\helpers\Json;
 use yii\jquery\captcha\CaptchaValidatorJqueryClientScript;
+use yii\jquery\tests\TestCase;
 
 /**
  * Unit tests for {@see CaptchaValidatorJqueryClientScript} jQuery client-side validation script.
@@ -20,7 +21,7 @@ use yii\jquery\captcha\CaptchaValidatorJqueryClientScript;
 #[Group('jquery')]
 #[Group('captcha')]
 #[Group('validators')]
-final class CaptchaValidatorJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class CaptchaValidatorJqueryClientScriptTest extends TestCase
 {
     public function testGetClientOptions(): void
     {

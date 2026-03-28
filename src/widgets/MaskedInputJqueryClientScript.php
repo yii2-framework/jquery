@@ -18,10 +18,10 @@ use function is_string;
  * Registers the [jQuery Input Mask](https://github.com/RobinHerbots/Inputmask) plugin asset and emits the plugin
  * initialization JavaScript using the jQuery API.
  *
- * Relies on [[MaskedInput::$_hashVar]] and [[MaskedInput::$clientOptions]] being populated by
+ * Relies on [[MaskedInput::$hashVar]] and [[MaskedInput::$clientOptions]] being populated by
  * [[MaskedInput::registerClientScript()]] before this class is invoked.
  *
- * @implements ClientScriptInterface<\yii\jquery\widgets\MaskedInput>
+ * @implements ClientScriptInterface<MaskedInput>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
@@ -51,7 +51,7 @@ class MaskedInputJqueryClientScript extends BaseObject implements ClientScriptIn
         $id = $widget->options['id'] ?? '';
 
         if (is_string($id) && $id !== '') {
-            $js .= 'jQuery("#' . $id . '").' . $pluginName . '(' . $widget->_hashVar . ');';
+            $js .= 'jQuery("#' . $id . '").' . $pluginName . '(' . $widget->hashVar . ');';
         }
 
         MaskedInputAsset::register($view);

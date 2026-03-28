@@ -50,11 +50,6 @@ class MaskedInput extends InputWidget
      */
     public const PLUGIN_NAME = 'inputmask';
     /**
-     * @var string|null the hashed variable name used to store the plugin options in the page JS scope.
-     * Populated by [[hashPluginOptions()]] before [[registerClientScript()]] delegates to [[clientScript]].
-     */
-    public string|null $_hashVar = null;
-    /**
      * @var array|null custom aliases to use. Should be configured as `maskAlias => settings`, where
      *
      * - `maskAlias` is a string containing a text to identify your mask alias definition (e.g. 'phone') and
@@ -86,6 +81,11 @@ class MaskedInput extends InputWidget
      */
     public array|null $definitions = null;
     /**
+     * @var string|null the hashed variable name used to store the plugin options in the page JS scope.
+     * Populated by [[hashPluginOptions()]] before [[registerClientScript()]] delegates to [[clientScript]].
+     */
+    public string|null $hashVar = null;
+    /**
      * @var array|JsExpression|string the input mask (e.g. '99/99/9999' for date input). The following characters
      * can be used in the mask and are predefined:
      *
@@ -112,7 +112,7 @@ class MaskedInput extends InputWidget
     /**
      * @var string[] the inputmask properties can be contained callbacks
      */
-    protected array $_jsCallbacks = [
+    protected array $jsCallbacks = [
         'oncomplete',
         'onincomplete',
         'oncleared',
@@ -130,7 +130,7 @@ class MaskedInput extends InputWidget
      *
      * @throws InvalidConfigException if the "mask" property is not set.
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         if (
@@ -151,7 +151,7 @@ class MaskedInput extends InputWidget
      *
      * Prepares plugin options and the hash variable, then delegates to [[clientScript]] when set.
      */
-    public function registerClientScript()
+    public function registerClientScript(): void
     {
         $view = $this->getView();
         $this->initClientOptions();
@@ -165,7 +165,7 @@ class MaskedInput extends InputWidget
         }
     }
 
-    public function run()
+    public function run(): void
     {
         $this->registerClientScript();
         echo $this->renderInputHtml($this->type);
@@ -186,9 +186,9 @@ class MaskedInput extends InputWidget
     protected function hashPluginOptions($view)
     {
         $encOptions = $this->clientOptions === [] ? '{}' : Json::htmlEncode($this->clientOptions);
-        $this->_hashVar = self::PLUGIN_NAME . '_' . hash('crc32', $encOptions);
-        $this->options['data-plugin-' . self::PLUGIN_NAME] = $this->_hashVar;
-        $view->registerJs("var {$this->_hashVar} = {$encOptions};", View::POS_HEAD);
+        $this->hashVar = self::PLUGIN_NAME . '_' . hash('crc32', $encOptions);
+        $this->options['data-plugin-' . self::PLUGIN_NAME] = $this->hashVar;
+        $view->registerJs("var {$this->hashVar} = {$encOptions};", View::POS_HEAD);
     }
 
     /**
@@ -201,7 +201,7 @@ class MaskedInput extends InputWidget
             if (
                 $value !== null && $value !== ''
                 && !$value instanceof JsExpression
-                && in_array($key, $this->_jsCallbacks, true)
+                && in_array($key, $this->jsCallbacks, true)
             ) {
                 $options[$key] = new JsExpression($value);
             }

@@ -7,6 +7,7 @@ namespace yii\jquery\tests\validators;
 use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\jquery\tests\data\validators\FakedValidationModel;
+use yii\jquery\tests\TestCase;
 use yii\validators\RequiredValidator;
 
 /**
@@ -17,7 +18,7 @@ use yii\validators\RequiredValidator;
  */
 #[Group('jquery')]
 #[Group('validators')]
-final class RequiredValidatorJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class RequiredValidatorJqueryClientScriptTest extends TestCase
 {
     public function testClientValidateAttribute(): void
     {

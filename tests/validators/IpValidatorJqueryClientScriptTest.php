@@ -7,6 +7,7 @@ namespace yii\jquery\tests\validators;
 use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\jquery\tests\data\validators\FakedValidationModel;
+use yii\jquery\tests\TestCase;
 use yii\validators\IpValidator;
 use yii\web\JsExpression;
 
@@ -18,7 +19,7 @@ use yii\web\JsExpression;
  */
 #[Group('jquery')]
 #[Group('validators')]
-final class IpValidatorJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class IpValidatorJqueryClientScriptTest extends TestCase
 {
     public function testClientValidateAttribute(): void
     {

@@ -17,7 +17,7 @@ use yii\web\View;
 /**
  * jQuery client-side script for [[IpValidator]].
  *
- * @implements ClientValidatorScriptInterface<\yii\validators\IpValidator>
+ * @implements ClientValidatorScriptInterface<IpValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1

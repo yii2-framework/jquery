@@ -215,7 +215,7 @@ class PjaxTest extends TestCase
         $pjax = Yii::createObject(
             [
                 'class' => Pjax::class,
-                'on init' => function () use (&$initTriggered) {
+                'on init' => function () use (&$initTriggered): void {
                     $initTriggered = true;
                 },
             ],

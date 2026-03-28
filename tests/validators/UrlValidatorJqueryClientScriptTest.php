@@ -8,6 +8,7 @@ namespace yii\jquery\tests\validators;
 use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\jquery\tests\data\validators\FakedValidationModel;
+use yii\jquery\tests\TestCase;
 use yii\validators\UrlValidator;
 use yii\web\JsExpression;
 
@@ -18,7 +19,7 @@ use yii\web\JsExpression;
  * @since 0.1
  */
 #[Group('jquery')]
-final class UrlValidatorJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class UrlValidatorJqueryClientScriptTest extends TestCase
 {
     public function testClientValidateAttribute(): void
     {

@@ -36,7 +36,7 @@ describe("yii", function () {
       window: window,
       navigator: window.navigator,
     };
-    var context = new vm.createContext(pjaxSandbox);
+    var context = vm.createContext(pjaxSandbox);
     script.runInContext(context);
   }
 
@@ -50,7 +50,7 @@ describe("yii", function () {
       document: window.document,
       XMLHttpRequest: window.XMLHttpRequest,
     };
-    var context = new vm.createContext(sandbox);
+    var context = vm.createContext(sandbox);
 
     script.runInContext(context);
     yii = sandbox.window.yii;

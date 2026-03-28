@@ -21,7 +21,7 @@ describe("yii.activeForm", function () {
       navigator: window.navigator,
       jQuery: $,
     };
-    var context = new vm.createContext(sandbox);
+    var context = vm.createContext(sandbox);
     script.runInContext(context);
     return sandbox.window.yii;
   }
@@ -30,7 +30,7 @@ describe("yii.activeForm", function () {
     var yii = registerYii();
     var code = fs.readFileSync(yiiActiveFormPath);
     var script = new vm.Script(code);
-    var context = new vm.createContext({
+    var context = vm.createContext({
       window: window,
       document: window.document,
       yii: yii,
@@ -203,18 +203,21 @@ describe("yii.activeForm", function () {
           }
 
           const ajaxStub = sinon.stub($, "ajax", fakeAjax);
-          $activeForm.yiiActiveForm("validateAttribute", "test-text2");
-          assert.isTrue(requests.length === 1);
-          $activeForm.yiiActiveForm("validateAttribute", "test-text3");
-          // When validateAttribute was called on text2, its value was valid.
-          // The value of text3 wasn't.
-          requests[0].respond({ "test-text3": ["Field cannot be empty"] });
-          // When validateAttribute was called on text3, its value was valid.
-          requests[1].respond([]);
-          assert.isTrue(
-            $activeForm.find(".field-test-text3").hasClass("has-success"),
-          );
-          ajaxStub.restore();
+          try {
+            $activeForm.yiiActiveForm("validateAttribute", "test-text2");
+            assert.isTrue(requests.length === 1);
+            $activeForm.yiiActiveForm("validateAttribute", "test-text3");
+            // When validateAttribute was called on text2, its value was valid.
+            // The value of text3 wasn't.
+            requests[0].respond({ "test-text3": ["Field cannot be empty"] });
+            // When validateAttribute was called on text3, its value was valid.
+            requests[1].respond([]);
+            assert.isTrue(
+              $activeForm.find(".field-test-text3").hasClass("has-success"),
+            );
+          } finally {
+            ajaxStub.restore();
+          }
         });
       });
 
@@ -267,22 +270,25 @@ describe("yii.activeForm", function () {
           }
 
           var ajaxStub = sinon.stub($, "ajax", fakeAjax);
-          var $dependentField = $activeForm.find(".field-test-att1");
+          try {
+            var $dependentField = $activeForm.find(".field-test-att1");
 
-          $("#test-att1").val("");
-          $activeForm.yiiActiveForm("validateAttribute", "test-att1");
-          assert.strictEqual(requests.length, 1);
-          requests[0].respond({ "test-att1": ["Att1 cannot be blank."] });
-          assert.isTrue($dependentField.hasClass("has-error"));
+            $("#test-att1").val("");
+            $activeForm.yiiActiveForm("validateAttribute", "test-att1");
+            assert.strictEqual(requests.length, 1);
+            requests[0].respond({ "test-att1": ["Att1 cannot be blank."] });
+            assert.isTrue($dependentField.hasClass("has-error"));
 
-          $("#test-att2").val("1");
-          $activeForm.yiiActiveForm("validateAttribute", "test-att2");
-          assert.strictEqual(requests.length, 2);
-          requests[1].respond({});
+            $("#test-att2").val("1");
+            $activeForm.yiiActiveForm("validateAttribute", "test-att2");
+            assert.strictEqual(requests.length, 2);
+            requests[1].respond({});
 
-          assert.isFalse($dependentField.hasClass("has-error"));
-          assert.equal("", $dependentField.find(".help-block").text());
-          ajaxStub.restore();
+            assert.isFalse($dependentField.hasClass("has-error"));
+            assert.equal("", $dependentField.find(".help-block").text());
+          } finally {
+            ajaxStub.restore();
+          }
         });
       });
     });

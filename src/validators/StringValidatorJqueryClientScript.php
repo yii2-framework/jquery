@@ -8,13 +8,14 @@ use yii\base\BaseObject;
 use yii\base\Model;
 use yii\helpers\Json;
 use yii\validators\client\ClientValidatorScriptInterface;
+use yii\validators\StringValidator;
 use yii\validators\Validator;
 use yii\web\View;
 
 /**
  * jQuery client-side script for [[StringValidator]].
  *
- * @implements ClientValidatorScriptInterface<\yii\validators\StringValidator>
+ * @implements ClientValidatorScriptInterface<StringValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1

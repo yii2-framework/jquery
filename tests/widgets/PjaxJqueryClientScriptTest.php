@@ -7,6 +7,7 @@ namespace yii\jquery\tests\widgets;
 
 use PHPUnit\Framework\Attributes\Group;
 use Yii;
+use yii\jquery\tests\TestCase;
 use yii\jquery\widgets\Pjax;
 use yii\jquery\widgets\PjaxJqueryClientScript;
 
@@ -18,7 +19,7 @@ use yii\jquery\widgets\PjaxJqueryClientScript;
  */
 #[Group('jquery')]
 #[Group('widgets')]
-final class PjaxJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class PjaxJqueryClientScriptTest extends TestCase
 {
     public function testGetClientOptions(): void
     {

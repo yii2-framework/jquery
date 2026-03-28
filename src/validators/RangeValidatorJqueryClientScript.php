@@ -9,13 +9,14 @@ use yii\base\BaseObject;
 use yii\base\Model;
 use yii\helpers\Json;
 use yii\validators\client\ClientValidatorScriptInterface;
+use yii\validators\RangeValidator;
 use yii\validators\Validator;
 use yii\web\View;
 
 /**
  * jQuery client-side script for [[RangeValidator]].
  *
- * @implements ClientValidatorScriptInterface<\yii\validators\RangeValidator>
+ * @implements ClientValidatorScriptInterface<RangeValidator>
  *
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1

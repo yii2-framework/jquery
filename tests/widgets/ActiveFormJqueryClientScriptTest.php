@@ -7,6 +7,7 @@ namespace yii\jquery\tests\widgets;
 use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\base\DynamicModel;
+use yii\jquery\tests\TestCase;
 use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
@@ -22,7 +23,7 @@ use function ob_start;
  */
 #[Group('jquery')]
 #[Group('widgets')]
-final class ActiveFormJqueryClientScriptTest extends \yii\jquery\tests\TestCase
+final class ActiveFormJqueryClientScriptTest extends TestCase
 {
     public function testGetClientOptionsForFieldWithAriaAttributesFalse(): void
     {
