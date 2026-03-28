@@ -1,5 +1,6 @@
 module.exports = [
   {
+    files: ["src/assets/**/*.js"],
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: "script",
@@ -84,6 +85,36 @@ module.exports = [
       "no-shadow-restricted-names": "error",
       "no-undef-init": "warn",
       "max-statements": ["warn", 30],
+    },
+  },
+  {
+    files: ["tests/js/**/*.js"],
+    languageOptions: {
+      ecmaVersion: 2020,
+      sourceType: "script",
+      globals: {
+        window: "readonly",
+        document: "readonly",
+        jQuery: "readonly",
+        $: "readonly",
+        require: "readonly",
+        module: "readonly",
+        __dirname: "readonly",
+        describe: "readonly",
+        it: "readonly",
+        before: "readonly",
+        after: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        assert: "readonly",
+        sinon: "readonly",
+      },
+    },
+    rules: {
+      "comma-dangle": ["error", "always-multiline"],
+      "no-shadow": "error",
+      "max-statements": "off",
+      complexity: "off",
     },
   },
 ];

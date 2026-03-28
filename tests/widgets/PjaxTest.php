@@ -76,8 +76,10 @@ class PjaxTest extends TestCase
         try {
             Pjax::begin(['options' => ['id' => 'test-pjax']]);
             Pjax::end();
-        } catch (ExitException|HeadersAlreadySentException) {
-            // Expected.
+        } catch (ExitException) {
+            // Expected: Pjax terminates via Yii::$app->end().
+        } catch (HeadersAlreadySentException $e) {
+            self::fail("Unexpected headers-already-sent failure: {$e->getMessage()}");
         } finally {
             while (ob_get_level() < $obLevel) {
                 ob_start();
@@ -165,8 +167,10 @@ class PjaxTest extends TestCase
         try {
             Pjax::begin(['options' => ['id' => 'test-pjax']]);
             Pjax::end();
-        } catch (ExitException|HeadersAlreadySentException) {
+        } catch (ExitException) {
             $caughtTermination = true;
+        } catch (HeadersAlreadySentException $e) {
+            self::fail("Unexpected headers-already-sent failure: {$e->getMessage()}");
         } finally {
             while (ob_get_level() < $obLevel) {
                 ob_start();
