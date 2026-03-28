@@ -52,7 +52,7 @@
                 </div>
                 <div class="alert-box">
                     <p class="alert-title"><strong>Fully Optional</strong></p>
-                    <p class="alert-content">Clean opt-out via useJquery: false • No jQuery assets loaded when disabled • Core remains framework-agnostic</p>
+                    <p class="alert-content">No jQuery loaded without Bootstrap • Core has zero jQuery references • Framework-agnostic by default</p>
                 </div>
                 <div class="alert-box">
                     <p class="alert-title"><strong>Strategy Pattern</strong></p>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="alert-box">
                     <p class="alert-title"><strong>Zero Config</strong></p>
-                    <p class="alert-content">Register Bootstrap and set useJquery: true • Works out of the box with existing Yii2 applications</p>
+                    <p class="alert-content">Register Bootstrap in config • DI container auto-wires all client scripts • Works out of the box</p>
                 </div>
             </div>
         </div>
