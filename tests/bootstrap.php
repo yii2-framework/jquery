@@ -10,5 +10,3 @@ define('YII_ENV', 'test');
 
 $_SERVER['SCRIPT_NAME'] = '/index.php';
 $_SERVER['SCRIPT_FILENAME'] = dirname(__DIR__) . '/index.php';
-
-require_once dirname(__DIR__) . '/vendor/autoload.php';

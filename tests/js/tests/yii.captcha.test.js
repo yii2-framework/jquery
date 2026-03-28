@@ -93,6 +93,7 @@ describe("yii.captcha", function () {
 
   describe("refresh", function () {
     var server;
+    var originalXMLHttpRequest;
     var response = {
       hash1: 747,
       hash2: 748,
@@ -100,12 +101,14 @@ describe("yii.captcha", function () {
     };
 
     beforeEach(function () {
+      originalXMLHttpRequest = window.XMLHttpRequest;
       server = sinon.fakeServer.create();
       window.XMLHttpRequest = global.XMLHttpRequest;
     });
 
     afterEach(function () {
       server.restore();
+      window.XMLHttpRequest = originalXMLHttpRequest;
     });
 
     withData(

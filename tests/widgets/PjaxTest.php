@@ -80,6 +80,8 @@ class PjaxTest extends TestCase
             // ExitException: expected PJAX termination via Yii::$app->end().
             // HeadersAlreadySentException: CLI artifact — headers_sent() is true in PHPUnit.
         } finally {
+            unset($_SERVER['HTTP_X_PJAX'], $_SERVER['HTTP_X_PJAX_CONTAINER']);
+
             while (ob_get_level() < $obLevel) {
                 ob_start();
             }
@@ -92,8 +94,6 @@ class PjaxTest extends TestCase
             $content,
             'Should contain the title tag in pjax response.',
         );
-
-        unset($_SERVER['HTTP_X_PJAX'], $_SERVER['HTTP_X_PJAX_CONTAINER']);
     }
 
     public function testRegisterClientScriptRegistersJs(): void
@@ -123,20 +123,19 @@ class PjaxTest extends TestCase
         $_SERVER['HTTP_X_PJAX'] = 'true';
         $_SERVER['HTTP_X_PJAX_CONTAINER'] = '#other-pjax';
 
-        ob_start();
+        try {
+            ob_start();
 
-        $pjax = Yii::createObject(['class' => Pjax::class, 'options' => ['id' => 'test-pjax']]);
+            $pjax = Yii::createObject(['class' => Pjax::class, 'options' => ['id' => 'test-pjax']]);
 
-        ob_end_clean();
+            ob_end_clean();
 
-        $result = $this->invokeMethod($pjax, 'requiresPjax');
+            $result = $this->invokeMethod($pjax, 'requiresPjax');
 
-        self::assertFalse(
-            $result,
-            "Should return 'false' when container does not match.",
-        );
-
-        unset($_SERVER['HTTP_X_PJAX'], $_SERVER['HTTP_X_PJAX_CONTAINER']);
+            self::assertFalse($result, 'Should return false when container does not match.');
+        } finally {
+            unset($_SERVER['HTTP_X_PJAX'], $_SERVER['HTTP_X_PJAX_CONTAINER']);
+        }
     }
 
     public function testRequiresPjaxReturnsFalseWithoutHeaders(): void
@@ -169,6 +168,8 @@ class PjaxTest extends TestCase
         } catch (ExitException|HeadersAlreadySentException) {
             $caughtTermination = true;
         } finally {
+            unset($_SERVER['HTTP_X_PJAX'], $_SERVER['HTTP_X_PJAX_CONTAINER']);
+
             while (ob_get_level() < $obLevel) {
                 ob_start();
             }
@@ -180,10 +181,8 @@ class PjaxTest extends TestCase
         self::assertSame(
             200,
             $response->statusCode,
-            "Should return '200' status code for matching pjax request.",
+            'Should return 200 status code for matching pjax request.',
         );
-
-        unset($_SERVER['HTTP_X_PJAX'], $_SERVER['HTTP_X_PJAX_CONTAINER']);
     }
 
     public function testRunNonPjaxRequest(): void
@@ -201,6 +200,8 @@ class PjaxTest extends TestCase
         } catch (HeadersAlreadySentException) {
             // CLI artifact — headers_sent() is true in PHPUnit.
         } finally {
+            unset($_SERVER['REQUEST_URI']);
+
             while (ob_get_level() < $obLevel + 1) {
                 ob_start();
             }
