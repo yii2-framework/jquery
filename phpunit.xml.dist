@@ -2,17 +2,19 @@
 <phpunit
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
-  bootstrap="./vendor/autoload.php"
+  bootstrap="./tests/bootstrap.php"
   cacheDirectory="./runtime/.phpunit.cache"
   colors="true"
   executionOrder="depends,defects"
   failOnRisky="true"
   failOnWarning="true"
+  stderr="true"
   stopOnFailure="false"
 >
   <testsuites>
-    <testsuite name="Package-Name">
+    <testsuite name="yii2-framework/jquery">
       <directory>tests</directory>
+      <exclude>tests/js</exclude>
     </testsuite>
   </testsuites>
 
