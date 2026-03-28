@@ -38,7 +38,8 @@
     "extra": {
         "branch-alias": {
             "dev-main": "0.1.x-dev"
-        }
+        },
+        "foxy": true
     },
     "config": {
         "sort-packages": true,
