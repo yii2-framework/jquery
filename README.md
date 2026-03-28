@@ -42,6 +42,39 @@
 composer require yii2-framework/jquery
 ```
 
+### Asset installation
+
+This package uses [php-forge/foxy](https://github.com/php-forge/foxy) to install npm dependencies (jQuery, Inputmask,
+etc.) automatically during `composer install` or `composer update`.
+
+The `@npm` alias must point to your project's `node_modules` directory:
+
+```php
+// config/web.php
+return [
+    'aliases' => [
+        '@npm' => dirname(__DIR__) . '/node_modules',
+    ],
+    // ...
+];
+```
+
+If npm packages are not installed automatically, verify that:
+
+1. `php-forge/foxy` is allowed in your `composer.json`:
+
+```json
+{
+    "config": {
+        "allow-plugins": {
+            "php-forge/foxy": true
+        }
+    }
+}
+```
+
+2. Run `composer update` to trigger the asset merge.
+
 ### Configuration
 
 Register the bootstrap class in your application configuration:
