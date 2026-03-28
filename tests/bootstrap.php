@@ -8,7 +8,7 @@ error_reporting(-1);
 define('YII_ENABLE_ERROR_HANDLER', false);
 define('YII_ENV', 'test');
 
-$_SERVER['SCRIPT_NAME'] = '/' . __DIR__;
-$_SERVER['SCRIPT_FILENAME'] = __FILE__;
+$_SERVER['SCRIPT_NAME'] = '/index.php';
+$_SERVER['SCRIPT_FILENAME'] = dirname(__DIR__) . '/index.php';
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';

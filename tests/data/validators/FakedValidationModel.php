@@ -8,7 +8,6 @@ use yii\base\Model;
 
 use function array_keys;
 use function func_get_args;
-use function strncasecmp;
 
 /**
  * @property mixed $attrA
@@ -29,7 +28,7 @@ final class FakedValidationModel extends Model
 
     public function __get($name): mixed
     {
-        if (strncasecmp($name, 'attr', 4) === 0) {
+        if (preg_match('/^attr(?:[A-Z]|_)/', $name) === 1) {
             return $this->attr[$name] ?? null;
         }
 
@@ -38,11 +37,13 @@ final class FakedValidationModel extends Model
 
     public function __set($name, $value): void
     {
-        if (strncasecmp($name, 'attr', 4) === 0) {
+        if (preg_match('/^attr(?:[A-Z]|_)/', $name) === 1) {
             $this->attr[$name] = $value;
-        } else {
-            parent::__set($name, $value);
+
+            return;
         }
+
+        parent::__set($name, $value);
     }
 
     /**

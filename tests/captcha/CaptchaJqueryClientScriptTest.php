@@ -7,6 +7,7 @@ namespace yii\jquery\tests\captcha;
 use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\captcha\Captcha;
+use yii\jquery\captcha\CaptchaAsset;
 use yii\jquery\captcha\CaptchaJqueryClientScript;
 use yii\jquery\tests\data\controllers\SiteController;
 use yii\jquery\tests\TestCase;
@@ -68,6 +69,12 @@ final class CaptchaJqueryClientScriptTest extends TestCase
         $clientScript = new CaptchaJqueryClientScript();
 
         $clientScript->register($captcha, $view);
+
+        self::assertArrayHasKey(
+            CaptchaAsset::class,
+            $view->assetBundles,
+            'Should register CaptchaAsset.',
+        );
 
         $js = implode('', $view->js[4] ?? []);
 

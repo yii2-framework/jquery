@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\jquery\tests\data\validators\FakedValidationModel;
 use yii\jquery\tests\TestCase;
+use yii\jquery\validators\ValidationAsset;
 use yii\validators\CompareValidator;
 
 /**
@@ -142,6 +143,36 @@ final class CompareValidatorJqueryClientScriptTest extends TestCase
             ],
             $validator->getClientOptions($modelValidator, 'attrA'),
             "Should return correct options 'array'.",
+        );
+    }
+
+    public function testClientValidateAttributeWithDefaultCompareAttribute(): void
+    {
+        $modelValidator = new FakedValidationModel();
+
+        $validator = Yii::createObject(
+            [
+                'class' => CompareValidator::class,
+                'operator' => '==',
+                'type' => CompareValidator::TYPE_STRING,
+            ],
+        );
+
+        $modelValidator->attrA = 'test';
+        $modelValidator->attrA_repeat = 'test';
+
+        $view = Yii::$app->view;
+        $js = $validator->clientValidateAttribute($modelValidator, 'attrA', $view);
+
+        self::assertArrayHasKey(
+            ValidationAsset::class,
+            $view->assetBundles,
+            'Should register ValidationAsset.',
+        );
+        self::assertStringContainsString(
+            'attra_repeat',
+            $js,
+            'Should use default {attribute}_repeat as compare attribute.',
         );
     }
 }

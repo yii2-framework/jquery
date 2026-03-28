@@ -11,6 +11,7 @@ use yii\captcha\CaptchaValidator;
 use yii\helpers\Json;
 use yii\jquery\captcha\CaptchaValidatorJqueryClientScript;
 use yii\jquery\tests\TestCase;
+use yii\jquery\validators\ValidationAsset;
 
 /**
  * Unit tests for {@see CaptchaValidatorJqueryClientScript} jQuery client-side validation script.
@@ -63,11 +64,17 @@ final class CaptchaValidatorJqueryClientScriptTest extends TestCase
         );
 
         $model = new DynamicModel(['captcha']);
+        $view = Yii::$app->view;
         $clientScript = new CaptchaValidatorJqueryClientScript();
         $options = Json::htmlEncode($clientScript->getClientOptions($validator, $model, 'captcha'));
 
-        $js = $clientScript->register($validator, $model, 'captcha', Yii::$app->view);
+        $js = $clientScript->register($validator, $model, 'captcha', $view);
 
+        self::assertArrayHasKey(
+            ValidationAsset::class,
+            $view->assetBundles,
+            'Should register ValidationAsset.',
+        );
         self::assertSame(
             <<<JS
             yii.validation.captcha(value, messages, $options);

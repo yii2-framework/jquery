@@ -56,6 +56,8 @@ class MaskedInputJqueryClientScript extends BaseObject implements ClientScriptIn
 
         MaskedInputAsset::register($view);
 
-        $view->registerJs($js);
+        if ($js !== '') {
+            $view->registerJs($js);
+        }
     }
 }

@@ -45,7 +45,7 @@ describe("yii.captcha", function () {
   });
 
   afterEach(function () {
-    if ($captcha.length) {
+    if ($captcha && $captcha.length && $captcha.data("yiiCaptcha")) {
       $captcha.yiiCaptcha("destroy");
     }
   });

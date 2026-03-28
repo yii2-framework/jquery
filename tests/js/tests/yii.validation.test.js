@@ -1,11 +1,13 @@
 var assert = require("chai").assert;
 
 assert.isDeferred = function (object) {
-  if (typeof object.resolve !== "function") {
-    return false;
-  }
-
-  return String(object.resolve) === String($.Deferred().resolve);
+  assert.isOk(object, "Expected a jQuery Deferred-like object");
+  assert.isFunction(object.resolve, "Expected object.resolve to be a function");
+  assert.strictEqual(
+    String(object.resolve),
+    String($.Deferred().resolve),
+    "Expected object.resolve to match jQuery Deferred.resolve",
+  );
 };
 
 var sinon;
@@ -487,7 +489,7 @@ describe("yii.validation", function () {
               { name: "file.jpg", type: "image/bmp", size: 100 * 1024 },
               { name: "file.png", type: "image/png", size: 100 * 1024 },
             ],
-            { maxSize: 100 * 1024 },
+            { minSize: 100 * 1024 },
             [],
           ],
           "size more than minimum size": [

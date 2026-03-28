@@ -84,7 +84,13 @@ class PjaxTest extends TestCase
             }
         }
 
-        self::expectNotToPerformAssertions();
+        $content = Yii::$app->getResponse()->content;
+
+        self::assertStringContainsString(
+            '<title>Test Title</title>',
+            $content,
+            'Should contain the title tag in pjax response.',
+        );
 
         unset($_SERVER['HTTP_X_PJAX'], $_SERVER['HTTP_X_PJAX_CONTAINER']);
     }
@@ -151,6 +157,7 @@ class PjaxTest extends TestCase
     public function testRequiresPjaxReturnsTrueWithMatchingHeaders(): void
     {
         $obLevel = ob_get_level();
+        $caughtTermination = false;
 
         $_SERVER['HTTP_X_PJAX'] = 'true';
         $_SERVER['HTTP_X_PJAX_CONTAINER'] = '#test-pjax';
@@ -159,7 +166,7 @@ class PjaxTest extends TestCase
             Pjax::begin(['options' => ['id' => 'test-pjax']]);
             Pjax::end();
         } catch (ExitException|HeadersAlreadySentException) {
-            // Expected: Pjax::run() calls Yii::$app->end() when serving a pjax request.
+            $caughtTermination = true;
         } finally {
             while (ob_get_level() < $obLevel) {
                 ob_start();
@@ -168,6 +175,7 @@ class PjaxTest extends TestCase
 
         $response = Yii::$app->getResponse();
 
+        self::assertTrue($caughtTermination, 'Should terminate through the PJAX branch.');
         self::assertSame(
             200,
             $response->statusCode,

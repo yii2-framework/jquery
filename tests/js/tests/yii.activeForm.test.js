@@ -130,10 +130,12 @@ describe("yii.activeForm", function () {
       Object.keys(inputTypes).forEach(function (inputId) {
         it(inputTypes[inputId] + " disabled field", function () {
           $activeForm = $("#w1");
-          $activeForm.yiiActiveForm({
-            id: inputId,
-            input: "#" + inputId,
-          });
+          $activeForm.yiiActiveForm([
+            {
+              id: inputId,
+              input: "#" + inputId,
+            },
+          ]);
           $activeForm.yiiActiveForm("validate");
 
           assert.isFalse($activeForm.data("yiiActiveForm").validated);
@@ -144,10 +146,12 @@ describe("yii.activeForm", function () {
     describe("if at least one of the items is disabled", function () {
       it("validate radioList", function () {
         $activeForm = $("#w2");
-        $activeForm.yiiActiveForm({
-          id: "radioList",
-          input: "#radioList",
-        });
+        $activeForm.yiiActiveForm([
+          {
+            id: "radioList",
+            input: "#radioList",
+          },
+        ]);
         $activeForm.yiiActiveForm("validate");
 
         assert.isFalse($activeForm.data("yiiActiveForm").validated);

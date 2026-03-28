@@ -51,49 +51,13 @@ class ActiveFormJqueryClientScript extends BaseObject implements ClientScriptInt
 
         $clientValidation = $this->isClientValidationEnabled($field);
         $ajaxValidation = $this->isAjaxValidationEnabled($field);
-
-        $validators = [];
-
-        if ($clientValidation) {
-            foreach ($field->model->getActiveValidators($attribute) as $validator) {
-                $js = $validator->clientValidateAttribute($field->model, $attribute, $field->form->getView());
-
-                if ($validator->enableClientValidation && $js !== '') {
-                    if ($validator->whenClient !== null) {
-                        $js = "if (({$validator->whenClient})(attribute, value)) { $js }";
-                    }
-
-                    $validators[] = $js;
-                }
-            }
-        }
+        $validators = $clientValidation ? $this->buildValidatorJs($field, $attribute) : [];
 
         if (!$ajaxValidation && (!$clientValidation || $validators === [])) {
             return [];
         }
 
-        $inputID = $options['id'] ?? Html::getInputId($field->model, $field->attribute);
-
-        $container = is_string($inputID) && $inputID !== '' ? ".field-$inputID" : null;
-        $input = is_string($inputID) && $inputID !== '' ? "#$inputID" : null;
-
-        $options['id'] = $inputID;
-        $options['name'] = $field->attribute;
-        $options['container'] = $field->selectors['container'] ?? $container;
-        $options['input'] = $field->selectors['input'] ?? $input;
-
-        if (isset($field->selectors['error'])) {
-            $options['error'] = $field->selectors['error'];
-        } elseif (isset($field->errorOptions['class'])) {
-            $options['error'] = '.' . implode(
-                '.',
-                preg_split('/\s+/', $field->errorOptions['class'], -1, PREG_SPLIT_NO_EMPTY),
-            );
-        } else {
-            $options['error'] = $field->errorOptions['tag'] ?? 'span';
-        }
-
-        $options['encodeError'] = !isset($field->errorOptions['encode']) || $field->errorOptions['encode'];
+        $options = $this->resolveSelectors($field, $options);
 
         if ($ajaxValidation) {
             $options['enableAjaxValidation'] = true;
@@ -113,7 +77,52 @@ class ActiveFormJqueryClientScript extends BaseObject implements ClientScriptInt
             $options['updateAriaInvalid'] = false;
         }
 
-        // only keep options that differ from the defaults (set in yii.activeForm.js)
+        return $this->filterDefaults($options);
+    }
+
+    public function register(BaseObject $widget, View $view, array $params = []): void
+    {
+        $id = $widget->options['id'];
+
+        $options = Json::htmlEncode($this->getClientOptions($widget));
+        $attributes = Json::htmlEncode($widget->attributes);
+
+        ActiveFormAsset::register($view);
+
+        if (is_string($id) && $id !== '') {
+            $view->registerJs("jQuery('#$id').yiiActiveForm($attributes, $options);");
+        }
+    }
+
+    /**
+     * Builds client-side validation JS for each active validator.
+     *
+     * @return list<string>
+     */
+    private function buildValidatorJs(ActiveField $field, string $attribute): array
+    {
+        $validators = [];
+
+        foreach ($field->model->getActiveValidators($attribute) as $validator) {
+            $js = $validator->clientValidateAttribute($field->model, $attribute, $field->form->getView());
+
+            if ($validator->enableClientValidation && $js !== '') {
+                if ($validator->whenClient !== null) {
+                    $js = "if (({$validator->whenClient})(attribute, value)) { $js }";
+                }
+
+                $validators[] = $js;
+            }
+        }
+
+        return $validators;
+    }
+
+    /**
+     * Removes options that match the yii.activeForm.js defaults.
+     */
+    private function filterDefaults(array $options): array
+    {
         $defaults = [
             'validateOnChange' => true,
             'validateOnBlur' => true,
@@ -129,20 +138,6 @@ class ActiveFormJqueryClientScript extends BaseObject implements ClientScriptInt
             static fn(mixed $value, string $key): bool => !array_key_exists($key, $defaults) || $defaults[$key] !== $value,
             ARRAY_FILTER_USE_BOTH,
         );
-    }
-
-    public function register(BaseObject $widget, View $view, array $params = []): void
-    {
-        $id = $widget->options['id'];
-
-        $options = Json::htmlEncode($this->getClientOptions($widget));
-        $attributes = Json::htmlEncode($widget->attributes);
-
-        ActiveFormAsset::register($view);
-
-        if (is_string($id) && $id !== '') {
-            $view->registerJs("jQuery('#$id').yiiActiveForm($attributes, $options);");
-        }
     }
 
     private function getClientOptionsInternal(ActiveForm $form): array
@@ -203,5 +198,35 @@ class ActiveFormJqueryClientScript extends BaseObject implements ClientScriptInt
         }
 
         return $field->form->enableClientValidation;
+    }
+
+    /**
+     * Resolves input ID, container, input, and error selectors for the field.
+     */
+    private function resolveSelectors(ActiveField $field, array $options): array
+    {
+        $inputID = $options['id'] ?? Html::getInputId($field->model, $field->attribute);
+
+        $options['id'] = $inputID;
+        $options['name'] = $field->attribute;
+        $options['container'] = $field->selectors['container']
+            ?? (is_string($inputID) && $inputID !== '' ? ".field-$inputID" : null);
+        $options['input'] = $field->selectors['input']
+            ?? (is_string($inputID) && $inputID !== '' ? "#$inputID" : null);
+
+        if (isset($field->selectors['error'])) {
+            $options['error'] = $field->selectors['error'];
+        } elseif (isset($field->errorOptions['class'])) {
+            $options['error'] = '.' . implode(
+                '.',
+                preg_split('/\s+/', $field->errorOptions['class'], -1, PREG_SPLIT_NO_EMPTY),
+            );
+        } else {
+            $options['error'] = $field->errorOptions['tag'] ?? 'span';
+        }
+
+        $options['encodeError'] = !isset($field->errorOptions['encode']) || $field->errorOptions['encode'];
+
+        return $options;
     }
 }

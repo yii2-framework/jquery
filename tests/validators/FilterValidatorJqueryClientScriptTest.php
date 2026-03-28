@@ -84,4 +84,25 @@ final class FilterValidatorJqueryClientScriptTest extends TestCase
             "Should return correct 'trim' validation script.",
         );
     }
+
+    public function testRegisterWithTrimFilterAndSkipOnEmpty(): void
+    {
+        $validator = Yii::createObject([
+            'class' => FilterValidator::class,
+            'filter' => 'trim',
+            'skipOnEmpty' => true,
+        ]);
+
+        $model = FakedValidationModel::createWithAttributes(['attr_trim' => '  test  ']);
+
+        $js = $validator->clientScript->register($validator, $model, 'attr_trim', Yii::$app->view);
+
+        self::assertSame(
+            <<<'JS'
+            value = yii.validation.trim($form, attribute, {"skipOnEmpty":1}, value);
+            JS,
+            $js,
+            'Should include skipOnEmpty option in trim validation script.',
+        );
+    }
 }

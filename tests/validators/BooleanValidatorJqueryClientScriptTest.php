@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\Group;
 use Yii;
 use yii\jquery\tests\data\validators\FakedValidationModel;
 use yii\jquery\tests\TestCase;
+use yii\jquery\validators\ValidationAsset;
 use yii\validators\BooleanValidator;
 
 /**
@@ -35,12 +36,19 @@ final class BooleanValidatorJqueryClientScriptTest extends TestCase
 
         $modelValidator->attrA = true;
 
+        $view = Yii::$app->view;
+
         self::assertSame(
             <<<JS
             yii.validation.boolean(value, messages, {"trueValue":true,"falseValue":false,"message":"attrA must be either \u0022true\u0022 or \u0022false\u0022.","skipOnEmpty":1,"strict":1});
             JS,
-            $validator->clientValidateAttribute($modelValidator, 'attrA', Yii::$app->view),
+            $validator->clientValidateAttribute($modelValidator, 'attrA', $view),
             'Should return correct validation script.',
+        );
+        self::assertArrayHasKey(
+            ValidationAsset::class,
+            $view->assetBundles,
+            'Should register ValidationAsset.',
         );
         self::assertSame(
             [
