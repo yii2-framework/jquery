@@ -14,7 +14,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.2",
-        "yii2-framework/core": "^1.0"
+        "yii2-framework/core": "^0.1@dev"
     },
     "require-dev": {
         "infection/infection": "^0.27|^0.32",
