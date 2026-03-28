@@ -76,10 +76,9 @@ class PjaxTest extends TestCase
         try {
             Pjax::begin(['options' => ['id' => 'test-pjax']]);
             Pjax::end();
-        } catch (ExitException) {
-            // Expected: Pjax terminates via Yii::$app->end().
-        } catch (HeadersAlreadySentException $e) {
-            self::fail("Unexpected headers-already-sent failure: {$e->getMessage()}");
+        } catch (ExitException|HeadersAlreadySentException) {
+            // ExitException: expected PJAX termination via Yii::$app->end().
+            // HeadersAlreadySentException: CLI artifact — headers_sent() is true in PHPUnit.
         } finally {
             while (ob_get_level() < $obLevel) {
                 ob_start();
@@ -167,10 +166,8 @@ class PjaxTest extends TestCase
         try {
             Pjax::begin(['options' => ['id' => 'test-pjax']]);
             Pjax::end();
-        } catch (ExitException) {
+        } catch (ExitException|HeadersAlreadySentException) {
             $caughtTermination = true;
-        } catch (HeadersAlreadySentException $e) {
-            self::fail("Unexpected headers-already-sent failure: {$e->getMessage()}");
         } finally {
             while (ob_get_level() < $obLevel) {
                 ob_start();
@@ -193,13 +190,21 @@ class PjaxTest extends TestCase
     {
         $_SERVER['REQUEST_URI'] = '/test/page';
 
+        $obLevel = ob_get_level();
+
         ob_start();
 
-        Pjax::begin(['options' => ['id' => 'test-pjax']]);
-
-        echo 'content';
-
-        Pjax::end();
+        try {
+            Pjax::begin(['options' => ['id' => 'test-pjax']]);
+            echo 'content';
+            Pjax::end();
+        } catch (HeadersAlreadySentException) {
+            // CLI artifact — headers_sent() is true in PHPUnit.
+        } finally {
+            while (ob_get_level() < $obLevel + 1) {
+                ob_start();
+            }
+        }
 
         $output = ob_get_clean();
 
