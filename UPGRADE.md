@@ -27,7 +27,6 @@ Register the bootstrap class in `config/web.php`:
 ```php
 return [
     'bootstrap' => [\yii\jquery\Bootstrap::class],
-    'useJquery' => true,
     // ...
 ];
 ```
