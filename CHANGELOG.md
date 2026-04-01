@@ -10,3 +10,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - feat: initial release jQuery integration layer extracted from `yii2-framework/core`.
 - feat: add GitHub Actions workflow for easy coding standards.
 - feat: add `foxy` configuration to `composer.json` extra section.
+- chore: update documentation and configuration for jQuery integration layer, transitioning from `yii2-framework/core` to `yii2`.

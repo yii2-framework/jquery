@@ -2,15 +2,6 @@
 
 This document describes development workflows and maintenance tasks for the project.
 
-## Sync Metadata
-
-To keep configuration files synchronized with the latest template updates, use the `sync-metadata` command. This command
-downloads the latest configuration files from the template repository.
-
-```bash
-composer sync-metadata
-```
-
 ### Updated Files
 
 This command updates the following configuration files:

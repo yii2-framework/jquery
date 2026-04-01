@@ -2,17 +2,17 @@
 
 ## 1.0.0 Under development
 
-### Initial release — extracted from `yii2-framework/core`
+### Initial release — extracted from `yii2-framework/yii2`
 
-This package is the jQuery integration layer for [`yii2-framework/core`](https://github.com/yii2-framework/core).
+This package is the jQuery integration layer for [`yii2-framework/yii2`](https://github.com/yii2-framework/yii2).
 
-It was extracted from core to make the framework client-side agnostic. Install it to restore jQuery-backed client
+It was extracted from yii2 to make the framework client-side agnostic. Install it to restore jQuery-backed client
 validation, asset bundles, and widget scripts that were previously bundled with the framework.
 
 #### Requirements
 
-- PHP 8.2+
-- `yii2-framework/core: ^1.0`
+- PHP `8.2+`
+- `yii2-framework/yii2: ^0.1@dev`
 
 #### Installation
 
@@ -31,12 +31,12 @@ return [
 ];
 ```
 
-#### Namespace changes from core
+#### Namespace changes from yii2
 
 All classes in this package use the `yii\jquery\*` namespace hierarchy. The corresponding classes that previously
-shipped with core used framework namespaces (`yii\web\`, `yii\widgets\`, etc.). Update any direct class references:
+shipped with yii2 used framework namespaces (`yii\web\`, `yii\widgets\`, etc.). Update any direct class references:
 
-| Before (core)                    | After (this package)                    |
+| Before (yii2)                    | After (this package)                    |
 | -------------------------------- | --------------------------------------- |
 | `yii\web\JqueryAsset`            | `yii\jquery\web\JqueryAsset`            |
 | `yii\validators\ValidationAsset` | `yii\jquery\validators\ValidationAsset` |
@@ -46,5 +46,14 @@ shipped with core used framework namespaces (`yii\web\`, `yii\widgets\`, etc.). 
 | `yii\captcha\CaptchaAsset`       | `yii\jquery\captcha\CaptchaAsset`       |
 | `yii\grid\GridViewAsset`         | `yii\jquery\grid\GridViewAsset`         |
 
-Direct references to these classes in application code are uncommon — they are registered automatically when jQuery
+Direct references to these classes in application code are uncommon they are registered automatically when jQuery 
 support is active. **No action required** for standard Yii2 applications.
+
+### Package positioning
+
+`yii2-framework/jquery` should be treated as the legacy optional integration for applications that still depend on
+classic Yii2 client-side behavior.
+
+For frontend modernization projects, the recommended migration path is to keep this package only on legacy routes and
+introduce a separate Inertia-based package family for new pages. This repository does not provide those packages, but
+it is designed to coexist with them because `yii2-framework/yii2` already supports strategy-based client integrations.
