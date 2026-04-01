@@ -179,6 +179,8 @@ describe("yii.activeForm", function () {
             ],
             {
               validationUrl: "",
+              errorCssClass: "has-error",
+              successCssClass: "has-success",
             },
           );
 
@@ -246,6 +248,8 @@ describe("yii.activeForm", function () {
             ],
             {
               validationUrl: "",
+              errorCssClass: "has-error",
+              successCssClass: "has-success",
             },
           );
 
@@ -289,7 +293,7 @@ describe("yii.activeForm", function () {
             requests[1].respond({});
 
             assert.isFalse($dependentField.hasClass("has-error"));
-            assert.equal("", $dependentField.find(".help-block").text());
+            assert.equal("", $dependentField.find(".field-error").text());
           } finally {
             ajaxStub.restore();
           }
@@ -301,24 +305,30 @@ describe("yii.activeForm", function () {
       it("should clear stale errors for conditional attributes when related input changes", function () {
         $activeForm = $("#w4");
         $activeForm.yiiActiveForm("destroy");
-        $activeForm.yiiActiveForm([
-          {
-            id: "test-att1",
-            input: "#test-att1",
-            container: ".field-test-att1",
-            hasWhenClient: true,
-            validate: function (attribute, value, messages) {
-              if ($("#test-att2").val() === "show" && value === "") {
-                messages.push("Att1 cannot be blank.");
-              }
+        $activeForm.yiiActiveForm(
+          [
+            {
+              id: "test-att1",
+              input: "#test-att1",
+              container: ".field-test-att1",
+              hasWhenClient: true,
+              validate: function (attribute, value, messages) {
+                if ($("#test-att2").val() === "show" && value === "") {
+                  messages.push("Att1 cannot be blank.");
+                }
+              },
             },
-          },
+            {
+              id: "test-att2",
+              input: "#test-att2",
+              container: ".field-test-att2",
+            },
+          ],
           {
-            id: "test-att2",
-            input: "#test-att2",
-            container: ".field-test-att2",
+            errorCssClass: "has-error",
+            successCssClass: "has-success",
           },
-        ]);
+        );
 
         var $dependentField = $activeForm.find(".field-test-att1");
         var $dependentInput = $("#test-att1");
@@ -332,7 +342,7 @@ describe("yii.activeForm", function () {
         $toggleInput.val("hide");
         $activeForm.yiiActiveForm("validateAttribute", "test-att2");
         assert.isFalse($dependentField.hasClass("has-error"));
-        assert.equal("", $dependentField.find(".help-block").text());
+        assert.equal("", $dependentField.find(".field-error").text());
       });
     });
   });
@@ -498,26 +508,32 @@ describe("yii.activeForm", function () {
         $activeForm = $("#w4");
         $activeForm.yiiActiveForm("destroy");
         $firstField.removeClass("has-error has-success");
-        $firstField.find(".help-block").empty();
+        $firstField.find(".field-error").empty();
 
         $activeForm
-          .yiiActiveForm([
-            {
-              id: "test-att1",
-              input: "#test-att1",
-              container: ".field-test-att1",
-              validate: function (attribute, value, messages) {
-                if (value === "") {
-                  messages.push("Att1 cannot be blank.");
-                }
+          .yiiActiveForm(
+            [
+              {
+                id: "test-att1",
+                input: "#test-att1",
+                container: ".field-test-att1",
+                validate: function (attribute, value, messages) {
+                  if (value === "") {
+                    messages.push("Att1 cannot be blank.");
+                  }
+                },
               },
-            },
+              {
+                id: "test-att2",
+                input: "#test-att2",
+                container: ".field-test-att2",
+              },
+            ],
             {
-              id: "test-att2",
-              input: "#test-att2",
-              container: ".field-test-att2",
+              errorCssClass: "has-error",
+              successCssClass: "has-success",
             },
-          ])
+          )
           .on("afterValidate", afterValidateErrorSpy);
 
         firstAttribute = $activeForm.yiiActiveForm("find", "test-att1");

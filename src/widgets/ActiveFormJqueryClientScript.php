@@ -129,7 +129,7 @@ class ActiveFormJqueryClientScript extends BaseObject implements ClientScriptInt
             'validateOnType' => false,
             'validationDelay' => 500,
             'encodeError' => true,
-            'error' => '.help-block',
+            'error' => '.field-error',
             'updateAriaInvalid' => true,
         ];
 
@@ -170,8 +170,8 @@ class ActiveFormJqueryClientScript extends BaseObject implements ClientScriptInt
                 'encodeErrorSummary' => true,
                 'errorSummary' => '.error-summary',
                 'validateOnSubmit' => true,
-                'errorCssClass' => 'has-error',
-                'successCssClass' => 'has-success',
+                'errorCssClass' => '',
+                'successCssClass' => '',
                 'validatingCssClass' => 'validating',
                 'ajaxParam' => 'ajax',
                 'ajaxDataType' => 'json',

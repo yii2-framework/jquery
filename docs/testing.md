@@ -1,27 +1,16 @@
 # Testing
 
-This package provides a consistent set of [Composer](https://getcomposer.org/) scripts for local validation.
+This package contains both PHP and JavaScript test suites.
 
-Tool references:
+## Automated refactoring and coding standards
 
-- [Composer Require Checker](https://github.com/maglnet/ComposerRequireChecker) for dependency definition checks.
-- [Easy Coding Standard (ECS)](https://github.com/easy-coding-standard/easy-coding-standard) for coding standards.
-- [Infection](https://infection.github.io/) for mutation testing.
-- [PHPStan](https://phpstan.org/) for static analysis.
-- [PHPUnit](https://phpunit.de/) for unit tests.
-- [Rector](https://github.com/rectorphp/rector) for automated refactoring.
-
-## Automated refactoring (Rector)
-
-Run Rector to apply automated code refactoring.
+Run Rector:
 
 ```bash
 composer rector
 ```
 
-## Coding standards (ECS)
-
-Run Easy Coding Standard (ECS) and apply fixes.
+Run Easy Coding Standard with fixes:
 
 ```bash
 composer ecs
@@ -29,54 +18,69 @@ composer ecs
 
 ## Dependency definition check
 
-Verify that runtime dependencies are correctly declared in `composer.json`.
+Verify runtime dependency declarations:
 
 ```bash
 composer check-dependencies
 ```
 
-## Mutation testing (Infection)
+## JavaScript asset test suite
 
-Run mutation testing.
+Run the JavaScript tests for the jQuery assets:
+
+```bash
+npm test
+```
+
+This executes the Mocha suite under `tests/js/tests`.
+
+## JavaScript linting
+
+Run ESLint for the asset sources and JS tests:
+
+```bash
+npm run lint
+```
+
+## Mutation testing
+
+Run mutation testing:
 
 ```bash
 composer mutation
 ```
 
-Run mutation testing with static analysis enabled.
+Run mutation testing with static analysis enabled:
 
 ```bash
 composer mutation-static
 ```
 
-## Static analysis (PHPStan)
+## PHP test suite
 
-Run static analysis.
-
-```bash
-composer static
-```
-
-## Unit tests (PHPUnit)
-
-Run the full test suite.
+Run the PHP unit and integration tests:
 
 ```bash
 composer tests
+```
+
+This executes the PHPUnit suite defined in `phpunit.xml.dist`.
+
+## Static analysis
+
+Run PHPStan:
+
+```bash
+composer static
 ```
 
 ## Passing extra arguments
 
 Composer scripts support forwarding additional arguments using `--`.
 
-Run PHPUnit with code coverage report generation.
+Examples:
 
 ```bash
-composer tests -- --coverage-html code_coverage
-```
-
-Run PHPStan with a different memory limit.
-
-```bash
+composer tests -- --filter PjaxTest
 composer static -- --memory-limit=512M
 ```

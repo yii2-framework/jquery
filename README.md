@@ -23,9 +23,23 @@
 </p>
 
 <p align="center">
-    <strong>Optional jQuery integration layer for <a href="https://github.com/yii2-framework/core">yii2-framework/core</a></strong><br>
+    <strong>Optional jQuery integration layer for <a href="https://github.com/yii2-framework/yii2">yii2-framework/yii2</a></strong><br>
     <em>Asset bundles, client-side validation scripts, and widget client scripts — all jQuery-backed</em>
 </p>
+
+## Overview
+
+This package restores the jQuery-powered client-side layer that was extracted from `yii2-framework/yii2`.
+
+Install it when your application still relies on classic Yii2 page flows such as:
+
+- `yii.js` data-method, confirmation, and CSRF helpers;
+- `ActiveForm` client-side and Ajax validation;
+- `GridView` filtering and checkbox selection scripts;
+- `Captcha`, `MaskedInput`, and `Pjax` jQuery integrations.
+
+The package is intentionally optional. Applications that no longer need jQuery should avoid installing it and should
+provide an alternative client-side integration strategy instead.
 
 ## Features
 
@@ -39,13 +53,13 @@
 ### Installation
 
 ```bash
-composer require yii2-framework/jquery
+composer require yii2-framework/jquery:^0.1@dev
 ```
 
 ### Asset installation
 
-This package uses [php-forge/foxy](https://github.com/php-forge/foxy) to install npm dependencies (jQuery, Inputmask,
-etc.) automatically during `composer install` or `composer update`.
+This package uses [php-forge/foxy](https://github.com/php-forge/foxy) to install npm dependencies such as jQuery,
+Inputmask, and `jquery-pjax` during `composer install` or `composer update`.
 
 The `@npm` alias must point to your project's `node_modules` directory:
 
@@ -87,8 +101,8 @@ return [
 ];
 ```
 
-`Bootstrap` configures the DI container with jQuery-based `$clientScript` defaults for all validators and widgets
-that support the strategy pattern. No other configuration is required.
+`Bootstrap` configures the DI container with jQuery-based `$clientScript` defaults for validators and widgets that
+support strategy-based client integrations.
 
 ### Overriding a single validator
 
@@ -104,6 +118,24 @@ public function rules(): array
     ];
 }
 ```
+
+## When to use this package
+
+Use `yii2-framework/jquery` when your application still renders classic Yii2 views and depends on jQuery-backed widget
+behavior or client validation.
+
+Do not use this package as the foundation for a new frontend modernization effort. When migrating away from jQuery, the
+recommended direction is to keep this package only on legacy pages and introduce a separate frontend integration layer
+for new pages.
+
+## Documentation
+
+- [Installation Guide](docs/installation.md)
+- [Configuration Reference](docs/configuration.md)
+- [Usage Examples](docs/examples.md)
+- [Modernization Guide](docs/modernization.md)
+- [Testing Guide](docs/testing.md)
+- [Development Notes](docs/development.md)
 
 ## Package information
 

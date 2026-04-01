@@ -40,7 +40,7 @@ final class GridViewJqueryClientScriptTest extends TestCase
             <body>
 
             <div id="test-grid">
-            <table class="table table-striped table-bordered"><thead>
+            <table><thead>
             <tr></tr>
             </thead>
             <tbody>
@@ -122,7 +122,7 @@ final class GridViewJqueryClientScriptTest extends TestCase
             <body>
 
             <div id="test-grid">
-            <table class="table table-striped table-bordered"><thead>
+            <table><thead>
             <tr></tr>
             </thead>
             <tbody>
@@ -174,7 +174,7 @@ final class GridViewJqueryClientScriptTest extends TestCase
             <body>
 
             <div id="test-grid">
-            <table class="table table-striped table-bordered"><thead>
+            <table><thead>
             <tr></tr>
             </thead>
             <tbody>
@@ -227,7 +227,7 @@ final class GridViewJqueryClientScriptTest extends TestCase
             <body>
 
             <div id="test-grid">
-            <table class="table table-striped table-bordered"><thead>
+            <table><thead>
             <tr></tr>
             </thead>
             <tbody>
