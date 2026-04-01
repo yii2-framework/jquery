@@ -53,7 +53,7 @@ provide an alternative client-side integration strategy instead.
 ### Installation
 
 ```bash
-composer require yii2-framework/jquery
+composer require yii2-framework/jquery:^0.1@dev
 ```
 
 ### Asset installation
