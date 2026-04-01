@@ -46,7 +46,7 @@ shipped with yii2 used framework namespaces (`yii\web\`, `yii\widgets\`, etc.). 
 | `yii\captcha\CaptchaAsset`       | `yii\jquery\captcha\CaptchaAsset`       |
 | `yii\grid\GridViewAsset`         | `yii\jquery\grid\GridViewAsset`         |
 
-Direct references to these classes in application code are uncommon they are registered automatically when jQuery 
+Direct references to these classes in application code are uncommon; they are registered automatically when jQuery
 support is active. **No action required** for standard Yii2 applications.
 
 ### Package positioning

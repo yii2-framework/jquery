@@ -26,7 +26,7 @@ class PjaxJqueryClientScript extends BaseObject implements ClientScriptInterface
 {
     public function getClientOptions(BaseObject $widget, array $params = []): array
     {
-        return $widget->clientOptions ?? [];
+        return $widget->clientOptions;
     }
 
     public function register(BaseObject $widget, View $view, array $params = []): void

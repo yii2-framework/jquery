@@ -67,18 +67,18 @@ final class ActiveFormJqueryClientScriptTest extends TestCase
             <body>
 
             <form id="w0" action="/" method="post">
-            <input type="hidden" name="_csrf" value="$csrfToken"><div class="form-group field-dynamicmodel-name required">
-            <label class="control-label" for="dynamicmodel-name">Name</label>
-            <input type="text" id="dynamicmodel-name" class="form-control" name="DynamicModel[name]">
+            <input type="hidden" name="_csrf" value="$csrfToken"><div class="field-dynamicmodel-name required">
+            <label for="dynamicmodel-name">Name</label>
+            <input type="text" id="dynamicmodel-name" name="DynamicModel[name]">
 
-            <div class="help-block"></div>
+            <div class="field-error"></div>
             </div></form>
             <script src="/assets/5a1b552/jquery.js"></script>
             <script src="/assets/5a1b552/yii.js"></script>
             <script src="/assets/5a1b552/yii.validation.js"></script>
             <script src="/assets/5a1b552/yii.activeForm.js"></script>
             <script>document.addEventListener('DOMContentLoaded', function () {
-            jQuery('#w0').yiiActiveForm([{"id":"dynamicmodel-name","name":"name","container":".field-dynamicmodel-name","input":"#dynamicmodel-name",$validate);},"updateAriaInvalid":false}], []);
+            jQuery('#w0').yiiActiveForm([{"id":"dynamicmodel-name","name":"name","container":".field-dynamicmodel-name","input":"#dynamicmodel-name","error":".field-error",$validate);},"updateAriaInvalid":false}], []);
             });</script></body>
             </html>
 
@@ -159,11 +159,11 @@ final class ActiveFormJqueryClientScriptTest extends TestCase
             <body>
 
             <form id="w0" action="/" method="post">
-            <input type="hidden" name="_csrf" value="$csrfToken"><div class="form-group field-dynamicmodel-name required">
-            <label class="control-label" for="dynamicmodel-name">Name</label>
-            <input type="text" id="dynamicmodel-name" class="form-control" name="DynamicModel[name]" aria-required="true">
+            <input type="hidden" name="_csrf" value="$csrfToken"><div class="field-dynamicmodel-name required">
+            <label for="dynamicmodel-name">Name</label>
+            <input type="text" id="dynamicmodel-name" name="DynamicModel[name]" aria-required="true">
 
-            <div class="help-block"></div>
+            <div class="field-error"></div>
             </div></form>
             <script src="/assets/5a1b552/jquery.js"></script>
             <script src="/assets/5a1b552/yii.js"></script>
@@ -228,9 +228,9 @@ final class ActiveFormJqueryClientScriptTest extends TestCase
             <body>
 
             <form id="w0" action="/" method="post">
-            <input type="hidden" name="_csrf" value="$csrfToken"><div class="form-group field-dynamicmodel-name">
-            <label class="control-label" for="dynamicmodel-name">Name</label>
-            <input type="text" id="dynamicmodel-name" class="form-control" name="DynamicModel[name]">
+            <input type="hidden" name="_csrf" value="$csrfToken"><div class="field-dynamicmodel-name">
+            <label for="dynamicmodel-name">Name</label>
+            <input type="text" id="dynamicmodel-name" name="DynamicModel[name]">
 
             <div></div>
             </div></form>
@@ -297,9 +297,9 @@ final class ActiveFormJqueryClientScriptTest extends TestCase
             <body>
 
             <form id="w0" action="/" method="post">
-            <input type="hidden" name="_csrf" value="$csrfToken"><div class="form-group field-dynamicmodel-name required">
-            <label class="control-label" for="dynamicmodel-name">Name</label>
-            <input type="text" id="dynamicmodel-name" class="form-control" name="DynamicModel[name]" aria-required="true">
+            <input type="hidden" name="_csrf" value="$csrfToken"><div class="field-dynamicmodel-name required">
+            <label for="dynamicmodel-name">Name</label>
+            <input type="text" id="dynamicmodel-name" name="DynamicModel[name]" aria-required="true">
 
             <div class="error-class another-class"></div>
             </div></form>
@@ -461,18 +461,18 @@ final class ActiveFormJqueryClientScriptTest extends TestCase
             <body>
 
             <form id="w0" action="/" method="post">
-            <input type="hidden" name="_csrf" value="{$csrfToken}"><div class="form-group field-dynamicmodel-name required">
-            <label class="control-label" for="dynamicmodel-name">Name</label>
-            <input type="text" id="dynamicmodel-name" class="form-control" name="DynamicModel[name]" aria-required="true">
+            <input type="hidden" name="_csrf" value="{$csrfToken}"><div class="field-dynamicmodel-name required">
+            <label for="dynamicmodel-name">Name</label>
+            <input type="text" id="dynamicmodel-name" name="DynamicModel[name]" aria-required="true">
 
-            <div class="help-block"></div>
+            <div class="field-error"></div>
             </div></form>
             <script src="/assets/5a1b552/jquery.js"></script>
             <script src="/assets/5a1b552/yii.js"></script>
             <script src="/assets/5a1b552/yii.validation.js"></script>
             <script src="/assets/5a1b552/yii.activeForm.js"></script>
             <script>document.addEventListener('DOMContentLoaded', function () {
-            jQuery('#w0').yiiActiveForm([{"id":"dynamicmodel-name","name":"name","container":".field-dynamicmodel-name","input":"#dynamicmodel-name",$validate}], {"validateOnSubmit":false,"validationUrl":"\/custom\/validation"});
+            jQuery('#w0').yiiActiveForm([{"id":"dynamicmodel-name","name":"name","container":".field-dynamicmodel-name","input":"#dynamicmodel-name","error":".field-error",$validate}], {"validateOnSubmit":false,"validationUrl":"\/custom\/validation"});
             });</script></body>
             </html>
 

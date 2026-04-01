@@ -52,7 +52,7 @@ final class Bootstrap implements BootstrapInterface
     /**
      * Maps core validators, widgets, and grid components to their jQuery client-script implementations.
      *
-     * Each key is a fully qualified class name from `yii2-framework/core`, and each value is the corresponding jQuery
+     * Each key is a fully qualified class name from `yii2-framework/yii2`, and each value is the corresponding jQuery
      * client-script class from this package. During {@see bootstrap()}, these are registered as DI container defaults
      * so that `$clientScript` is automatically configured when the component is instantiated.
      */

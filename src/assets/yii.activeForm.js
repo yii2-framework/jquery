@@ -119,9 +119,9 @@
     // whether to perform validation before submitting the form.
     validateOnSubmit: true,
     // the container CSS class representing the corresponding attribute has validation error
-    errorCssClass: "has-error",
+    errorCssClass: "",
     // the container CSS class representing the corresponding attribute passes validation
-    successCssClass: "has-success",
+    successCssClass: "",
     // the container CSS class representing the corresponding attribute is being validated
     validatingCssClass: "validating",
     // the GET parameter name indicating an AJAX-based validation
@@ -149,7 +149,7 @@
     // the jQuery selector of the input field under the context of the form
     input: undefined,
     // the jQuery selector of the error tag under the context of the container
-    error: ".help-block",
+    error: ".field-error",
     // whether to encode the error
     encodeError: true,
     // whether to perform validation when a change is detected on the input

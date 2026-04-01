@@ -48,7 +48,7 @@ final class CheckboxColumnJqueryClientScriptTest extends TestCase
             <body>
 
             <div id="test-grid">
-            <table class="table table-striped table-bordered"><thead>
+            <table><thead>
             <tr><th><input type="hidden" name="custom_selection" value=""><input type="checkbox" class="select-on-check-all" name="custom_selection_all" value="1"></th></tr>
             </thead>
             <tbody>
@@ -96,7 +96,7 @@ final class CheckboxColumnJqueryClientScriptTest extends TestCase
             <body>
 
             <div id="test-grid">
-            <table class="table table-striped table-bordered"><tbody>
+            <table><tbody>
             <tr><td colspan="1"><div class="empty">No results found.</div></td></tr>
             </tbody></table>
             </div>
@@ -141,7 +141,7 @@ final class CheckboxColumnJqueryClientScriptTest extends TestCase
             <body>
 
             <div id="test-grid">
-            <table class="table table-striped table-bordered"><thead>
+            <table><thead>
             <tr><th><input type="hidden" name="selection" value=""><input type="checkbox" class="select-on-check-all" name="selection_all" value="1"></th></tr>
             </thead>
             <tbody>

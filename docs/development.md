@@ -2,7 +2,7 @@
 
 This document describes development workflows and maintenance tasks for the project.
 
-### Updated Files
+## Updated Files
 
 This command updates the following configuration files:
 
@@ -16,7 +16,7 @@ This command updates the following configuration files:
 | `phpstan.neon`     | PHPStan static analysis configuration        |
 | `phpunit.xml.dist` | PHPUnit test configuration                   |
 
-### When to Run
+## When to Run
 
 Run this command in the following scenarios:
 
@@ -25,7 +25,7 @@ Run this command in the following scenarios:
 - **Before Major Releases** - Ensure your project uses the latest best practices.
 - **When Issues Occur** - If configuration files become outdated or incompatible.
 
-### Important Notes
+## Important Notes
 
 - This command overwrites existing configuration files with the latest versions from the template.
 - Ensure you have committed any custom configuration changes before running this command.

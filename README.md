@@ -34,7 +34,7 @@ This package restores the jQuery-powered client-side layer that was extracted fr
 Install it when your application still relies on classic Yii2 page flows such as:
 
 - `yii.js` data-method, confirmation, and CSRF helpers;
-- `ActiveForm` client-side and AJAX validation;
+- `ActiveForm` client-side and Ajax validation;
 - `GridView` filtering and checkbox selection scripts;
 - `Captcha`, `MaskedInput`, and `Pjax` jQuery integrations.
 

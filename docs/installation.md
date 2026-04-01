@@ -16,7 +16,7 @@ composer require yii2-framework/jquery:^0.1
 
 ## Enable npm asset resolution
 
-This package loads client assets from npm packages such as `jquery`, `inputmask`, and `yii2-pjax`. Configure the
+This package loads client assets from npm packages such as `jquery`, `inputmask`, and `jquery-pjax`. Configure the
 `@npm` alias so Yii can resolve those assets:
 
 ```php
