@@ -24,7 +24,7 @@
 
 <p align="center">
     <strong>Optional jQuery integration layer for <a href="https://github.com/yii2-framework/yii2">Yii2</a></strong><br>
-    <em>Asset bundles, client-side validation scripts, and widget client scripts — all jQuery-backed</em>
+    <em>Asset bundles, client-side validation scripts, and widget client scripts all jQuery-backed</em>
 </p>
 
 ## Overview
@@ -53,7 +53,7 @@ provide an alternative client-side integration strategy instead.
 ### Installation
 
 ```bash
-composer require yii2-framework/jquery:^0.1@dev
+composer require yii2-framework/jquery:^0.1
 ```
 
 ### Asset installation
