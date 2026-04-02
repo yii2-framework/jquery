@@ -6,26 +6,32 @@
 - [Composer](https://getcomposer.org/download/) for dependency management.
 - A project-level `node_modules` directory exposed through the `@npm` alias.
 
-## Install the package
+## Installation
 
-Add the package with Composer:
+### Method 1: Using [Composer](https://getcomposer.org/download/) (recommended)
+
+Install the extension.
 
 ```bash
 composer require yii2-framework/jquery:^0.1
 ```
 
-## Enable npm asset resolution
+### Method 2: Manual installation
 
-This package loads client assets from npm packages such as `jquery`, `inputmask`, and `jquery-pjax`. Configure the
-`@npm` alias so Yii can resolve those assets:
+Add to your `composer.json`.
 
-```php
-// config/web.php
-return [
-    'aliases' => [
-        '@npm' => dirname(__DIR__) . '/node_modules',
-    ],
-];
+```json
+{
+    "require": {
+        "yii2-framework/jquery": "^0.1"
+    }
+}
+```
+
+Then run.
+
+```bash
+composer update
 ```
 
 ## Allow automatic npm dependency installation
@@ -72,6 +78,6 @@ layer for modern pages.
 
 ## Next steps
 
-- [Configuration Reference](configuration.md)
-- [Usage Examples](examples.md)
-- [Testing Guide](testing.md)
+- ⚙️ [Configuration Reference](configuration.md)
+- 💡 [Usage Examples](examples.md)
+- 🧪 [Testing Guide](testing.md)

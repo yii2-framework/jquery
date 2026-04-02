@@ -23,8 +23,8 @@
 </p>
 
 <p align="center">
-    <strong>Optional jQuery integration layer for <a href="https://github.com/yii2-framework/yii2">yii2-framework/yii2</a></strong><br>
-    <em>Asset bundles, client-side validation scripts, and widget client scripts — all jQuery-backed</em>
+    <strong>Optional jQuery integration layer for <a href="https://github.com/yii2-framework/yii2">Yii2</a></strong><br>
+    <em>Asset bundles, client-side validation scripts, and widget client scripts all jQuery-backed</em>
 </p>
 
 ## Overview
@@ -53,7 +53,7 @@ provide an alternative client-side integration strategy instead.
 ### Installation
 
 ```bash
-composer require yii2-framework/jquery:^0.1@dev
+composer require yii2-framework/jquery:^0.1
 ```
 
 ### Asset installation
@@ -130,12 +130,10 @@ for new pages.
 
 ## Documentation
 
-- [Installation Guide](docs/installation.md)
-- [Configuration Reference](docs/configuration.md)
-- [Usage Examples](docs/examples.md)
-- [Modernization Guide](docs/modernization.md)
-- [Testing Guide](docs/testing.md)
-- [Development Notes](docs/development.md)
+- 📚 [Installation Guide](docs/installation.md)
+- ⚙️ [Configuration Reference](docs/configuration.md)
+- 💡 [Usage Examples](docs/examples.md)
+- 🧪 [Testing Guide](docs/testing.md)
 
 ## Package information
 
