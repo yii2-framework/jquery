@@ -84,3 +84,9 @@ Examples:
 composer tests -- --filter PjaxTest
 composer static -- --memory-limit=512M
 ```
+
+## Next steps
+
+- 📚 [Installation Guide](installation.md)
+- ⚙️ [Configuration Reference](configuration.md)
+- 💡 [Usage Examples](examples.md)

@@ -62,5 +62,6 @@ widget at a time.
 
 ## Next steps
 
-- [Configuration Reference](configuration.md)
-- [Testing Guide](testing.md)
+- 📚 [Installation Guide](installation.md)
+- ⚙️ [Configuration Reference](configuration.md)
+- 🧪 [Testing Guide](testing.md)

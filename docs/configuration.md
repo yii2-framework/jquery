@@ -69,5 +69,6 @@ This is useful when you are migrating route by route and want a page to remain f
 
 ## Next steps
 
-- [Usage Examples](examples.md)
-- [Testing Guide](testing.md)
+- 📚 [Installation Guide](installation.md)
+- 💡 [Usage Examples](examples.md)
+- 🧪 [Testing Guide](testing.md)
