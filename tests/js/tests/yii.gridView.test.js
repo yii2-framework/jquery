@@ -875,13 +875,15 @@ describe("yii.gridView", function () {
 
         var events = $._data(document, "events");
         var clickHandlers = events && events.click ? events.click : [];
-        var yiiGridViewClickHandlers = clickHandlers.filter(function (handleObj) {
-          return (
-            handleObj.namespace === "yiiGridView" &&
-            (handleObj.selector === "#w3 input" ||
-              handleObj.selector === "#w3 input.w3-check-row")
-          );
-        });
+        var yiiGridViewClickHandlers = clickHandlers.filter(
+          function (handleObj) {
+            return (
+              handleObj.namespace === "yiiGridView" &&
+              (handleObj.selector === "#w3 input" ||
+                handleObj.selector === "#w3 input.w3-check-row")
+            );
+          },
+        );
         var selectors = yiiGridViewClickHandlers
           .map(function (handleObj) {
             return handleObj.selector;

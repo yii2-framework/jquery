@@ -51,11 +51,7 @@
       handleClick(event, opts);
     };
     $(selector).removeClass("data-pjax");
-    return this.off("click.pjax", selector).on(
-      "click.pjax",
-      selector,
-      handler,
-    );
+    return this.off("click.pjax", selector).on("click.pjax", selector, handler);
   }
 
   // Public: pjax on click handler
