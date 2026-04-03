@@ -119,6 +119,53 @@ describe("yii.activeForm", function () {
         // https://github.com/yiisoft/yii2/issues/14186
         assert.isTrue(afterValidateSpy.calledOnce);
       });
+
+      it("should provide validated=true in afterValidate when submit validation has no errors", function () {
+        var inputId = "name";
+        var validatedInAfterValidate = null;
+
+        $activeForm = $("#w0");
+        $activeForm.yiiActiveForm("destroy");
+        $activeForm
+          .yiiActiveForm([
+            {
+              id: inputId,
+              input: "#" + inputId,
+            },
+          ])
+          .on("afterValidate", function () {
+            validatedInAfterValidate = $activeForm.data("yiiActiveForm").validated;
+          });
+
+        $activeForm.yiiActiveForm("validate", true);
+
+        assert.isTrue(validatedInAfterValidate);
+      });
+
+      it("should provide validated=false in afterValidate when submit validation has errors", function () {
+        var inputId = "name";
+        var validatedInAfterValidate = null;
+
+        $activeForm = $("#w0");
+        $activeForm.yiiActiveForm("destroy");
+        $activeForm
+          .yiiActiveForm([
+            {
+              id: inputId,
+              input: "#" + inputId,
+              validate: function (attribute, value, messages) {
+                messages.push("Name cannot be blank.");
+              },
+            },
+          ])
+          .on("afterValidate", function () {
+            validatedInAfterValidate = $activeForm.data("yiiActiveForm").validated;
+          });
+
+        $activeForm.yiiActiveForm("validate", true);
+
+        assert.isFalse(validatedInAfterValidate);
+      });
     });
 
     describe("with disabled fields", function () {
