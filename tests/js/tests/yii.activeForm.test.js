@@ -134,7 +134,8 @@ describe("yii.activeForm", function () {
             },
           ])
           .on("afterValidate", function () {
-            validatedInAfterValidate = $activeForm.data("yiiActiveForm").validated;
+            validatedInAfterValidate =
+              $activeForm.data("yiiActiveForm").validated;
           });
 
         $activeForm.yiiActiveForm("validate", true);
@@ -159,7 +160,8 @@ describe("yii.activeForm", function () {
             },
           ])
           .on("afterValidate", function () {
-            validatedInAfterValidate = $activeForm.data("yiiActiveForm").validated;
+            validatedInAfterValidate =
+              $activeForm.data("yiiActiveForm").validated;
           });
 
         $activeForm.yiiActiveForm("validate", true);
