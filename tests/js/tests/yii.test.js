@@ -35,6 +35,9 @@ describe("yii", function () {
     var pjaxSandbox = {
       jQuery: $,
       window: window,
+      document: window.document,
+      history: window.history,
+      location: window.location,
       navigator: window.navigator,
     };
     var context = vm.createContext(pjaxSandbox);
@@ -107,6 +110,49 @@ describe("yii", function () {
   after(function () {
     yiiGetBaseCurrentUrlStub.restore();
     yiiGetCurrentUrlStub.restore();
+  });
+
+  describe("$.fn.pjax", function () {
+    var ajaxStub;
+
+    beforeEach(function () {
+      ajaxStub = sinon.stub($, "ajax", function () {
+        return {
+          readyState: 4,
+          abort: function () {},
+          setRequestHeader: function () {},
+          getResponseHeader: function () {
+            return null;
+          },
+          status: 200,
+        };
+      });
+      $("body").append(
+        '<div id="pjax-test-container"></div><a id="pjax-test-link" href="/posts">Posts</a>',
+      );
+    });
+
+    afterEach(function () {
+      $(document).off("click.pjax", "#pjax-test-link");
+      $("#pjax-test-link").remove();
+      $("#pjax-test-container").remove();
+      ajaxStub.restore();
+    });
+
+    it("should not duplicate delegated click handlers on repeated initialization", function () {
+      $(document).pjax("#pjax-test-link", {
+        container: "#pjax-test-container",
+        history: false,
+      });
+      $(document).pjax("#pjax-test-link", {
+        container: "#pjax-test-container",
+        history: false,
+      });
+
+      $("#pjax-test-link").trigger($.Event("click"));
+
+      assert.equal(ajaxStub.callCount, 1);
+    });
   });
 
   describe("getCsrfParam method", function () {
@@ -1815,12 +1861,14 @@ describe("yii", function () {
       });
       it("confirm data param = undefined", function () {
         var element = $("#data-methods-no-data");
+        element.attr("data-confirm", "Are you sure?");
         element.removeData("confirm");
-        element.attr("data-confirm", undefined);
+        element.removeAttr("data-confirm");
         element.trigger($.Event("click"));
 
         assert.isFalse(yiiConfirmSpy.called);
-        assert.isTrue(yiiHandleActionStub.called);
+        assert.isFalse(yiiHandleActionStub.called);
+        assert.isTrue(extraEventHandlerSpy.calledOnce);
       });
     });
 

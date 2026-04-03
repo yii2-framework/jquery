@@ -56,7 +56,8 @@
    *     gridViewId: {
    *         type: {
    *             event: '...',
-   *             selector: '...'
+   *             selector: '...',
+   *             handler: function () {}
    *         }
    *     }
    * }
@@ -261,7 +262,7 @@
 
       var id = $(this).attr("id");
       $.each(gridEventHandlers[id], function (type, data) {
-        $(document).off(data.event, data.selector);
+        $(document).off(data.event, data.selector, data.handler);
       });
 
       delete gridData[id];
@@ -289,13 +290,17 @@
     var prevHandler = gridEventHandlers[id];
     if (prevHandler !== undefined && prevHandler[type] !== undefined) {
       var data = prevHandler[type];
-      $(document).off(data.event, data.selector);
+      $(document).off(data.event, data.selector, data.handler);
     }
     if (prevHandler === undefined) {
       gridEventHandlers[id] = {};
     }
     $(document).on(event, selector, callback);
-    gridEventHandlers[id][type] = { event: event, selector: selector };
+    gridEventHandlers[id][type] = {
+      event: event,
+      selector: selector,
+      handler: callback,
+    };
   }
 
   function getNamedInputs($container, name) {

@@ -808,7 +808,9 @@ window.yii = (function ($) {
   }
 
   function isSameOriginUrl(url) {
-    return getUrlOrigin(getAbsoluteUrl(url)) === getUrlOrigin(pub.getCurrentUrl());
+    return (
+      getUrlOrigin(getAbsoluteUrl(url)) === getUrlOrigin(pub.getCurrentUrl())
+    );
   }
 
   function getUrlOrigin(url) {
