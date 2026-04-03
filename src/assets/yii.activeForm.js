@@ -357,12 +357,18 @@
     });
   };
 
-  var appendDataParam = function (data, name, value) {
-    if (value === undefined) {
+  var appendDataParam = function (data, name, value, includeUndefined) {
+    if (value === undefined && !includeUndefined) {
       return data;
     }
 
-    return data + "&" + name + "=" + value;
+    return (
+      data +
+      "&" +
+      encodeURIComponent(name) +
+      "=" +
+      encodeURIComponent(value)
+    );
   };
 
   var buildAjaxValidationData = function (
@@ -386,7 +392,12 @@
     }
 
     if ($button && $button.length && $button.attr("name")) {
-      data = appendDataParam(data, $button.attr("name"), $button.attr("value"));
+      data = appendDataParam(
+        data,
+        $button.attr("name"),
+        $button.attr("value"),
+        true,
+      );
     }
 
     return data;

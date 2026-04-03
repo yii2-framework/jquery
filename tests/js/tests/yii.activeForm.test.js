@@ -399,8 +399,58 @@ describe("yii.activeForm", function () {
 
             assert.strictEqual(requests.length, 1);
             assert.include(requests[0], "&ajax=w4");
-            assert.include(requests[0], "&ajax_attribute=Test[att1]");
+            assert.include(requests[0], "&ajax_attribute=Test%5Batt1%5D");
             assert.include(requests[0], "&ajax_attribute_id=test-att1");
+          } finally {
+            ajaxStub.restore();
+          }
+        });
+
+        it("should keep submit button parameter when submit button has no value attribute", function () {
+          $activeForm = $("#w4");
+          $activeForm.yiiActiveForm("destroy");
+          $activeForm.yiiActiveForm(
+            [
+              {
+                id: "test-att1",
+                name: "Test[att1]",
+                input: "#test-att1",
+                container: ".field-test-att1",
+                enableAjaxValidation: true,
+              },
+            ],
+            {
+              validationUrl: "",
+              errorCssClass: "has-error",
+              successCssClass: "has-success",
+            },
+          );
+
+          var $submitButton = $('<button type="submit" name="scenario"></button>');
+          $activeForm.append($submitButton);
+          $activeForm.data("yiiActiveForm").submitObject = $submitButton;
+
+          var requests = [];
+          function fakeAjax(object) {
+            var jqXHR = {
+              abort: function () {},
+              getResponseHeader: function () {
+                return null;
+              },
+            };
+
+            requests.push(object.data);
+            object.beforeSend(jqXHR, "");
+            object.success({});
+            object.complete(jqXHR, "success");
+          }
+
+          var ajaxStub = sinon.stub($, "ajax", fakeAjax);
+          try {
+            $activeForm.yiiActiveForm("validateAttribute", "test-att1");
+
+            assert.strictEqual(requests.length, 1);
+            assert.include(requests[0], "&scenario=undefined");
           } finally {
             ajaxStub.restore();
           }
