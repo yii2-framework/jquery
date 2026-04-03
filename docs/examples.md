@@ -55,9 +55,22 @@ Example characteristics of a legacy page that should keep this package:
 - `Pjax` is still used for partial page refreshes;
 - the page depends on `yii.js` features such as `data-method` or `data-confirm`.
 
+## Opt in to jQuery 4 in the host application
+
+The package defaults to jQuery `3.7.1`. If your application is ready for jQuery `4.0.0`, pin it explicitly in the
+application `package.json`:
+
+```json
+{
+    "dependencies": {
+        "jquery": "^4.0.0"
+    }
+}
+```
+
 ## Move new pages to a separate frontend integration
 
-Do not port `yii.activeForm.js`, `yii.validation.js`, `yii.gridView.js`, or `jquery-pjax` semantics to a new stack one
+Do not port `yii.activeForm.js`, `yii.validation.js`, `yii.gridView.js`, or pjax semantics to a new stack one
 widget at a time.
 
 ## Next steps

@@ -2,6 +2,7 @@ var assert = require("chai").assert;
 var sinon;
 var withData = require("leche").withData;
 var jsdom = require("mocha-jsdom");
+var runtime = require("../support/runtime");
 
 var fs = require("fs");
 var vm = require("vm");
@@ -20,8 +21,8 @@ var StringUtils = {
 
 describe("yii", function () {
   var yiiPath = "src/assets/yii.js";
-  var jQueryPath = "node_modules/jquery/dist/jquery.js";
-  var pjaxPath = "node_modules/yii2-pjax/jquery.pjax.js";
+  var jQueryPath = runtime.getJquerySourcePath();
+  var pjaxPath = runtime.getPjaxSourcePath();
   var sandbox;
   var $;
   var yii;
@@ -1796,7 +1797,8 @@ describe("yii", function () {
     describe("disabled confirm dialog", function () {
       it("confirm data param = false", function () {
         var element = $("#data-methods-no-data");
-        element.attr("data-confirm", false);
+        element.removeData("confirm");
+        element[0].setAttribute("data-confirm", "false");
         element.trigger($.Event("click"));
 
         assert.isFalse(yiiConfirmSpy.called);
@@ -1804,6 +1806,7 @@ describe("yii", function () {
       });
       it("confirm data param = empty", function () {
         var element = $("#data-methods-no-data");
+        element.removeData("confirm");
         element.attr("data-confirm", "");
         element.trigger($.Event("click"));
 
@@ -1812,6 +1815,7 @@ describe("yii", function () {
       });
       it("confirm data param = undefined", function () {
         var element = $("#data-methods-no-data");
+        element.removeData("confirm");
         element.attr("data-confirm", undefined);
         element.trigger($.Event("click"));
 

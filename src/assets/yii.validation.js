@@ -11,7 +11,7 @@ yii.validation = (function ($) {
       return (
         value === null ||
         value === undefined ||
-        ($.isArray(value) && value.length === 0) ||
+        (Array.isArray(value) && value.length === 0) ||
         value === ""
       );
     },
@@ -294,11 +294,11 @@ yii.validation = (function ($) {
   }
 
   function isRangeValid(value, options) {
-    if (!options.allowArray && $.isArray(value)) {
+    if (!options.allowArray && Array.isArray(value)) {
       return false;
     }
 
-    var values = $.isArray(value) ? value : [value];
+    var values = Array.isArray(value) ? value : [value];
     var inArray = values.every(function (singleValue) {
       return $.inArray(singleValue, options.range) !== -1;
     });

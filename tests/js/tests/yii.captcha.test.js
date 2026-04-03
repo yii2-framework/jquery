@@ -2,13 +2,14 @@ var assert = require("chai").assert;
 var sinon;
 var withData = require("leche").withData;
 var jsdom = require("mocha-jsdom");
+var runtime = require("../support/runtime");
 
 var fs = require("fs");
 var vm = require("vm");
 
 describe("yii.captcha", function () {
   var yiiCaptchaPath = "src/assets/yii.captcha.js";
-  var jQueryPath = "node_modules/jquery/dist/jquery.js";
+  var jQueryPath = runtime.getJquerySourcePath();
   var $;
   var $captcha;
   var settings = {

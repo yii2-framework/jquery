@@ -14,8 +14,7 @@ use function is_string;
 /**
  * jQuery client script for the [[Pjax]] widget.
  *
- * Registers the [jquery-pjax](https://github.com/yiisoft/jquery-pjax) plugin asset and
- * emits the initialization JavaScript using the jQuery API.
+ * Registers the bundled `jquery.pjax.js` asset and emits the initialization JavaScript using the jQuery API.
  *
  * @implements ClientScriptInterface<Pjax>
  *

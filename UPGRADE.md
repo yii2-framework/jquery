@@ -1,6 +1,6 @@
 # Upgrade notes
 
-## 1.0.0 Under development
+## 0.1.0 Under development
 
 ### Initial release — extracted from `yii2-framework/yii2`
 
@@ -57,3 +57,12 @@ classic Yii2 client-side behavior.
 For frontend modernization projects, the recommended migration path is to keep this package only on legacy routes and
 introduce a separate Inertia-based package family for new pages. This repository does not provide those packages, but
 it is designed to coexist with them because `yii2-framework/yii2` already supports strategy-based client integrations.
+
+### jQuery compatibility
+
+This package supports jQuery `3.7.1` and jQuery `4.0.0`.
+
+- jQuery `3.7.1` remains the default dependency line for `0.1.x`.
+- jQuery `4.0.0` is supported when the host application pins it explicitly in its project-level `package.json`.
+
+The package requires the full jQuery build because it uses Ajax and Deferred APIs.

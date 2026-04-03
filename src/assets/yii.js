@@ -183,7 +183,7 @@ window.yii = (function ($) {
       if (module.isActive !== undefined && !module.isActive) {
         return;
       }
-      if ($.isFunction(module.init)) {
+      if (typeof module.init === "function") {
         module.init();
       }
       $.each(module, function () {
@@ -255,7 +255,13 @@ window.yii = (function ($) {
   function isPjaxEnabled($e) {
     var pjax = $e.data("pjax");
 
-    return pjax !== undefined && pjax !== 0 && pjax !== false && $.support.pjax;
+    return (
+      pjax !== undefined &&
+      pjax !== 0 &&
+      pjax !== false &&
+      $.support &&
+      $.support.pjax
+    );
   }
 
   function validateActionParams(params, areValidParams) {
@@ -518,7 +524,7 @@ window.yii = (function ($) {
   }
 
   function appendQueryParamValue(params, name, value) {
-    if (!$.isArray(params[name])) {
+    if (!Array.isArray(params[name])) {
       params[name] = [params[name]];
     }
 
@@ -614,6 +620,8 @@ window.yii = (function ($) {
       return;
     }
 
+    ensureScriptUsesXhrTransport(options);
+
     var url = getAbsoluteUrl(options.url);
     if (shouldAbortScriptRequest(loadedScripts, url)) {
       xhr.abort();
@@ -624,6 +632,24 @@ window.yii = (function ($) {
     ensureScriptRequestData(loadedScripts, url);
     attachScriptRequestHandlers(xhr, loadedScripts);
     registerScriptRequest(xhr, loadedScripts, url);
+  }
+
+  function ensureScriptUsesXhrTransport(options) {
+    if (!shouldUseXhrTransportForScript(options)) {
+      return;
+    }
+
+    if (options.headers === undefined || options.headers === null) {
+      options.headers = {};
+    }
+  }
+
+  function shouldUseXhrTransportForScript(options) {
+    if (options.crossDomain === false) {
+      return true;
+    }
+
+    return isSameOriginUrl(options.url);
   }
 
   function shouldAbortScriptRequest(loadedScripts, url) {
@@ -745,7 +771,12 @@ window.yii = (function ($) {
   }
 
   function isConfirmationMessageEnabled(message) {
-    return message !== undefined && message !== false && message !== "";
+    return (
+      message !== undefined &&
+      message !== false &&
+      message !== "false" &&
+      message !== ""
+    );
   }
 
   function isReloadableAsset(url) {
@@ -774,6 +805,18 @@ window.yii = (function ($) {
    */
   function getAbsoluteUrl(url) {
     return url.charAt(0) === "/" ? pub.getBaseCurrentUrl() + url : url;
+  }
+
+  function isSameOriginUrl(url) {
+    return getUrlOrigin(getAbsoluteUrl(url)) === getUrlOrigin(pub.getCurrentUrl());
+  }
+
+  function getUrlOrigin(url) {
+    var anchor = document.createElement("a");
+
+    anchor.href = url;
+
+    return anchor.protocol + "//" + anchor.host;
   }
 
   return pub;

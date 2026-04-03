@@ -32,7 +32,14 @@ Run the JavaScript tests for the jQuery assets:
 npm test
 ```
 
-This executes the Mocha suite under `tests/js/tests`.
+This executes the Mocha suite under `tests/js/tests` against the default jQuery `3.7.1` runtime.
+
+To verify dual compatibility explicitly, run:
+
+```bash
+npm run test:js:jquery3
+npm run test:js:jquery4
+```
 
 ## JavaScript linting
 

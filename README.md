@@ -31,6 +31,10 @@
 
 This package restores the jQuery-powered client-side layer that was extracted from `yii2-framework/yii2`.
 
+The package supports **jQuery 3.7.1** and **jQuery 4.0.0**. The bundled npm dependency defaults to jQuery `3.7.1` so
+legacy Yii2 applications remain safe by default. Applications that want jQuery `4.0.0` must pin it explicitly in
+their project-level `package.json`.
+
 Install it when your application still relies on classic Yii2 page flows such as:
 
 - `yii.js` data-method, confirmation, and CSRF helpers;
@@ -59,7 +63,7 @@ composer require yii2-framework/jquery:^0.1
 ### Asset installation
 
 This package uses [php-forge/foxy](https://github.com/php-forge/foxy) to install npm dependencies such as jQuery,
-Inputmask, and `jquery-pjax` during `composer install` or `composer update`.
+Inputmask, and Punycode during `composer install` or `composer update`.
 
 The `@npm` alias must point to your project's `node_modules` directory:
 
@@ -88,6 +92,23 @@ If npm packages are not installed automatically, verify that:
 ```
 
 2. Run `composer update` to trigger the asset merge.
+
+### jQuery version selection
+
+By default, this package installs jQuery `3.7.1`.
+
+If your application is ready to run on jQuery `4.0.0`, pin it explicitly in the project-level `package.json` and run
+`composer update` again so the merged npm manifest is refreshed:
+
+```json
+{
+    "dependencies": {
+        "jquery": "^4.0.0"
+    }
+}
+```
+
+Use the full jQuery build. This package depends on Ajax and Deferred APIs and is not compatible with the slim build.
 
 ### Configuration
 
