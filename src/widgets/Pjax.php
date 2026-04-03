@@ -14,7 +14,7 @@ use yii\web\Response;
 use function is_string;
 
 /**
- * Pjax is a widget integrating the [pjax](https://github.com/yiisoft/jquery-pjax) jQuery plugin.
+ * Pjax is a widget integrating the bundled `jquery.pjax.js` client plugin.
  *
  * Pjax only deals with the content enclosed between its [[begin()]] and [[end()]] calls, called the *body content* of
  * the widget.
@@ -46,8 +46,7 @@ class Pjax extends Widget
 {
     public static $autoIdPrefix = 'p';
     /**
-     * @var array Additional options to be passed to the pjax JS plugin. Please refer to the
-     * [pjax project page](https://github.com/yiisoft/jquery-pjax) for available options.
+     * @var array Additional options to be passed to the pjax JS plugin.
      */
     public array $clientOptions = [];
     /**

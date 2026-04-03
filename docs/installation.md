@@ -55,6 +55,28 @@ If the npm dependencies are missing after installation, run:
 composer update
 ```
 
+## jQuery version compatibility
+
+This package supports:
+
+- jQuery `3.7.1` (default)
+- jQuery `4.0.0` (application opt-in)
+
+The bundled dependency remains on jQuery `3.7.1` so existing Yii2 applications do not switch major versions
+implicitly.
+
+To opt in to jQuery `4.0.0`, pin it in your project-level `package.json` and run `composer update` again:
+
+```json
+{
+    "dependencies": {
+        "jquery": "^4.0.0"
+    }
+}
+```
+
+Use the full jQuery build. The package requires Ajax and Deferred APIs that are not available in the slim build.
+
 ## Register the bootstrap integration
 
 Enable the jQuery strategy package in your web configuration:

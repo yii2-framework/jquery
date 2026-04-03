@@ -12,7 +12,7 @@
   stopOnFailure="false"
 >
   <testsuites>
-    <testsuite name="yii2-framework/jquery">
+    <testsuite name="Yii2Framework-jQuery">
       <directory>tests</directory>
       <exclude>tests/js</exclude>
     </testsuite>

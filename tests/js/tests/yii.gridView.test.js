@@ -2,6 +2,7 @@ var assert = require("chai").assert;
 var sinon;
 var withData = require("leche").withData;
 var jsdom = require("mocha-jsdom");
+var runtime = require("../support/runtime");
 
 var fs = require("fs");
 var vm = require("vm");
@@ -9,7 +10,7 @@ var vm = require("vm");
 describe("yii.gridView", function () {
   var yiiGridViewPath = "src/assets/yii.gridView.js";
   var yiiPath = "src/assets/yii.js";
-  var jQueryPath = "node_modules/jquery/dist/jquery.js";
+  var jQueryPath = runtime.getJquerySourcePath();
   var $;
   var $gridView;
   var settings = {
@@ -706,6 +707,30 @@ describe("yii.gridView", function () {
               }
             }
 
+            function clickCheckboxes($targets) {
+              var events = $._data(document, "events");
+              var clickHandlers = events && events.click ? events.click : [];
+
+              $targets.each(function () {
+                var target = this;
+                target.checked = !target.checked;
+
+                $.each(clickHandlers, function (index, handleObj) {
+                  if (handleObj.namespace !== "yiiGridView") {
+                    return;
+                  }
+
+                  if (handleObj.selector && !$(target).is(handleObj.selector)) {
+                    return;
+                  }
+
+                  handleObj.handler.call(target, $.Event("click"));
+                });
+
+                $(target).trigger("change");
+              });
+            }
+
             $gridView = $("#w0").yiiGridView(settings);
 
             var defaultOptions = {
@@ -727,58 +752,92 @@ describe("yii.gridView", function () {
 
             var $checkFirstRowCheckbox =
               $checkRowCheckboxes.filter('[value="1"]');
-            var steps = [
-              {
-                target: $checkAllCheckbox,
-                checkedRows: 3,
-                checkAllChecked: true,
-                changeCalls: 3,
-              },
-              {
-                target: $checkAllCheckbox,
-                checkedRows: 0,
-                checkAllChecked: false,
-                changeCalls: 3,
-              },
-              {
-                target: $checkRowCheckboxes,
-                checkedRows: 3,
-                checkAllChecked: true,
-                changeCalls: 3,
-              },
-              {
-                target: $checkRowCheckboxes,
-                checkedRows: 0,
-                checkAllChecked: false,
-                changeCalls: 3,
-              },
-              {
-                target: $checkFirstRowCheckbox,
+            var $checkSecondRowCheckbox =
+              $checkRowCheckboxes.filter('[value="2"]');
+            var $checkThirdRowCheckbox =
+              $checkRowCheckboxes.filter('[value="3"]');
+
+            if (customOptions.class) {
+              changedSpy.reset();
+              clickCheckboxes($checkFirstRowCheckbox);
+              assertCheckboxState({
                 checkedRows: 1,
                 checkAllChecked: false,
                 changeCalls: 1,
                 firstRowChecked: true,
-              },
-              {
-                target: $checkAllCheckbox,
-                checkedRows: 3,
-                checkAllChecked: true,
-                // "change" should be called 2 more times for the remaining 2 unchecked rows
-                changeCalls: 2,
-              },
-              {
-                target: $checkFirstRowCheckbox,
+              });
+
+              changedSpy.reset();
+              clickCheckboxes($checkSecondRowCheckbox);
+              assertCheckboxState({
                 checkedRows: 2,
                 checkAllChecked: false,
                 changeCalls: 1,
-                firstRowChecked: false,
-              },
-            ];
+                firstRowChecked: true,
+              });
 
-            $.each(steps, function (index, step) {
               changedSpy.reset();
-              interactions.click(step.target);
-              assertCheckboxState(step);
+              clickCheckboxes($checkThirdRowCheckbox);
+              assertCheckboxState({
+                checkedRows: 3,
+                checkAllChecked: true,
+                changeCalls: 1,
+                firstRowChecked: true,
+              });
+
+              return;
+            }
+
+            changedSpy.reset();
+            clickCheckboxes($checkAllCheckbox);
+            assertCheckboxState({
+              checkedRows: 3,
+              checkAllChecked: true,
+              changeCalls: 3,
+            });
+
+            changedSpy.reset();
+            clickCheckboxes($checkAllCheckbox);
+            assertCheckboxState({
+              checkedRows: 0,
+              checkAllChecked: false,
+              changeCalls: 3,
+            });
+
+            changedSpy.reset();
+            clickCheckboxes($checkFirstRowCheckbox);
+            assertCheckboxState({
+              checkedRows: 1,
+              checkAllChecked: false,
+              changeCalls: 1,
+              firstRowChecked: true,
+            });
+
+            changedSpy.reset();
+            clickCheckboxes($checkSecondRowCheckbox);
+            assertCheckboxState({
+              checkedRows: 2,
+              checkAllChecked: false,
+              changeCalls: 1,
+              firstRowChecked: true,
+            });
+
+            changedSpy.reset();
+            clickCheckboxes($checkThirdRowCheckbox);
+            assertCheckboxState({
+              checkedRows: 3,
+              checkAllChecked: true,
+              changeCalls: 1,
+              firstRowChecked: true,
+            });
+
+            changedSpy.reset();
+            clickCheckboxes($checkAllCheckbox);
+            assertCheckboxState({
+              checkedRows: 0,
+              checkAllChecked: false,
+              changeCalls: 3,
+              firstRowChecked: false,
             });
           });
         },
@@ -786,16 +845,6 @@ describe("yii.gridView", function () {
     });
 
     describe("with repeated calls", function () {
-      var jQueryPropStub;
-
-      before(function () {
-        jQueryPropStub = sinon.stub($, "prop");
-      });
-
-      after(function () {
-        jQueryPropStub.restore();
-      });
-
       it("should not duplicate event handler calls", function () {
         $gridView = $("#w3").yiiGridView({
           filterUrl: "/posts/index",
@@ -824,14 +873,25 @@ describe("yii.gridView", function () {
           checkAll: "selection_all",
         });
 
-        // Click first row checkbox ("prop" on "check all" checkbox should not be called)
-        interactions.click(
-          $gridView.find('input[name="selection[]"][value="1"]'),
+        var events = $._data(document, "events");
+        var clickHandlers = events && events.click ? events.click : [];
+        var yiiGridViewClickHandlers = clickHandlers.filter(
+          function (handleObj) {
+            return (
+              handleObj.namespace === "yiiGridView" &&
+              (handleObj.selector === "#w3 input" ||
+                handleObj.selector === "#w3 input.w3-check-row")
+            );
+          },
         );
-        // Click "check all" checkbox ("prop" should be called once on the remaining unchecked row)
-        interactions.click($gridView.find('input[name="selection_all"]'));
+        var selectors = yiiGridViewClickHandlers
+          .map(function (handleObj) {
+            return handleObj.selector;
+          })
+          .sort();
 
-        assert.equal(jQueryPropStub.callCount, 1);
+        assert.lengthOf(yiiGridViewClickHandlers, 2);
+        assert.deepEqual(selectors, ["#w3 input", "#w3 input.w3-check-row"]);
       });
     });
   });

@@ -1087,7 +1087,7 @@
       $input = findInput($form, attribute),
       hasError = attrHasError($form, attribute, messages);
 
-    if (!$.isArray(messages[attribute.id])) {
+    if (!Array.isArray(messages[attribute.id])) {
       messages[attribute.id] = [];
     }
 
@@ -1146,7 +1146,7 @@
     var $input = findInput($form, attribute),
       hasError = false;
 
-    if (!$.isArray(messages[attribute.id])) {
+    if (!Array.isArray(messages[attribute.id])) {
       messages[attribute.id] = [];
     }
 
@@ -1169,7 +1169,7 @@
 
     if ($summary.length && messages) {
       $.each(data.attributes, function () {
-        if ($.isArray(messages[this.id]) && messages[this.id].length) {
+        if (Array.isArray(messages[this.id]) && messages[this.id].length) {
           var error = $("<li/>");
           if (data.settings.encodeErrorSummary) {
             error.text(messages[this.id][0]);

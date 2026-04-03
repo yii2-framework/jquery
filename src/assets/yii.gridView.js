@@ -56,7 +56,8 @@
    *     gridViewId: {
    *         type: {
    *             event: '...',
-   *             selector: '...'
+   *             selector: '...',
+   *             handler: function () {}
    *         }
    *     }
    * }
@@ -137,7 +138,7 @@
           namesInFilter.indexOf(name) === -1 &&
           namesInFilter.indexOf(name.replace(/\[\d*\]$/, "")) === -1
         ) {
-          if (!$.isArray(value)) {
+          if (!Array.isArray(value)) {
             value = [value];
           }
           if (!(name in data)) {
@@ -197,40 +198,42 @@
       if (!options.multiple || !options.checkAll) {
         return;
       }
-      var checkAllInput = "input[name='" + options.checkAll + "']";
-      var inputs =
-        (options["class"]
-          ? "input." + options["class"]
-          : "input[name='" + options.name + "']") + ":enabled";
+      var checkAllSelector = "#" + id + " input";
+      var rowSelector = options["class"]
+        ? "#" + id + " input." + options["class"]
+        : "#" + id + " input";
       initEventHandler(
         $grid,
         "checkAllRows",
         "click.yiiGridView",
-        "#" + id + " " + checkAllInput,
+        checkAllSelector,
         function () {
-          $grid
-            .find(inputs + (this.checked ? ":not(:checked)" : ":checked"))
+          if (!isNamedInput(this, options.checkAll)) {
+            return;
+          }
+
+          getSelectionInputs($grid, options)
+            .filter(this.checked ? ":not(:checked)" : ":checked")
             .prop("checked", this.checked)
             .change();
         },
       );
       var handler = function () {
-        var all =
-          $grid.find(inputs).length === $grid.find(inputs + ":checked").length;
-        $grid
-          .find(checkAllInput + (all ? ":not(:checked)" : ":checked"))
-          .prop("checked", all)
-          .change();
+        if (!isSelectionInput(this, options)) {
+          return;
+        }
+
+        updateCheckAllState($grid, options);
       };
       initEventHandler(
         $grid,
         "checkRow",
         "click.yiiGridView",
-        "#" + id + " " + inputs,
+        rowSelector,
         handler,
       );
-      if ($grid.find(inputs).length) {
-        handler(); // Ensure "check all" checkbox is checked on page load if all data row checkboxes are initially checked.
+      if (getSelectionInputs($grid, options).length) {
+        updateCheckAllState($grid, options);
       }
     },
 
@@ -239,8 +242,8 @@
       var data = gridData[$grid.attr("id")];
       var keys = [];
       if (data.selectionColumn) {
-        $grid
-          .find("input[name='" + data.selectionColumn + "']:checked")
+        getNamedInputs($grid, data.selectionColumn)
+          .filter(":checked")
           .each(function () {
             keys.push($(this).parent().closest("tr").data("key"));
           });
@@ -259,7 +262,7 @@
 
       var id = $(this).attr("id");
       $.each(gridEventHandlers[id], function (type, data) {
-        $(document).off(data.event, data.selector);
+        $(document).off(data.event, data.selector, data.handler);
       });
 
       delete gridData[id];
@@ -287,12 +290,52 @@
     var prevHandler = gridEventHandlers[id];
     if (prevHandler !== undefined && prevHandler[type] !== undefined) {
       var data = prevHandler[type];
-      $(document).off(data.event, data.selector);
+      $(document).off(data.event, data.selector, data.handler);
     }
     if (prevHandler === undefined) {
       gridEventHandlers[id] = {};
     }
     $(document).on(event, selector, callback);
-    gridEventHandlers[id][type] = { event: event, selector: selector };
+    gridEventHandlers[id][type] = {
+      event: event,
+      selector: selector,
+      handler: callback,
+    };
+  }
+
+  function getNamedInputs($container, name) {
+    return $container.find("input").filter(function () {
+      return this.name === name;
+    });
+  }
+
+  function getSelectionInputs($grid, options) {
+    if (options["class"]) {
+      return $grid.find("input." + options["class"] + ":enabled");
+    }
+
+    return getNamedInputs($grid, options.name).filter(":enabled");
+  }
+
+  function isNamedInput(input, name) {
+    return input.name === name;
+  }
+
+  function isSelectionInput(input, options) {
+    if (options["class"]) {
+      return $(input).is("input." + options["class"]);
+    }
+
+    return isNamedInput(input, options.name);
+  }
+
+  function updateCheckAllState($grid, options) {
+    var $inputs = getSelectionInputs($grid, options);
+    var all = $inputs.length === $inputs.filter(":checked").length;
+
+    getNamedInputs($grid, options.checkAll)
+      .filter(all ? ":not(:checked)" : ":checked")
+      .prop("checked", all)
+      .change();
   }
 })(window.jQuery);

@@ -1,6 +1,7 @@
 var assert = require("chai").assert;
 var sinon;
 var jsdom = require("mocha-jsdom");
+var runtime = require("../support/runtime");
 
 var fs = require("fs");
 var vm = require("vm");
@@ -8,7 +9,7 @@ var vm = require("vm");
 describe("yii.activeForm", function () {
   var yiiActiveFormPath = "src/assets/yii.activeForm.js";
   var yiiPath = "src/assets/yii.js";
-  var jQueryPath = "node_modules/jquery/dist/jquery.js";
+  var jQueryPath = runtime.getJquerySourcePath();
   var $;
   var $activeForm;
 

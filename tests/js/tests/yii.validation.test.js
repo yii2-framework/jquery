@@ -1,4 +1,5 @@
 var assert = require("chai").assert;
+var runtime = require("../support/runtime");
 
 assert.isDeferred = function (object) {
   assert.isOk(object, "Expected a jQuery Deferred-like object");
@@ -80,7 +81,7 @@ describe("yii.validation", function () {
   }
 
   jsdom({
-    src: fs.readFileSync("node_modules/jquery/dist/jquery.js", "utf-8"),
+    src: fs.readFileSync(runtime.getJquerySourcePath(), "utf-8"),
     url: "http://foo.bar",
   });
 
