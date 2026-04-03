@@ -292,10 +292,11 @@
     deferreds,
     needAjaxValidation,
     submitting,
+    validationTarget,
   ) {
     removeEmptyMessages(messages);
     if (shouldRunAjaxValidation(data, messages, needAjaxValidation)) {
-      sendAjaxValidation($form, data, messages, submitting);
+      sendAjaxValidation($form, data, messages, submitting, validationTarget);
       return;
     }
 
@@ -314,7 +315,13 @@
     return needAjaxValidation && ($.isEmptyObject(messages) || data.submitting);
   };
 
-  var sendAjaxValidation = function ($form, data, messages, submitting) {
+  var sendAjaxValidation = function (
+    $form,
+    data,
+    messages,
+    submitting,
+    validationTarget,
+  ) {
     $.ajax({
       url: data.settings.validationUrl,
       type: $form.attr("method"),
@@ -324,6 +331,7 @@
           $form,
           data.submitObject,
           data.settings.ajaxParam,
+          validationTarget,
         ),
       dataType: data.settings.ajaxDataType,
       complete: function (jqXHR, textStatus) {
@@ -349,10 +357,36 @@
     });
   };
 
-  var buildAjaxValidationData = function ($form, $button, ajaxParamName) {
+  var appendDataParam = function (data, name, value) {
+    if (value === undefined) {
+      return data;
+    }
+
+    return data + "&" + name + "=" + value;
+  };
+
+  var buildAjaxValidationData = function (
+    $form,
+    $button,
+    ajaxParamName,
+    validationTarget,
+  ) {
     var data = "&" + ajaxParamName + "=" + $form.attr("id");
+    if (validationTarget) {
+      data = appendDataParam(
+        data,
+        ajaxParamName + "_attribute",
+        validationTarget.name,
+      );
+      data = appendDataParam(
+        data,
+        ajaxParamName + "_attribute_id",
+        validationTarget.id,
+      );
+    }
+
     if ($button && $button.length && $button.attr("name")) {
-      data += "&" + $button.attr("name") + "=" + $button.attr("value");
+      data = appendDataParam(data, $button.attr("name"), $button.attr("value"));
     }
 
     return data;
@@ -393,6 +427,17 @@
     updateInputs($form, messages, submitting);
   };
 
+  var consumeValidationTarget = function (data, submitting) {
+    var validationTarget = null;
+    if (!submitting) {
+      validationTarget = data.validationTarget || null;
+    }
+
+    data.validationTarget = null;
+
+    return validationTarget;
+  };
+
   var methods = {
     init: function (attributes, options) {
       return this.each(function () {
@@ -420,6 +465,7 @@
           attributes: attributes,
           submitting: false,
           validated: false,
+          validationTarget: null,
           validate_only: false, // validate without auto submitting
           options: getFormOptions($form),
         });
@@ -522,7 +568,8 @@
         needAjaxValidation = false,
         messages = {},
         deferreds = deferredArray(),
-        submitting = data.submitting;
+        submitting = data.submitting,
+        validationTarget = consumeValidationTarget(data, submitting);
 
       if (submitting) {
         var event = $.Event(events.beforeValidate);
@@ -551,6 +598,7 @@
           deferreds,
           needAjaxValidation,
           submitting,
+          validationTarget,
         );
       });
     },
@@ -577,6 +625,7 @@
         if (data.settings.timer !== undefined) {
           clearTimeout(data.settings.timer);
         }
+        data.validationTarget = null;
         data.submitting = true;
         methods.validate.call($form);
         return false;
@@ -730,6 +779,11 @@
     if (!forceValidate) {
       return;
     }
+
+    data.validationTarget = {
+      id: attribute.id,
+      name: attribute.name,
+    };
 
     cancelActiveValidation(data);
     data.settings.timer = window.setTimeout(
