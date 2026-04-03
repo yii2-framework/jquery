@@ -897,6 +897,10 @@
       submitting,
     );
 
+    if (submitting) {
+      data.validated = errorAttributes.length === 0;
+    }
+
     $form.trigger(events.afterValidate, [messages, errorAttributes]);
 
     if (submitting) {
