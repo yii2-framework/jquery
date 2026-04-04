@@ -16,3 +16,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - fix: synchronize `yiiActiveForm` `validated` state before triggering `afterValidate` during submit validation.
 - fix: include triggering attribute metadata in per-field `yiiActiveForm` Ajax validation requests.
 - feat: allow `yii.js` `handleAction` to use `data-href` with `data-method` when `href` is missing or invalid.
+- feat: add namespaced aliases for `yiiGridView` `beforeFilter` and `afterFilter` events while preserving legacy subscriptions.
