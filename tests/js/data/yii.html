@@ -37,6 +37,11 @@
                             class="submit-form-not-exist"
                             data-form="not-existing-form"
                         ></button>
+                        <button
+                            class="button-data-href"
+                            type="button"
+                            data-href="/tests/index"
+                        ></button>
 
                         <input
                             class="not-submit-no-form-pjax"
@@ -201,6 +206,13 @@
                         data-method="put"
                         data-params='{"foo":"1","bar":"2"}'
                     ></a>
+                    <button
+                        class="post-data-href"
+                        type="button"
+                        data-method="post"
+                        data-href="/tests/index"
+                        data-params='{"foo":"1","bar":"2"}'
+                    ></button>
 
                     <a
                         class="get-params-pjax"
@@ -229,6 +241,14 @@
                     <a
                         class="bad-action-new-method"
                         href="#"
+                        data-method="post"
+                        data-form="method-form"
+                        data-params='{"foo":"1","bar":"2"}'
+                    ></a>
+                    <a
+                        class="bad-href-data-href-new-method"
+                        href="#"
+                        data-href="/tests/index"
                         data-method="post"
                         data-form="method-form"
                         data-params='{"foo":"1","bar":"2"}'

@@ -122,6 +122,7 @@ window.yii = (function ($) {
      * For hyperlinks, the form action will take the value of the "href" attribute of the link.
      * For other elements, either the containing form action or the current page URL will be used
      * as the form action URL.
+     * If `href` is missing or invalid, `data-href` is used as form action URL when `data-method` is set.
      *
      * If the `data-method` attribute is not defined, the `href` attribute (if any) of the element
      * will be assigned to `window.location`.
@@ -161,6 +162,7 @@ window.yii = (function ($) {
         return;
       }
 
+      resolveActionWithDataHref(context);
       handleActionWithMethod(context);
     },
 
@@ -237,19 +239,36 @@ window.yii = (function ($) {
       ? $("#" + $e.attr("data-form"))
       : $e.closest("form");
     var params = $e.data("params");
+    var action = $e.attr("href");
 
     return {
       $e: $e,
       event: event,
       $form: $form,
       method: $e.data("method"),
-      action: $e.attr("href"),
-      isValidAction: $e.attr("href") && $e.attr("href") !== "#",
+      action: action,
+      isValidAction: isValidAction(action),
       params: params,
       areValidParams: params && $.isPlainObject(params),
       usePjax: isPjaxEnabled($e),
       pjaxOptions: {},
     };
+  }
+
+  function resolveActionWithDataHref(context) {
+    if (context.isValidAction) {
+      return;
+    }
+
+    var dataHref = context.$e.data("href");
+    if (isValidAction(dataHref)) {
+      context.action = dataHref;
+      context.isValidAction = true;
+    }
+  }
+
+  function isValidAction(action) {
+    return action && action !== "#";
   }
 
   function isPjaxEnabled($e) {

@@ -522,6 +522,7 @@ describe("yii", function () {
               "submit, data-form, form does not exist": [
                 ".submit-form-not-exist",
               ],
+              "button, data-href, no data-method": [".button-data-href"],
               "not submit, no form, data-pjax": [".not-submit-no-form-pjax"],
               "submit, no form, data-pjax": [".submit-no-form-pjax"],
               "submit, data-form, form does not exist, data-pjax": [
@@ -803,6 +804,14 @@ describe("yii", function () {
                 '<input name="bar" value="2" type="hidden" data-yii-action-helper="true">' +
                 "</form>",
             ],
+            'data-method="post", data-href, data-params': [
+              ".post-data-href",
+              '<form method="post" action="/tests/index" style="display: none;">' +
+                '<input name="_csrf" value="foobar" type="hidden">' +
+                '<input name="foo" value="1" type="hidden" data-yii-action-helper="true">' +
+                '<input name="bar" value="2" type="hidden" data-yii-action-helper="true">' +
+                "</form>",
+            ],
           },
           function (elementSelector, expectedFormHtml) {
             it("should create temporary form and submit it", function () {
@@ -917,6 +926,17 @@ describe("yii", function () {
                 '<input name="bar" value="2" type="hidden" data-yii-action-helper="true">' +
                 "</form>",
             ],
+            "data-form, invalid href, valid data-href, new method, data-params":
+              [
+                ".bad-href-data-href-new-method",
+                "#method-form",
+                '<form id="method-form" method="post" action="/tests/index">' +
+                  '<input name="query" value="a">' +
+                  '<input name="_csrf" value="foobar" type="hidden" data-yii-action-helper="true">' +
+                  '<input name="foo" value="1" type="hidden" data-yii-action-helper="true">' +
+                  '<input name="bar" value="2" type="hidden" data-yii-action-helper="true">' +
+                  "</form>",
+              ],
             "data-form, new action, put method, data-params": [
               ".new-action-put-method",
               "#method-form",
