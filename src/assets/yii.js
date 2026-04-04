@@ -35,6 +35,13 @@
  */
 // eslint-disable-next-line max-statements
 window.yii = (function ($) {
+  var dataMethodsEventNamespace = ".yii.dataMethods";
+  var clickableSelector =
+    'a, button, input[type="submit"], input[type="button"], input[type="reset"], ' +
+    'input[type="image"]';
+  var changeableSelector = "select, input, textarea";
+  var isDataMethodsInitialized = false;
+
   var pub = {
     /**
      * List of JS or CSS URLs that can be loaded multiple times via AJAX requests.
@@ -49,13 +56,11 @@ window.yii = (function ($) {
     /**
      * The selector for clickable elements that need to support confirmation and form submission.
      */
-    clickableSelector:
-      'a, button, input[type="submit"], input[type="button"], input[type="reset"], ' +
-      'input[type="image"]',
+    clickableSelector: clickableSelector,
     /**
      * The selector for changeable elements that need to support confirmation and form submission.
      */
-    changeableSelector: "select, input, textarea",
+    changeableSelector: changeableSelector,
 
     /**
      * @return string|undefined the CSRF parameter name. Undefined is returned if CSRF validation is not enabled.
@@ -233,6 +238,50 @@ window.yii = (function ($) {
     "target",
   ];
   var actionHelperAttribute = "data-yii-action-helper";
+  defineDataMethodsSelectorProperties();
+
+  function defineDataMethodsSelectorProperties() {
+    Object.defineProperties(pub, {
+      clickableSelector: {
+        configurable: true,
+        enumerable: true,
+        get: function () {
+          return clickableSelector;
+        },
+        set: function (value) {
+          if (clickableSelector === value) {
+            return;
+          }
+
+          clickableSelector = value;
+          rebindDataMethods();
+        },
+      },
+      changeableSelector: {
+        configurable: true,
+        enumerable: true,
+        get: function () {
+          return changeableSelector;
+        },
+        set: function (value) {
+          if (changeableSelector === value) {
+            return;
+          }
+
+          changeableSelector = value;
+          rebindDataMethods();
+        },
+      },
+    });
+  }
+
+  function rebindDataMethods() {
+    if (!isDataMethodsInitialized) {
+      return;
+    }
+
+    bindDataMethodsHandlers();
+  }
 
   function createActionContext($e, event) {
     var $form = $e.attr("data-form")
@@ -616,22 +665,37 @@ window.yii = (function ($) {
   }
 
   function initDataMethods() {
-    var handler = function (event) {
-      var actionData = getDataMethodActionData($(this));
-      if (shouldSkipDataMethod(actionData)) {
-        return true;
-      }
+    isDataMethodsInitialized = true;
+    bindDataMethodsHandlers();
+  }
 
-      executeDataMethodAction(this, actionData, event);
-      event.stopImmediatePropagation();
-
-      return false;
-    };
-
+  function bindDataMethodsHandlers() {
     // handle data-confirm and data-method for clickable and changeable elements
     $(document)
-      .on("click.yii", pub.clickableSelector, handler)
-      .on("change.yii", pub.changeableSelector, handler);
+      .off("click" + dataMethodsEventNamespace)
+      .off("change" + dataMethodsEventNamespace)
+      .on(
+        "click" + dataMethodsEventNamespace,
+        pub.clickableSelector,
+        handleDataMethodEvent,
+      )
+      .on(
+        "change" + dataMethodsEventNamespace,
+        pub.changeableSelector,
+        handleDataMethodEvent,
+      );
+  }
+
+  function handleDataMethodEvent(event) {
+    var actionData = getDataMethodActionData($(this));
+    if (shouldSkipDataMethod(actionData)) {
+      return true;
+    }
+
+    executeDataMethodAction(this, actionData, event);
+    event.stopImmediatePropagation();
+
+    return false;
   }
 
   function handleScriptAjaxPrefilter(options, xhr, loadedScripts) {
