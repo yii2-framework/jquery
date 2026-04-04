@@ -426,7 +426,9 @@ describe("yii.activeForm", function () {
             },
           );
 
-          var $submitButton = $('<button type="submit" name="scenario"></button>');
+          var $submitButton = $(
+            '<button type="submit" name="scenario"></button>',
+          );
           $activeForm.append($submitButton);
           $activeForm.data("yiiActiveForm").submitObject = $submitButton;
 

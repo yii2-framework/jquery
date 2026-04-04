@@ -363,11 +363,7 @@
     }
 
     return (
-      data +
-      "&" +
-      encodeURIComponent(name) +
-      "=" +
-      encodeURIComponent(value)
+      data + "&" + encodeURIComponent(name) + "=" + encodeURIComponent(value)
     );
   };
 
