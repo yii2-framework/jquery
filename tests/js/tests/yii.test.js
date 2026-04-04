@@ -1823,6 +1823,13 @@ describe("yii", function () {
     var yiiConfirmSpy;
     var yiiHandleActionStub;
     var extraEventHandlerSpy;
+    var defaultClickableSelector;
+    var defaultChangeableSelector;
+
+    before(function () {
+      defaultClickableSelector = yii.clickableSelector;
+      defaultChangeableSelector = yii.changeableSelector;
+    });
 
     beforeEach(function () {
       windowConfirmStub = sinon.stub(window, "confirm", function () {
@@ -1839,6 +1846,11 @@ describe("yii", function () {
     });
 
     afterEach(function () {
+      yii.clickableSelector = defaultClickableSelector;
+      yii.changeableSelector = defaultChangeableSelector;
+      $(".custom-clickable-element").remove();
+      $(".custom-changeable-wrapper").remove();
+
       windowConfirmStub.restore();
       yiiConfirmSpy.restore();
       yiiHandleActionStub.restore();
@@ -1922,6 +1934,39 @@ describe("yii", function () {
       });
     });
 
+    describe("with updated clickableSelector", function () {
+      it("should rebind click handling to the new selector", function () {
+        var event = $.Event("click");
+        var customElementId = "data-methods-custom-click-confirm";
+
+        yii.clickableSelector = ".custom-clickable-element";
+
+        $("#data-methods-click-confirm").trigger($.Event("click"));
+
+        assert.isFalse(yiiConfirmSpy.called);
+        assert.isFalse(yiiHandleActionStub.called);
+        assert.isTrue(extraEventHandlerSpy.calledOnce);
+
+        $(".data-methods").append(
+          '<a id="' +
+            customElementId +
+            '" class="data-methods-element custom-clickable-element" href="/tests/index" data-confirm="Are you sure?"></a>',
+        );
+
+        $("#" + customElementId).trigger(event);
+
+        assert.isTrue(yiiConfirmSpy.calledOnce);
+        assert.equal(yiiConfirmSpy.getCall(0).thisValue.id, customElementId);
+
+        assert.isTrue(yiiHandleActionStub.calledOnce);
+        assert.equal(
+          yiiHandleActionStub.getCall(0).args[0].attr("id"),
+          customElementId,
+        );
+        assert.strictEqual(yiiHandleActionStub.getCall(0).args[1], event);
+      });
+    });
+
     describe("with changeableSelector without data-confirm", function () {
       var elementId = "data-methods-change";
       var $element;
@@ -1951,6 +1996,44 @@ describe("yii", function () {
         assert.strictEqual(yiiHandleActionStub.getCall(0).args[1], event);
 
         assert.isFalse(extraEventHandlerSpy.called);
+      });
+    });
+
+    describe("with updated changeableSelector", function () {
+      it("should rebind change handling to the new selector", function () {
+        var event = $.Event("change");
+        var customElementId = "data-methods-custom-change";
+
+        yii.changeableSelector = ".custom-changeable-element";
+
+        $("#data-methods-change").val(1);
+        $("#data-methods-change").trigger($.Event("change"));
+
+        assert.isFalse(yiiConfirmSpy.called);
+        assert.isFalse(yiiHandleActionStub.called);
+        assert.isTrue(extraEventHandlerSpy.calledOnce);
+
+        $(".data-methods").append(
+          '<form class="custom-changeable-wrapper">' +
+            '<select id="' +
+            customElementId +
+            '" class="data-methods-element custom-changeable-element" data-method="get">' +
+            '<option value="1">html</option>' +
+            '<option value="2">css</option>' +
+            "</select>" +
+            "</form>",
+        );
+
+        $("#" + customElementId).val(1);
+        $("#" + customElementId).trigger(event);
+
+        assert.isFalse(yiiConfirmSpy.called);
+        assert.isTrue(yiiHandleActionStub.calledOnce);
+        assert.equal(
+          yiiHandleActionStub.getCall(0).args[0].attr("id"),
+          customElementId,
+        );
+        assert.strictEqual(yiiHandleActionStub.getCall(0).args[1], event);
       });
     });
   });
