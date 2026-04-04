@@ -352,6 +352,79 @@ describe("yii.gridView", function () {
       });
     });
 
+    describe("with namespaced beforeFilter returning not false", function () {
+      var calledMethods = [];
+      var beforeFilterSpy;
+      var afterFilterSpy;
+
+      before(function () {
+        jQuerySubmit = function () {
+          calledMethods.push("submit");
+
+          return this;
+        };
+        beforeFilterSpy = sinon.spy(function () {
+          calledMethods.push("beforeFilter");
+        });
+        afterFilterSpy = sinon.spy(function () {
+          calledMethods.push("afterFilter");
+        });
+      });
+
+      after(function () {
+        jQuerySubmit = function () {};
+        beforeFilterSpy.reset();
+        afterFilterSpy.reset();
+        calledMethods = [];
+      });
+
+      it('should trigger namespaced "beforeFilter" and "afterFilter" handlers in correct order', function () {
+        $gridView = $("#w0")
+          .yiiGridView(settings)
+          .on("beforeFilter.yiiGridView", beforeFilterSpy)
+          .on("afterFilter.yiiGridView", afterFilterSpy);
+        $gridView.yiiGridView("applyFilter");
+
+        assert.isTrue(beforeFilterSpy.calledOnce);
+        assert.isTrue(jQuerySubmitStub.calledOnce);
+        assert.isTrue(afterFilterSpy.calledOnce);
+        assert.deepEqual(calledMethods, [
+          "beforeFilter",
+          "submit",
+          "afterFilter",
+        ]);
+      });
+    });
+
+    describe("with namespaced beforeFilter returning false", function () {
+      var beforeFilterSpy;
+      var afterFilterSpy;
+
+      before(function () {
+        beforeFilterSpy = sinon.spy(function () {
+          return false;
+        });
+        afterFilterSpy = sinon.spy();
+      });
+
+      after(function () {
+        beforeFilterSpy.reset();
+        afterFilterSpy.reset();
+      });
+
+      it('should prevent request and "afterFilter" when namespaced "beforeFilter" returns false', function () {
+        $gridView = $("#w0")
+          .yiiGridView(settings)
+          .on("beforeFilter.yiiGridView", beforeFilterSpy)
+          .on("afterFilter.yiiGridView", afterFilterSpy);
+        $gridView.yiiGridView("applyFilter");
+
+        assert.isTrue(beforeFilterSpy.calledOnce);
+        assert.isFalse(jQuerySubmitStub.called);
+        assert.isFalse(afterFilterSpy.called);
+      });
+    });
+
     describe("with different urls", function () {
       describe("with no filter data sent", function () {
         withData(
@@ -991,6 +1064,31 @@ describe("yii.gridView", function () {
         $gridView1.yiiGridView("applyFilter");
       }, "Cannot read properties of undefined (reading \'settings\')");
       $gridView1.yiiGridView(settings); // Reinitialize without "beforeFilter" and "afterFilter" event handlers
+
+      $gridView1.yiiGridView("applyFilter");
+      assert.isTrue(jQuerySubmitStub.calledOnce);
+      assert.isFalse(beforeFilterSpy.called);
+      assert.isFalse(afterFilterSpy.called);
+
+      $gridView2.yiiGridView("applyFilter");
+      assert.isTrue(jQuerySubmitStub.calledTwice);
+      assert.isTrue(beforeFilterSpy.calledOnce);
+      assert.isTrue(afterFilterSpy.calledOnce);
+    });
+
+    it('should remove namespaced "beforeFilter" and "afterFilter" event handlers for destroyed element only', function () {
+      $gridView = $(".grid-view")
+        .yiiGridView(commonSettings)
+        .on("beforeFilter.yiiGridView", beforeFilterSpy)
+        .on("afterFilter.yiiGridView", afterFilterSpy);
+      var $gridView1 = $("#w0");
+      var $gridView2 = $("#w1");
+      $gridView1.yiiGridView("destroy");
+
+      assert.throws(function () {
+        $gridView1.yiiGridView("applyFilter");
+      }, "Cannot read properties of undefined (reading \'settings\')");
+      $gridView1.yiiGridView(settings);
 
       $gridView1.yiiGridView("applyFilter");
       assert.isTrue(jQuerySubmitStub.calledOnce);

@@ -39,6 +39,10 @@
      */
     beforeFilter: "beforeFilter",
     /**
+     * Namespaced alias for beforeFilter event.
+     */
+    beforeFilterNs: "beforeFilter.yiiGridView",
+    /**
      * afterFilter event is triggered after filtering the grid and filtered results are fetched.
      * The signature of the event handler should be:
      *     function (event)
@@ -46,6 +50,10 @@
      *  - event: an Event object.
      */
     afterFilter: "afterFilter",
+    /**
+     * Namespaced alias for afterFilter event.
+     */
+    afterFilterNs: "afterFilter.yiiGridView",
   };
 
   /**
@@ -177,6 +185,7 @@
         });
       });
 
+      // Trigger base event name for backward compatibility with existing subscriptions.
       var event = $.Event(gridEvents.beforeFilter);
       $grid.trigger(event);
       if (event.result === false) {
@@ -185,6 +194,7 @@
 
       $form.submit();
 
+      // Trigger base event name for backward compatibility with existing subscriptions.
       $grid.trigger(gridEvents.afterFilter);
     },
 
@@ -256,7 +266,9 @@
       var events = [
         ".yiiGridView",
         gridEvents.beforeFilter,
+        gridEvents.beforeFilterNs,
         gridEvents.afterFilter,
+        gridEvents.afterFilterNs,
       ].join(" ");
       this.off(events);
 
