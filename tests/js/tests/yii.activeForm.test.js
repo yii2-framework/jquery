@@ -170,6 +170,62 @@ describe("yii.activeForm", function () {
       });
     });
 
+    it("should re-run validation on next submit after successful submit with formtarget _blank", function () {
+      var validateCalls = 0;
+      var $firstField = $(".field-test-att1");
+
+      $activeForm = $("#w4");
+      $activeForm.yiiActiveForm("destroy");
+      $firstField.removeClass("has-error has-success");
+      $firstField.find(".field-error").empty();
+      $activeForm.yiiActiveForm(
+        [
+          {
+            id: "test-att1",
+            input: "#test-att1",
+            container: ".field-test-att1",
+            validate: function (attribute, value, messages) {
+              validateCalls += 1;
+              if (value === "") {
+                messages.push("Att1 cannot be blank.");
+              }
+            },
+          },
+        ],
+        {
+          errorCssClass: "has-error",
+          successCssClass: "has-success",
+        },
+      );
+
+      var $submitButton = $(
+        '<button type="submit" name="scenario" value="create" formtarget="_blank"></button>',
+      );
+      $activeForm.append($submitButton);
+      $activeForm.data("yiiActiveForm").submitObject = $submitButton;
+
+      var submitStub = sinon.stub($.fn, "submit", function () {
+        this.triggerHandler("submit");
+        return this;
+      });
+
+      try {
+        $("#test-att1").val("valid");
+        var firstSubmitResult = $activeForm.triggerHandler("submit");
+        assert.isFalse(firstSubmitResult);
+        assert.strictEqual(validateCalls, 1);
+        assert.isFalse($activeForm.data("yiiActiveForm").validated);
+
+        $("#test-att1").val("");
+        var secondSubmitResult = $activeForm.triggerHandler("submit");
+        assert.isFalse(secondSubmitResult);
+        assert.strictEqual(validateCalls, 2);
+        assert.isTrue($firstField.hasClass("has-error"));
+      } finally {
+        submitStub.restore();
+      }
+    });
+
     describe("with disabled fields", function () {
       var inputTypes = {
         test_radio: "radioList",

@@ -18,3 +18,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - feat: allow `yii.js` `handleAction` to use `data-href` with `data-method` when `href` is missing or invalid.
 - feat: add namespaced aliases for `yiiGridView` `beforeFilter` and `afterFilter` events while preserving legacy subscriptions.
 - feat: make `yii.js` `clickableSelector` and `changeableSelector` runtime updates rebind delegated `data-method`/`data-confirm` handlers.
+- fix: re-run `yiiActiveForm` submit validation on subsequent submits after successful `_blank` target submission.

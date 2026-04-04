@@ -624,6 +624,9 @@
           return false;
         }
         updateHiddenButton($form);
+        if (shouldResetValidatedAfterSubmit($form, data.submitObject)) {
+          data.validated = false;
+        }
         return true; // continue submitting the form since validation passes
       } else {
         // First submit's call (from yii.js/handleAction) - execute validating
@@ -896,6 +899,21 @@
   };
 
   var buttonOptions = ["action", "target", "method", "enctype"];
+
+  var shouldResetValidatedAfterSubmit = function ($form, $button) {
+    var target = "";
+    if ($button && $button.length) {
+      target = $button.attr("formtarget") || target;
+    }
+    if (!target) {
+      target = $form.attr("target");
+    }
+    if (!target) {
+      return false;
+    }
+
+    return String(target).toLowerCase() !== "_self";
+  };
 
   /**
    * Returns current form options
